@@ -1,0 +1,48 @@
+# IntelliJ
+/out/
+
+# mpeltonen/sbt-idea plugin
+.idea_modules/
+
+# JIRA plugin
+atlassian-ide-plugin.xml
+
+# Crashlytics plugin (for Android Studio and IntelliJ)
+com_crashlytics_export_strings.xml
+crashlytics.properties
+crashlytics-build.properties
+fabric.properties
+
+# compiled output
+/ui/dist
+/ui/tmp
+
+# dependencies
+/ui/node_modules
+/ui/bower_components
+
+# misc
+/ui/.sass-cache
+/ui/connect.lock
+/ui/coverage/*
+/ui/libpeerconnection.log
+/ui/npm-debug.log
+/ui/testem.log
+/ui/typings
+
+# e2e
+/ui/e2e/*.js
+/ui/e2e/*.map
+
+#System Files
+/ui/.DS_Store
+
+/server/build/
+
+### STS ###
+/server/.apt_generated
+/server/.classpath
+/server/.factorypath
+/server/.project
+/server/.settings
+/server/.springBeans
