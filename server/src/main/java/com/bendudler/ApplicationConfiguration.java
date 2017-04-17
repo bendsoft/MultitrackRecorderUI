@@ -3,6 +3,7 @@ package main.java.com.bendudler;
 import com.mongodb.reactivestreams.client.MongoClient;
 import com.mongodb.reactivestreams.client.MongoClients;
 import main.java.com.bendudler.user.UserController;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration;
@@ -26,7 +27,8 @@ import static org.springframework.web.reactive.function.server.RequestPredicates
 @EnableReactiveMongoRepositories
 @AutoConfigureAfter(EmbeddedMongoAutoConfiguration.class)
 public class ApplicationConfiguration extends AbstractReactiveMongoConfiguration {
-    private final int MONGODB_PORT = 3201;
+    @Value( "${mongodb.port}" )
+    private int MONGODB_PORT;
 
     @Bean
     RouterFunction<?> routes(UserController controller) {

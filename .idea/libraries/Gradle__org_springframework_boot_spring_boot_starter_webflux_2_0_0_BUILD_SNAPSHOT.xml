@@ -2,10 +2,12 @@
   <library name="Gradle: org.springframework.boot:spring-boot-starter-webflux:2.0.0.BUILD-SNAPSHOT">
     <CLASSES>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.springframework.boot/spring-boot-starter-webflux/2.0.0.BUILD-SNAPSHOT/e2fe8c4db9d2451ec7c90d8beb65763d08d470e0/spring-boot-starter-webflux-2.0.0.BUILD-SNAPSHOT.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.springframework.boot/spring-boot-starter-webflux/2.0.0.BUILD-SNAPSHOT/e0656b8e995eb0c799c73ca39511d08593040792/spring-boot-starter-webflux-2.0.0.BUILD-SNAPSHOT.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.springframework.boot/spring-boot-starter-webflux/2.0.0.BUILD-SNAPSHOT/13a122aeddee7795f78c77216526fc877504f08d/spring-boot-starter-webflux-2.0.0.BUILD-SNAPSHOT-sources.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.springframework.boot/spring-boot-starter-webflux/2.0.0.BUILD-SNAPSHOT/fcc25daced9eb60b70c776a8f87157e107b65cf6/spring-boot-starter-webflux-2.0.0.BUILD-SNAPSHOT-sources.jar!/" />
     </SOURCES>
   </library>
 </component>
