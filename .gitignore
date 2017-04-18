@@ -1,5 +1,6 @@
 # IntelliJ
 /out/
+/classes/
 /.idea
 
 # mpeltonen/sbt-idea plugin

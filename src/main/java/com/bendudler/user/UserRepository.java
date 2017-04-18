@@ -1,4 +1,4 @@
-package main.java.com.bendudler.user;
+package com.bendudler.user;
 
 import org.springframework.data.repository.reactive.ReactiveCrudRepository;
 import reactor.core.publisher.Mono;

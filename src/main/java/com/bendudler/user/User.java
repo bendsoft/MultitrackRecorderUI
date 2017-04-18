@@ -1,4 +1,4 @@
-package main.java.com.bendudler.user;
+package com.bendudler.user;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
