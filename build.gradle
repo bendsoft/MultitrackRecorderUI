@@ -36,6 +36,7 @@ dependencies {
     compile('org.reactivestreams:reactive-streams')
     compile('io.projectreactor:reactor-core')
     compile('io.projectreactor.ipc:reactor-netty')
+	compile('org.apache.commons:commons-lang3')
     runtime('com.h2database:h2')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 	testCompile('de.flapdoodle.embed:de.flapdoodle.embed.mongo')

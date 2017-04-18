@@ -17,7 +17,8 @@ import org.springframework.data.mongodb.repository.config.EnableReactiveMongoRep
 import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.RouterFunctions;
 
-import static org.springframework.web.reactive.function.server.RequestPredicates.GET;
+import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.web.reactive.function.server.RequestPredicates.*;
 
 /**
  * Created by ben on 16.04.2017.
@@ -31,23 +32,12 @@ public class ApplicationConfiguration extends AbstractReactiveMongoConfiguration
     private int MONGODB_PORT;
 
     @Bean
-    RouterFunction<?> routes(UserController controller) {
+    RouterFunction<?> userRoutes(UserController controller) {
         return RouterFunctions
-                .route(GET("/users"), controller::getUsers)
-                .andRoute(GET("users/{id}"), request -> {
-                    boolean pathVariableIsNumber = true;
-                    try {
-                        int test = Integer.parseInt(request.pathVariable("id"));
-                    } catch (NumberFormatException e) {
-                        pathVariableIsNumber = false;
-                    }
-
-                    if(pathVariableIsNumber) {
-                        return controller.getUser(request);
-                    }
-
-                    return controller.getUserByUsername(request);
-                };
+                .route(GET("/users")
+                        .and(accept(APPLICATION_JSON)), controller::getUsers)
+                .andRoute(GET("users/{id}")
+                        .and(contentType(APPLICATION_JSON)), controller::getUser);
     }
 
     @Bean

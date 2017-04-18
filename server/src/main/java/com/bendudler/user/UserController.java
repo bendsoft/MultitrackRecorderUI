@@ -1,5 +1,7 @@
 package main.java.com.bendudler.user;
 
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
@@ -18,13 +20,19 @@ public class UserController {
         this.repository = repository;
     }
 
-    public Mono<ServerResponse> getUser(ServerRequest request) {
-        Mono<User> user = repository.findOne(request.pathVariable("id"));
-        return ServerResponse.ok().body(user, User.class);
+    public Mono<ResponseEntity<User>> getUser(ServerRequest request) {
+        String id = request.pathVariable("id");
+        return Mono.just(id)
+                .filter(StringUtils::isNumeric)
+                .compose(repository::findOne)
+                .switchIfEmpty(repository.findByUserName(id))
+                .map(ResponseEntity::ok)
+                .defaultIfEmpty(ResponseEntity.status(404).body(null));
     }
 
-    public Mono<ServerResponse> getUsers(ServerRequest request) {
-        Flux<User> users = repository.findAll();
-        return ServerResponse.ok().body(users, User.class);
+    public Flux<ResponseEntity<User>> getUsers(ServerRequest request) {
+        return repository.findAll()
+                .map(ResponseEntity::ok)
+                .defaultIfEmpty(ResponseEntity.status(404).body(null));
     }
 }
