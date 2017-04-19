@@ -1,3 +1,17 @@
+buildscript {
+	ext {
+		springBootVersion = '2.0.0.BUILD-SNAPSHOT'
+	}
+	repositories {
+		mavenCentral()
+		maven { url "https://repo.spring.io/snapshot" }
+		maven { url "https://repo.spring.io/milestone" }
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
 apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
@@ -5,6 +19,11 @@ apply plugin: 'io.spring.dependency-management'
 
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 1.8
+
+jar {
+	baseName = 'x32mtr-rest'
+	version = '0.0.1-SNAPSHOT'
+}
 
 repositories {
 	mavenCentral()
@@ -17,17 +36,16 @@ configurations {
 }
 
 dependencies {
-	classpath("org.springframework.boot:spring-boot-gradle-plugin:2.0.0.BUILD-SNAPSHOT")
 	compile('org.springframework.boot:spring-boot-starter-data-jpa')
 	compile('org.springframework.boot:spring-boot-starter-data-mongodb-reactive')
 	compile('org.springframework.boot:spring-boot-starter-data-rest')
 	compile('org.springframework.boot:spring-boot-starter-webflux')
     compile('org.reactivestreams:reactive-streams')
     compile('io.projectreactor:reactor-core')
-    compile('io.projectreactor:reactor-netty')
+    compile('io.projectreactor.ipc:reactor-netty')
 	compile('org.apache.commons:commons-lang3')
+	compile('de.flapdoodle.embed:de.flapdoodle.embed.mongo')
     runtime('com.h2database:h2')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
-	testCompile('de.flapdoodle.embed:de.flapdoodle.embed.mongo')
 	testCompile('junit:junit:4.12')
 }

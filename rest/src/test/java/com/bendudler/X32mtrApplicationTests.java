@@ -1,4 +1,4 @@
-package java.com.bendudler;
+package com.bendudler;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
