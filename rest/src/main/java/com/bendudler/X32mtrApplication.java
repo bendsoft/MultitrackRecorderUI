@@ -1,5 +1,6 @@
 package com.bendudler;
 
+import com.bendudler.user.User;
 import com.bendudler.user.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +12,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration;
 import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
 import org.springframework.data.mongodb.repository.config.EnableReactiveMongoRepositories;
+import reactor.core.publisher.Flux;
 
 @SpringBootApplication(exclude = { MongoAutoConfiguration.class, MongoDataAutoConfiguration.class })
 @EnableReactiveMongoRepositories
