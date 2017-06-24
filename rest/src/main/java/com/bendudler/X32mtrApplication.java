@@ -29,18 +29,19 @@ public class X32mtrApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-/*        log.info("delete repository");
+        log.info("delete repository");
         repository.deleteAll().block();
 
         log.info("Adding user");
         repository.save(new User("User" + 0, "abc" + 0)).block();
 
-        repository.save(Flux.range(1, 10)
+        Flux<User> initUsers = Flux.range(1, 10)
                 .map(i -> {
                     User newUser = new User("User" + i, "abc" + i);
                     log.info("User created: " + newUser);
                     return newUser;
-                })
-        ).subscribe();*/
+                });
+
+        repository.saveAll(initUsers).subscribe();
     }
 }
