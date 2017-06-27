@@ -1,12 +1,81 @@
 <md-toolbar color="primary">
-
-  <span>MyCompany</span>
-  <span class="example-spacer"></span>
-  <button md-button [mdMenuTriggerFor]="appMenu"><md-icon>menu</md-icon> Menu</button>
-
+  <button md-icon-button (click)="toggleSidenav()"><md-icon>menu</md-icon> </button>
+  <span>Behringer Multitrack Recorder</span>
 </md-toolbar>
 
-<md-menu #appMenu="mdMenu">
-  <button md-menu-item> Settings </button>
-  <button md-menu-item> Help </button>
-</md-menu>
+<md-sidenav-container>
+  <md-sidenav #sidenav mode="over">
+    <md-list class="sideNavMenu">
+      <md-list-item>
+        <button (click)="menuItemClicked($event.target)" md-button><md-icon>settings</md-icon> Settings </button>
+      </md-list-item>
+      <md-list-item>
+        <button (click)="menuItemClicked($event.target)" md-button><md-icon>help</md-icon> Help </button>
+      </md-list-item>
+    </md-list>
+  </md-sidenav>
+
+  <md-tab-group>
+    <md-tab label="Recorder">
+
+      <md-card class="recorder">
+        <md-card-header>
+          <div md-card-avatar class="recorder-header-image"></div>
+          <md-card-title>Recorder</md-card-title>
+          <md-card-subtitle>Control Recording</md-card-subtitle>
+        </md-card-header>
+
+        <md-card-content>
+          <form>
+            <md-select placeholder="Choose a Channel Profile" [(ngModel)]="selectedProfile" name="channelProfile">
+              <md-option *ngFor="let channelProfile of channelProfiles" [value]="channelProfile.value">{{ channelProfile.name }}</md-option>
+            </md-select>
+            <md-input-container>
+              <input mdInput placeholder="Name of the Recording">
+              <md-error>Uuups!</md-error>
+            </md-input-container>
+            <md-input-container>
+              <input mdInput [mdDatepicker]="picker" placeholder="Choose a date">
+              <button mdSuffix [mdDatepickerToggle]="picker"></button>
+            </md-input-container>
+            <md-datepicker #picker></md-datepicker>
+          </form>
+
+          <md-button-toggle-group>
+            <md-button-toggle class="btnRecord" value="left" checked="false">
+              <md-icon>fiber_manual_record</md-icon> Record
+            </md-button-toggle>
+            <md-button-toggle class="btnStop" value="right" checked="true">
+              <md-icon>stop</md-icon> Stop
+            </md-button-toggle>
+          </md-button-toggle-group>
+        </md-card-content>
+
+        <md-card-footer>
+          <button md-mini-fab class="fab" (click)="alert('Hello World')">
+            <md-icon>add</md-icon>
+          </button>
+        </md-card-footer>
+      </md-card>
+
+    </md-tab>
+    <md-tab label="Channels">
+      <md-card class="channels">
+        <md-card-header>
+          <div md-card-avatar class="channels-header-image"></div>
+          <md-card-title>Channels</md-card-title>
+          <md-card-subtitle>Define Channels</md-card-subtitle>
+        </md-card-header>
+        <md-card-content>
+          <button md-mini-fab class="fab" (click)="alert('Hello World')">
+            <md-icon>add</md-icon>
+          </button>
+
+
+        </md-card-content>
+      </md-card>
+    </md-tab>
+    <md-tab label="Recordings"></md-tab>
+  </md-tab-group>
+
+</md-sidenav-container>

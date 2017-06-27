@@ -1,6 +1,38 @@
 @import '~@angular/material/prebuilt-themes/indigo-pink.css';
 
 body {
-  padding: 2em 23em;
+  padding: 2rem 2rem;
   background:lightgray;
+}
+
+md-toolbar, md-sidenav-container {
+  min-width: 38rem;
+}
+
+md-sidenav-container {
+  min-height: 30rem;
+}
+
+.sideNavMenu {
+  display: block;
+}
+
+.recorder .fab {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+}
+
+.recorder md-button-toggle.btnRecord.mat-button-toggle-checked md-icon {
+  color: red;
+}
+
+.recorder-header-image {
+  background-image: url("assets/img/microphone.jpg");
+  background-size: cover;
+}
+
+.channels-header-image {
+  background-image: url("assets/img/channels.jpg");
+  background-size: cover;
 }
