@@ -5,13 +5,13 @@ import { AppComponent } from './app.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
-  MdButtonModule,
-  MdCardModule,
-  MdMenuModule,
-  MdToolbarModule,
-  MdIconModule,
-  MdSidenavModule, MdListModule, MdTabsModule, MdButtonToggleModule, MdInputModule, MdDatepickerModule,
-  MdNativeDateModule, MdSelectModule
+  MatButtonModule,
+  MatCardModule,
+  MatMenuModule,
+  MatToolbarModule,
+  MatIconModule,
+  MatSidenavModule, MatListModule, MatTabsModule, MatButtonToggleModule, MatInputModule, MatDatepickerModule,
+  MatNativeDateModule, MatSelectModule
 } from '@angular/material';
 import { HttpModule } from "@angular/http";
 import { FormsModule } from "@angular/forms";
@@ -25,19 +25,19 @@ import { FormsModule } from "@angular/forms";
     FormsModule,
     HttpModule,
     BrowserAnimationsModule,
-    MdButtonModule,
-    MdMenuModule,
-    MdCardModule,
-    MdToolbarModule,
-    MdIconModule,
-    MdSidenavModule,
-    MdListModule,
-    MdTabsModule,
-    MdButtonToggleModule,
-    MdInputModule,
-    MdDatepickerModule,
-    MdNativeDateModule,
-    MdSelectModule
+    MatButtonModule,
+    MatMenuModule,
+    MatCardModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatSidenavModule,
+    MatListModule,
+    MatTabsModule,
+    MatButtonToggleModule,
+    MatInputModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent]

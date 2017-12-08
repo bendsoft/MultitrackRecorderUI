@@ -48,3 +48,18 @@ fabric.properties
 /server/.project
 /server/.settings
 /server/.springBeans
+
+# Ignores compiled TypeScript files
+/ui/src/app/**/*.map
+/ui/src/app/**/*.js
+/ui/src/environments/**/*.map
+/ui/src/environments/**/*.js
+/ui/src/test.map
+/ui/src/test.js
+/ui/src/test.js.map
+/ui/src/polyfills.map
+/ui/src/polyfills.js
+/ui/src/polyfills.js.map
+/ui/src/main.map
+/ui/src/main.js
+/ui/src/main.js.map

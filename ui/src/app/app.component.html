@@ -1,81 +1,81 @@
-<md-toolbar color="primary">
-  <button md-icon-button (click)="toggleSidenav()"><md-icon>menu</md-icon> </button>
+<mat-toolbar color="primary">
+  <button mat-icon-button (click)="toggleSidenav()"><mat-icon>menu</mat-icon> </button>
   <span>Behringer Multitrack Recorder</span>
-</md-toolbar>
+</mat-toolbar>
 
-<md-sidenav-container>
-  <md-sidenav #sidenav mode="over">
-    <md-list class="sideNavMenu">
-      <md-list-item>
-        <button (click)="menuItemClicked($event.target)" md-button><md-icon>settings</md-icon> Settings </button>
-      </md-list-item>
-      <md-list-item>
-        <button (click)="menuItemClicked($event.target)" md-button><md-icon>help</md-icon> Help </button>
-      </md-list-item>
-    </md-list>
-  </md-sidenav>
+<mat-sidenav-container>
+  <mat-sidenav #sidenav mode="over">
+    <mat-list class="sideNavMenu">
+      <mat-list-item>
+        <button (click)="menuItemClicked($event.target)" mat-button><mat-icon>settings</mat-icon> Settings </button>
+      </mat-list-item>
+      <mat-list-item>
+        <button (click)="menuItemClicked($event.target)" mat-button><mat-icon>help</mat-icon> Help </button>
+      </mat-list-item>
+    </mat-list>
+  </mat-sidenav>
 
-  <md-tab-group>
-    <md-tab label="Recorder">
+  <mat-tab-group>
+    <mat-tab label="Recorder">
 
-      <md-card class="recorder">
-        <md-card-header>
-          <div md-card-avatar class="recorder-header-image"></div>
-          <md-card-title>Recorder</md-card-title>
-          <md-card-subtitle>Control Recording</md-card-subtitle>
-        </md-card-header>
+      <mat-card class="recorder">
+        <mat-card-header>
+          <div mat-card-avatar class="recorder-header-image"></div>
+          <mat-card-title>Recorder</mat-card-title>
+          <mat-card-subtitle>Control Recording</mat-card-subtitle>
+        </mat-card-header>
 
-        <md-card-content>
+        <mat-card-content>
           <form>
-            <md-select placeholder="Choose a Channel Profile" [(ngModel)]="selectedProfile" name="channelProfile">
-              <md-option *ngFor="let channelProfile of channelProfiles" [value]="channelProfile.value">{{ channelProfile.name }}</md-option>
-            </md-select>
-            <md-input-container>
+            <mat-select placeholder="Choose a Channel Profile" [(ngModel)]="selectedProfile" name="channelProfile">
+              <mat-option *ngFor="let channelProfile of channelProfiles" [value]="channelProfile.value">{{ channelProfile.name }}</mat-option>
+            </mat-select>
+            <mat-input-container>
               <input mdInput placeholder="Name of the Recording">
-              <md-error>Uuups!</md-error>
-            </md-input-container>
-            <md-input-container>
+              <mat-error>Uuups!</mat-error>
+            </mat-input-container>
+            <mat-input-container>
               <input mdInput [mdDatepicker]="picker" placeholder="Choose a date">
               <button mdSuffix [mdDatepickerToggle]="picker"></button>
-            </md-input-container>
-            <md-datepicker #picker></md-datepicker>
+            </mat-input-container>
+            <mat-datepicker #picker></mat-datepicker>
           </form>
 
-          <md-button-toggle-group>
-            <md-button-toggle class="btnRecord" value="left" checked="false">
-              <md-icon>fiber_manual_record</md-icon> Record
-            </md-button-toggle>
-            <md-button-toggle class="btnStop" value="right" checked="true">
-              <md-icon>stop</md-icon> Stop
-            </md-button-toggle>
-          </md-button-toggle-group>
-        </md-card-content>
+          <mat-button-toggle-group>
+            <mat-button-toggle class="btnRecord" value="left" checked="false">
+              <mat-icon>fiber_manual_record</mat-icon> Record
+            </mat-button-toggle>
+            <mat-button-toggle class="btnStop" value="right" checked="true">
+              <mat-icon>stop</mat-icon> Stop
+            </mat-button-toggle>
+          </mat-button-toggle-group>
+        </mat-card-content>
 
-        <md-card-footer>
-          <button md-mini-fab class="fab" (click)="alert('Hello World')">
-            <md-icon>add</md-icon>
+        <mat-card-footer>
+          <button mat-mini-fab class="fab" (click)="alert('Hello World')">
+            <mat-icon>add</mat-icon>
           </button>
-        </md-card-footer>
-      </md-card>
+        </mat-card-footer>
+      </mat-card>
 
-    </md-tab>
-    <md-tab label="Channels">
-      <md-card class="channels">
-        <md-card-header>
-          <div md-card-avatar class="channels-header-image"></div>
-          <md-card-title>Channels</md-card-title>
-          <md-card-subtitle>Define Channels</md-card-subtitle>
-        </md-card-header>
-        <md-card-content>
-          <button md-mini-fab class="fab" (click)="alert('Hello World')">
-            <md-icon>add</md-icon>
+    </mat-tab>
+    <mat-tab label="Channels">
+      <mat-card class="channels">
+        <mat-card-header>
+          <div mat-card-avatar class="channels-header-image"></div>
+          <mat-card-title>Channels</mat-card-title>
+          <mat-card-subtitle>Define Channels</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <button mat-mini-fab class="fab" (click)="alert('Hello World')">
+            <mat-icon>add</mat-icon>
           </button>
 
 
-        </md-card-content>
-      </md-card>
-    </md-tab>
-    <md-tab label="Recordings"></md-tab>
-  </md-tab-group>
+        </mat-card-content>
+      </mat-card>
+    </mat-tab>
+    <mat-tab label="Recordings"></mat-tab>
+  </mat-tab-group>
 
-</md-sidenav-container>
+</mat-sidenav-container>
