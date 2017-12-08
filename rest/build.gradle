@@ -35,16 +35,17 @@ configurations {
 }
 
 dependencies {
-	compile('org.springframework.boot:spring-boot-starter-data-jpa')
 	compile('org.springframework.boot:spring-boot-starter-data-mongodb-reactive')
-	compile('org.springframework.boot:spring-boot-starter-data-rest')
 	compile('org.springframework.boot:spring-boot-starter-webflux')
-    compile('org.reactivestreams:reactive-streams')
-    compile('io.projectreactor:reactor-core')
-    compile('io.projectreactor.ipc:reactor-netty')
+	compile('org.springframework.boot:spring-boot-starter-data-jpa')
+	compile('org.springframework.boot:spring-boot-starter-data-rest')
+	compile('org.reactivestreams:reactive-streams')
+	compile('io.projectreactor:reactor-core')
+	compile('io.projectreactor.ipc:reactor-netty')
 	compile('org.apache.commons:commons-lang3')
 	compile('de.flapdoodle.embed:de.flapdoodle.embed.mongo')
-    runtime('com.h2database:h2')
+	runtime('com.h2database:h2')
+	testCompile('io.projectreactor:reactor-test')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 	testCompile('junit:junit:4.12')
 }
