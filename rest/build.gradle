@@ -9,6 +9,7 @@ buildscript {
 	}
 	dependencies {
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        	classpath("org.junit.platform:junit-platform-gradle-plugin:1.0.1")
 	}
 }
 
@@ -16,6 +17,7 @@ apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
+apply plugin: 'org.junit.platform.gradle.plugin'
 
 jar {
 	baseName = 'x32mtr-rest'
@@ -35,6 +37,14 @@ configurations {
 }
 
 dependencies {
+	testCompile(
+		'org.junit.jupiter:junit-jupiter-api:5.0.1'
+		'io.projectreactor:reactor-test'
+		'org.springframework.boot:spring-boot-starter-test'
+	)
+	testRuntime(
+		'org.junit.jupiter:junit-jupiter-engine:5.0.1'
+	)
 	compile('org.springframework.boot:spring-boot-starter-data-mongodb-reactive')
 	compile('org.springframework.boot:spring-boot-starter-webflux')
 	compile('org.springframework.boot:spring-boot-starter-data-jpa')
@@ -45,7 +55,4 @@ dependencies {
 	compile('org.apache.commons:commons-lang3')
 	compile('de.flapdoodle.embed:de.flapdoodle.embed.mongo')
 	runtime('com.h2database:h2')
-	testCompile('io.projectreactor:reactor-test')
-	testCompile('org.springframework.boot:spring-boot-starter-test')
-	testCompile('junit:junit:4.12')
 }
