@@ -11,19 +11,20 @@ import {
   MatToolbarModule,
   MatIconModule,
   MatSidenavModule, MatListModule, MatTabsModule, MatButtonToggleModule, MatInputModule, MatDatepickerModule,
-  MatNativeDateModule, MatSelectModule, MatFormFieldModule
+  MatNativeDateModule, MatSelectModule, MatFormFieldModule, MatTableModule
 } from '@angular/material';
 import { FormsModule } from "@angular/forms";
-import {HttpClient} from "@angular/common/http";
+import {HttpClientModule} from "@angular/common/http";
+import {ChannelsTable} from "./channels/ChannelsTable";
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent, ChannelsTable
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    HttpClient,
+    HttpClientModule,
     BrowserAnimationsModule,
     MatButtonModule,
     MatMenuModule,
@@ -37,7 +38,7 @@ import {HttpClient} from "@angular/common/http";
     MatInputModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatSelectModule, MatFormFieldModule
+    MatSelectModule, MatFormFieldModule, MatTableModule
   ],
   providers: [],
   bootstrap: [AppComponent]

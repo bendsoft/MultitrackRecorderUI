@@ -1,5 +1,7 @@
 <mat-toolbar color="primary">
-  <button mat-icon-button (click)="toggleSidenav()"><mat-icon>menu</mat-icon> </button>
+  <button mat-icon-button (click)="toggleSidenav()">
+    <mat-icon>menu</mat-icon>
+  </button>
   <span>Behringer Multitrack Recorder</span>
 </mat-toolbar>
 
@@ -52,7 +54,7 @@
           <button mat-mini-fab class="fab" (click)="alert('Hello World')">
             <mat-icon>add</mat-icon>
           </button>
-
+          <channels-table></channels-table>
 
         </mat-card-content>
       </mat-card>

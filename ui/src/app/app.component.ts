@@ -1,5 +1,6 @@
 import {Component, ViewChild} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
+import {Observable} from "rxjs/Observable";
 
 @Component({
   selector: 'app-root',
@@ -14,12 +15,15 @@ export class AppComponent {
   @ViewChild('sidenav') sideNav;
 
   constructor(private http:HttpClient) {
-    this.http.get('./assets/test.json')
-      .map(response => response.json())
+    this.getConfigurationData()
       .subscribe(res => {
         this.data = res.data;
         this.channelProfiles = res.channelProfiles;
       });
+  }
+
+  getConfigurationData(): Observable<any> {
+    return this.http.get("./assets/test.json")
   }
 
   menuItemClicked(target: EventTarget) {
