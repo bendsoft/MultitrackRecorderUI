@@ -11,10 +11,10 @@ import {
   MatToolbarModule,
   MatIconModule,
   MatSidenavModule, MatListModule, MatTabsModule, MatButtonToggleModule, MatInputModule, MatDatepickerModule,
-  MatNativeDateModule, MatSelectModule
+  MatNativeDateModule, MatSelectModule, MatFormFieldModule
 } from '@angular/material';
-import { HttpModule } from "@angular/http";
 import { FormsModule } from "@angular/forms";
+import {HttpClient} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -23,7 +23,7 @@ import { FormsModule } from "@angular/forms";
   imports: [
     BrowserModule,
     FormsModule,
-    HttpModule,
+    HttpClient,
     BrowserAnimationsModule,
     MatButtonModule,
     MatMenuModule,
@@ -37,7 +37,7 @@ import { FormsModule } from "@angular/forms";
     MatInputModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatSelectModule
+    MatSelectModule, MatFormFieldModule
   ],
   providers: [],
   bootstrap: [AppComponent]

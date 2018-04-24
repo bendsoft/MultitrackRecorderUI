@@ -26,29 +26,11 @@
         </mat-card-header>
 
         <mat-card-content>
-          <form>
-            <mat-select placeholder="Choose a Channel Profile" [(ngModel)]="selectedProfile" name="channelProfile">
-              <mat-option *ngFor="let channelProfile of channelProfiles" [value]="channelProfile.value">{{ channelProfile.name }}</mat-option>
-            </mat-select>
-            <mat-input-container>
-              <input mdInput placeholder="Name of the Recording">
-              <mat-error>Uuups!</mat-error>
-            </mat-input-container>
-            <mat-input-container>
-              <input mdInput [mdDatepicker]="picker" placeholder="Choose a date">
-              <button mdSuffix [mdDatepickerToggle]="picker"></button>
-            </mat-input-container>
+          <mat-form-field>
+            <input matInput [matDatepicker]="picker" placeholder="Choose a date">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
-          </form>
-
-          <mat-button-toggle-group>
-            <mat-button-toggle class="btnRecord" value="left" checked="false">
-              <mat-icon>fiber_manual_record</mat-icon> Record
-            </mat-button-toggle>
-            <mat-button-toggle class="btnStop" value="right" checked="true">
-              <mat-icon>stop</mat-icon> Stop
-            </mat-button-toggle>
-          </mat-button-toggle-group>
+          </mat-form-field>
         </mat-card-content>
 
         <mat-card-footer>

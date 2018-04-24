@@ -2,6 +2,11 @@
 /out/
 /classes/
 /.idea
+/rest/.idea
+*.iml
+
+# gradle
+.gradle
 
 # mpeltonen/sbt-idea plugin
 .idea_modules/
@@ -18,6 +23,7 @@ fabric.properties
 # compiled output
 /ui/dist
 /ui/tmp
+/build/
 
 # dependencies
 /ui/node_modules
@@ -38,6 +44,7 @@ fabric.properties
 
 #System Files
 /ui/.DS_Store
+/ui/Thumbs.db
 
 /server/build/
 
@@ -63,3 +70,21 @@ fabric.properties
 /ui/src/main.map
 /ui/src/main.js
 /ui/src/main.js.map
+
+# compiled output
+/dist
+/dist-server
+/tmp
+/out-tsc
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# misc
+/ui/coverage
+/ui/yarn-error.log
+/ui/yarn.lock

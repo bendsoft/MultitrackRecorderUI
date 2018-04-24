@@ -1,23 +1,20 @@
 import {Component, ViewChild} from '@angular/core';
-import { Http } from '@angular/http';
-import {MdSidenav} from "@angular/material";
+import {HttpClient} from "@angular/common/http";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-
 export class AppComponent {
-  title = 'BehringerMultitrackRecorder';
+  title = 'Multitrackrecorder';
   data: String;
   channelProfiles: Array<any>;
 
-  @ViewChild('sidenav') sideNav: MdSidenav;
+  @ViewChild('sidenav') sideNav;
 
-  constructor(private http:Http) {
-
-    this.http.get('assets/test.json')
+  constructor(private http:HttpClient) {
+    this.http.get('./assets/test.json')
       .map(response => response.json())
       .subscribe(res => {
         this.data = res.data;
