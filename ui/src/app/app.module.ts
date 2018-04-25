@@ -11,16 +11,18 @@ import {
   MatToolbarModule,
   MatIconModule,
   MatSidenavModule, MatListModule, MatTabsModule, MatButtonToggleModule, MatInputModule, MatDatepickerModule,
-  MatNativeDateModule, MatSelectModule, MatFormFieldModule, MatTableModule
+  MatNativeDateModule, MatSelectModule, MatFormFieldModule, MatTableModule, MatCheckboxModule, MatDialogModule
 } from '@angular/material';
 import { FormsModule } from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import {ChannelsTable} from "./channels/ChannelsTable";
+import { SecurityCheckDialogComponent } from './common/security-check-dialog/security-check-dialog.component';
 
 @NgModule({
   declarations: [
-    AppComponent, ChannelsTable
+    AppComponent, ChannelsTable, SecurityCheckDialogComponent
   ],
+  entryComponents: [SecurityCheckDialogComponent],
   imports: [
     BrowserModule,
     FormsModule,
@@ -36,8 +38,8 @@ import {ChannelsTable} from "./channels/ChannelsTable";
     MatTabsModule,
     MatButtonToggleModule,
     MatInputModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
+    MatDatepickerModule, MatDialogModule,
+    MatNativeDateModule, MatCheckboxModule,
     MatSelectModule, MatFormFieldModule, MatTableModule
   ],
   providers: [],

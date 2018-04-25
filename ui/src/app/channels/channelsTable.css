@@ -1,0 +1,12 @@
+.mat-column-action,
+.mat-column-active {
+  max-width: 50px;
+}
+
+.mat-table {
+  overflow: auto;
+}
+
+.mat-column-active {
+  overflow: visible;
+}
