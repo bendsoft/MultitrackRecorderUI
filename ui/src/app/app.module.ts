@@ -10,10 +10,21 @@ import {
   MatMenuModule,
   MatToolbarModule,
   MatIconModule,
-  MatSidenavModule, MatListModule, MatTabsModule, MatButtonToggleModule, MatInputModule, MatDatepickerModule,
-  MatNativeDateModule, MatSelectModule, MatFormFieldModule, MatTableModule, MatCheckboxModule, MatDialogModule
+  MatSidenavModule,
+  MatListModule,
+  MatTabsModule,
+  MatButtonToggleModule,
+  MatInputModule,
+  MatDatepickerModule,
+  MatNativeDateModule,
+  MatSelectModule,
+  MatFormFieldModule,
+  MatTableModule,
+  MatCheckboxModule,
+  MatDialogModule,
+  MatSlideToggleModule
 } from '@angular/material';
-import { FormsModule } from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import {ChannelsTable} from "./channels/ChannelsTable";
 import { SecurityCheckDialogComponent } from './common/security-check-dialog/security-check-dialog.component';
@@ -38,9 +49,16 @@ import { SecurityCheckDialogComponent } from './common/security-check-dialog/sec
     MatTabsModule,
     MatButtonToggleModule,
     MatInputModule,
-    MatDatepickerModule, MatDialogModule,
-    MatNativeDateModule, MatCheckboxModule,
-    MatSelectModule, MatFormFieldModule, MatTableModule
+    MatDatepickerModule,
+    MatDialogModule,
+    MatNativeDateModule,
+    MatCheckboxModule,
+    MatSelectModule,
+    MatFormFieldModule,
+    MatTableModule,
+    ReactiveFormsModule,
+    MatSelectModule,
+    MatSlideToggleModule
   ],
   providers: [],
   bootstrap: [AppComponent]

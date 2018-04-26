@@ -1,6 +1,15 @@
 .mat-column-action,
+.mat-column-edit,
 .mat-column-active {
   max-width: 50px;
+}
+
+.mat-column-active {
+  max-width: 50px;
+}
+
+.mat-column-selectedChannel {
+  max-width: 120px;
 }
 
 .mat-table {
@@ -9,4 +18,12 @@
 
 .mat-column-active {
   overflow: visible;
+}
+
+.channel-number-select {
+  width: 50px;
+}
+
+.edit-name {
+  width: 300px;
 }
