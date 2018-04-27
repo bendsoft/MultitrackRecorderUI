@@ -7,7 +7,7 @@
         <mat-select
           [formControl]="channelRow.selected"
           [errorStateMatcher]="channelRow.channelNumberErrorStateMatcher"
-          [(ngModel)]="channelRow.selectedChannel"
+          [(ngModel)]="channelRow.channel.selectedChannel"
           (change)="channelNumberChanged($event)"
         >
           <mat-option *ngFor="let channelNr of channelRow.availableChannels" [value]="channelNr">
@@ -40,9 +40,9 @@
   <ng-container matColumnDef="name">
     <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
     <mat-cell *matCellDef="let channelRow">
-      <span *ngIf="!channelRow.viewState.editing">{{channelRow.name}}</span>
+      <span *ngIf="!channelRow.viewState.editing">{{channelRow.channel.name}}</span>
       <mat-form-field class="edit-name" *ngIf="channelRow.viewState.editing">
-        <input matInput placeholder="Kanalname" [value]="channelRow.name">
+        <input matInput placeholder="Kanalname" [value]="channelRow.channel.name">
       </mat-form-field>
     </mat-cell>
   </ng-container>
@@ -53,7 +53,7 @@
       <mat-slide-toggle
          color="primary"
         (click)="toggleActive(channelRow)"
-        [checked]="channelRow.active">
+        [checked]="channelRow.channel.active">
       </mat-slide-toggle>
     </mat-cell>
   </ng-container>
@@ -61,7 +61,7 @@
   <ng-container matColumnDef="action">
     <mat-header-cell *matHeaderCellDef> Aktion </mat-header-cell>
     <mat-cell *matCellDef="let channelRow">
-      <button (click)="removeChannel(channelRow)" mat-icon-button>
+      <button (click)="removeChannel(channelRow.channel)" mat-icon-button>
         <mat-icon
           color="warn"
           aria-label="L&ouml;sche Kanal-Eintrag"

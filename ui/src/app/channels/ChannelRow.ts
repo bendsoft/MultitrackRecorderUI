@@ -1,12 +1,9 @@
 import {FormControl, FormGroupDirective, NgForm, Validators} from "@angular/forms";
 import {ErrorStateMatcher} from "@angular/material";
+import {Channel} from "./channel.service";
 
 export class ChannelRow {
   availableChannels = this.createAvailableChannels();
-  selectedChannel: number;
-  name: string;
-  active: boolean;
-  profile: number;
   selected = new FormControl('valid', [
     Validators.required,
     Validators.pattern(/[0-9]+/),
@@ -21,12 +18,7 @@ export class ChannelRow {
     return new ChannelRow(channel);
   }
 
-  private constructor(channel) {
-    this.selectedChannel = channel.number;
-    this.name = channel.name;
-    this.active = channel.active;
-    this.profile = channel.profile;
-  }
+  private constructor(public channel: Channel) {}
 
   private createAvailableChannels() {
     return Array.from(Array(17).keys()).slice(1);
