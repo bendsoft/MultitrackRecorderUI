@@ -1,0 +1,25 @@
+<h2 mat-dialog-title>Kanal Eintrag erstellen</h2>
+
+<form class="example-form">
+  <mat-form-field>
+    <mat-select placeholder="Kanal Nummer">
+      <mat-option *ngFor="let nr of [1,2,3,4]" [value]="nr">
+        {{ nr }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput placeholder="Kanal Name">
+  </mat-form-field>
+
+  <section>
+    <mat-slide-toggle>Aktiv</mat-slide-toggle>
+  </section>
+
+  <mat-dialog-actions>
+    <button mat-button mat-dialog-close>Abbrechen<mat-icon>cancel</mat-icon></button>
+    <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. -->
+    <button mat-button [mat-dialog-close]="true">Speichern<mat-icon>save</mat-icon></button>
+  </mat-dialog-actions>
+</form>

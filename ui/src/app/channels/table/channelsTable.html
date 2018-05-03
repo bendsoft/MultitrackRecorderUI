@@ -1,21 +1,25 @@
-<mat-table #table [dataSource]="channelRowData" matSort>
+<button mat-mini-fab class="fab" (click)="addNewChannel()">
+  <mat-icon>add</mat-icon>
+</button>
+
+<mat-table #table [dataSource]="channelRowData">
 
   <ng-container matColumnDef="selectedChannel">
     <mat-header-cell *matHeaderCellDef> Nummer </mat-header-cell>
     <mat-cell *matCellDef="let channelRow">
       <mat-form-field class="channel-number-select">
         <mat-select
-          [formControl]="channelRow.selected"
+          [formControl]="channelRow.chooseChannelFormControl"
           [errorStateMatcher]="channelRow.channelNumberErrorStateMatcher"
+          (selectionChange)="channelChanged(channelRow)"
           [(ngModel)]="channelRow.channel.selectedChannel"
-          (change)="channelNumberChanged($event)"
         >
-          <mat-option *ngFor="let channelNr of channelRow.availableChannels" [value]="channelNr">
+          <mat-option *ngFor="let channelNr of channelRow.allChannelNumbers" [value]="channelNr">
             {{channelNr}}
           </mat-option>
         </mat-select>
-        <mat-error *ngIf="channelRow.selected.hasError('required')">Kanal muss ausgew&auml;hlt werden</mat-error>
-        <mat-error *ngIf="channelRow.selected.hasError('pattern') && !selected.hasError('required')">
+        <mat-error *ngIf="channelRow.chooseChannelFormControl.hasError('required')">Kanal muss ausgew&auml;hlt werden</mat-error>
+        <mat-error *ngIf="channelRow.chooseChannelFormControl.hasError('pattern') && !selected.hasError('required')">
           Kanal ist schon belegt
         </mat-error>
       </mat-form-field>
@@ -25,7 +29,7 @@
   <ng-container matColumnDef="edit">
     <mat-header-cell *matHeaderCellDef></mat-header-cell>
     <mat-cell *matCellDef="let channelRow">
-      <button (click)="editChannel(channelRow)" mat-icon-button>
+      <button (click)="editChannelName(channelRow)" mat-icon-button>
         <mat-icon *ngIf="!channelRow.viewState.editing"
           color="accent"
           aria-label="Bearbeite Kanal-Eintrag"
@@ -42,7 +46,7 @@
     <mat-cell *matCellDef="let channelRow">
       <span *ngIf="!channelRow.viewState.editing">{{channelRow.channel.name}}</span>
       <mat-form-field class="edit-name" *ngIf="channelRow.viewState.editing">
-        <input matInput placeholder="Kanalname" [value]="channelRow.channel.name">
+        <input matInput placeholder="Kanalname" [(ngModel)]="channelRow.channel.name" (blur)="editChannelName(channelRow)">
       </mat-form-field>
     </mat-cell>
   </ng-container>
@@ -61,7 +65,7 @@
   <ng-container matColumnDef="action">
     <mat-header-cell *matHeaderCellDef> Aktion </mat-header-cell>
     <mat-cell *matCellDef="let channelRow">
-      <button (click)="removeChannel(channelRow.channel)" mat-icon-button>
+      <button (click)="removeChannel(channelRow)" mat-icon-button>
         <mat-icon
           color="warn"
           aria-label="L&ouml;sche Kanal-Eintrag"

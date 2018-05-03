@@ -22,18 +22,21 @@ import {
   MatTableModule,
   MatCheckboxModule,
   MatDialogModule,
-  MatSlideToggleModule
+  MatSlideToggleModule,
+  MatSortModule
 } from '@angular/material';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
-import {ChannelsTable} from "./channels/ChannelsTable";
+import {ChannelsTable} from "./channels/table/ChannelsTable";
 import { SecurityCheckDialogComponent } from './common/security-check-dialog/security-check-dialog.component';
+import {ChannelService} from "./channels/service/channel.service";
+import { CreateChannelDialogComponent } from './channels/create-channel-dialog/create-channel-dialog.component';
 
 @NgModule({
   declarations: [
-    AppComponent, ChannelsTable, SecurityCheckDialogComponent
+    AppComponent, ChannelsTable, SecurityCheckDialogComponent, CreateChannelDialogComponent
   ],
-  entryComponents: [SecurityCheckDialogComponent],
+  entryComponents: [SecurityCheckDialogComponent, CreateChannelDialogComponent],
   imports: [
     BrowserModule,
     FormsModule,
@@ -58,9 +61,10 @@ import { SecurityCheckDialogComponent } from './common/security-check-dialog/sec
     MatTableModule,
     ReactiveFormsModule,
     MatSelectModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatSortModule
   ],
-  providers: [],
+  providers: [ChannelService],
   bootstrap: [AppComponent]
 })
 
