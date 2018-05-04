@@ -1,5 +1,5 @@
-import {EventEmitter, Injectable, Output} from '@angular/core';
-import {BehaviorSubject} from "rxjs/BehaviorSubject";
+import { Injectable } from '@angular/core';
+import {BehaviorSubject} from "rxjs/internal/BehaviorSubject";
 
 @Injectable()
 export class ChannelService {
@@ -23,6 +23,22 @@ export class ChannelService {
     }
 
     this._channelDataStream.next(this.getChannels());
+  }
+}
+
+export class ChannelFactory {
+  static create(data: {
+    selectedChannel: number
+    name: string
+    active: boolean
+  }): Channel {
+    return {
+      id: undefined,
+      selectedChannel: data.selectedChannel,
+      name: data.name,
+      active: data.active,
+      profile: 0
+    }
   }
 }
 

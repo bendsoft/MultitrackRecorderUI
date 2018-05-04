@@ -1,10 +1,9 @@
 import {ChannelRow} from "./ChannelRow";
 import {DataSource} from "@angular/cdk/table";
 import {CollectionViewer} from "@angular/cdk/collections";
-import {Observable} from "rxjs/Observable";
 import {Channel, ChannelService} from "../service/channel.service";
-import 'rxjs/add/observable/from';
-import "rxjs/add/operator/map";
+import {Observable} from "rxjs/internal/Observable";
+import {map} from 'rxjs/operators';
 
 export class ChannelDataSource extends DataSource<ChannelRow> {
   constructor(
@@ -27,8 +26,9 @@ export class ChannelDataSource extends DataSource<ChannelRow> {
   }
 
   connect(collectionViewer: CollectionViewer): Observable<ChannelRow[]> {
-    return this.channelService.channelsStream
-      .map(this.transformChannelToSortedChannelRow);
+    return this.channelService.channelsStream.pipe(
+      map(this.transformChannelToSortedChannelRow)
+    );
   }
 
   disconnect(collectionViewer: CollectionViewer): void {

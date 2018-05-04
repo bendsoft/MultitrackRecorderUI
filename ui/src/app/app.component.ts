@@ -1,6 +1,6 @@
 import {Component, ViewChild} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs/Observable";
+import {Observable} from "rxjs/internal/Observable";
 
 @Component({
   selector: 'app-root',

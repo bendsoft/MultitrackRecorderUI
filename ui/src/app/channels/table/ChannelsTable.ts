@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {Channel, ChannelService} from "../service/channel.service";
+import {Channel, ChannelFactory, ChannelService} from "../service/channel.service";
 import {MatDialog} from "@angular/material";
 import {SecurityCheckDialogComponent} from "../../common/security-check-dialog/security-check-dialog.component";
 import {DialogPosition} from "@angular/material/typings/dialog";
@@ -33,11 +33,15 @@ export class ChannelsTable {
     let dialogRef = this.dialog.open(CreateChannelDialogComponent, {
       height: '20rem',
       width: '25rem',
-      position
+      position,
+      data: {
+        availableChannels: ChannelRow._allChannelNumbers
+      }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      const newChannel = ChannelFactory.create(result);
+      console.log(newChannel);
     });
   }
 
