@@ -26,28 +26,12 @@ export class ChannelService {
   }
 }
 
-export class ChannelFactory {
-  static create(data: {
-    selectedChannel: number
-    name: string
-    active: boolean
-  }): Channel {
-    return {
-      id: undefined,
-      selectedChannel: data.selectedChannel,
-      name: data.name,
-      active: data.active,
-      profile: 0
-    }
-  }
-}
-
 export interface Channel {
-  id: number
+  id?: number
   selectedChannel: number
   name: string
   active: boolean
-  profile: number
+  profile?: number
 }
 
 const CHANNEL_DATA: Channel[] = [

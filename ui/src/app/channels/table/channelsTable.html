@@ -12,7 +12,6 @@
           [formControl]="channelRow.chooseChannelFormControl"
           [errorStateMatcher]="channelRow.channelNumberErrorStateMatcher"
           (selectionChange)="channelChanged(channelRow)"
-          [(ngModel)]="channelRow.channel.selectedChannel"
         >
           <mat-option *ngFor="let channelNr of channelRow.allChannelNumbers" [value]="channelNr">
             {{channelNr}}

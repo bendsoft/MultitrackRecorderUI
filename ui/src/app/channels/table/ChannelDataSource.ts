@@ -3,13 +3,28 @@ import {DataSource} from "@angular/cdk/table";
 import {CollectionViewer} from "@angular/cdk/collections";
 import {Channel, ChannelService} from "../service/channel.service";
 import {Observable} from "rxjs/internal/Observable";
-import {map} from 'rxjs/operators';
+import {map, tap} from 'rxjs/operators';
+import {FormArray, FormControl} from "@angular/forms";
 
 export class ChannelDataSource extends DataSource<ChannelRow> {
+  private _selectedChannelFormArray: FormArray;
+  get selectedChannelFormArray(): FormArray {
+    return this._selectedChannelFormArray;
+  }
+
   constructor(
     public channelService: ChannelService,
   ) {
     super();
+  }
+
+  connect(collectionViewer: CollectionViewer): Observable<ChannelRow[]> {
+    return this.channelService.channelsStream.pipe(
+      map(this.transformChannelToSortedChannelRow),
+      tap(this.collectSelectedChannelFormGroup)
+    );
+  }
+  disconnect(collectionViewer: CollectionViewer): void {
   }
 
   private transformChannelToSortedChannelRow(channels: Channel[]): ChannelRow[] {
@@ -25,12 +40,10 @@ export class ChannelDataSource extends DataSource<ChannelRow> {
       .map(channel => channel);
   }
 
-  connect(collectionViewer: CollectionViewer): Observable<ChannelRow[]> {
-    return this.channelService.channelsStream.pipe(
-      map(this.transformChannelToSortedChannelRow)
-    );
-  }
+  private collectSelectedChannelFormGroup(channelRows) {
+    const selectedChannelFormControls: FormControl[] = [];
+    channelRows.forEach(channelRow => selectedChannelFormControls.push(channelRow.chooseChannelFormControl));
 
-  disconnect(collectionViewer: CollectionViewer): void {
+    this._selectedChannelFormArray = new FormArray(selectedChannelFormControls);
   }
 }

@@ -1,11 +1,12 @@
 import {Component} from '@angular/core';
-import {Channel, ChannelFactory, ChannelService} from "../service/channel.service";
+import {ChannelService} from "../service/channel.service";
 import {MatDialog} from "@angular/material";
 import {SecurityCheckDialogComponent} from "../../common/security-check-dialog/security-check-dialog.component";
 import {DialogPosition} from "@angular/material/typings/dialog";
 import {ChannelDataSource} from "./ChannelDataSource";
 import {ChannelRow} from "./ChannelRow";
 import {CreateChannelDialogComponent} from "../create-channel-dialog/create-channel-dialog.component";
+import {FormArray, FormGroup} from "@angular/forms";
 
 /**
  * @title Channels table
@@ -24,8 +25,6 @@ export class ChannelsTable {
   }
 
   addNewChannel() {
-    //this.channelRowData.push(ChannelRow.create({ id: 11, selectedChannel: 12, name: 'Dummy Entry', active: true, profile: 0 }))
-
     const position: DialogPosition = {
       top: '200px'
     };
@@ -40,8 +39,7 @@ export class ChannelsTable {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      const newChannel = ChannelFactory.create(result);
-      console.log(newChannel);
+      this.channelService.createOrUpdateChannel(result);
     });
   }
 

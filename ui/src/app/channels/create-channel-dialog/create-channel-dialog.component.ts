@@ -1,6 +1,5 @@
 import {Component, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA} from "@angular/material";
-import {Channel} from "../service/channel.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
@@ -10,7 +9,6 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 })
 export class CreateChannelDialogComponent {
   private availableChannels: number[];
-  private newChannel: Channel;
 
   createChannelForm: FormGroup;
 

@@ -17,31 +17,20 @@ export class ChannelRow {
   };
 
   channelNumberErrorStateMatcher = new ChannelNumberErrorStateMatcher();
-  chooseChannelFormControl = new FormControl('valid', [
-    Validators.required,
-    Validators.pattern(/[0-9]+/),
-    () => this.viewState.selectedChannelValid
-  ]);
+  chooseChannelFormControl: FormControl;
 
   public static create(channel: Channel) {
     return new ChannelRow(channel);
   }
 
-  private constructor(public channel) {}
-
-  validateChannelChosen(chosenChannels: number[]) {
-    let foundOwnChannelCount = 0;
-    chosenChannels.forEach(channel => {
-      if(channel === this.channel.selectedChannel) {
-        foundOwnChannelCount++;
-        if(foundOwnChannelCount > 1) {
-          this.viewState.selectedChannelValid = false;
-          return;
-        }
-      }
-    });
-
-    this.viewState.selectedChannelValid = true;
+  private constructor(public channel: Channel) {
+    this.chooseChannelFormControl = new FormControl(
+      { value: channel.selectedChannel },
+      [
+        Validators.required,
+        Validators.pattern(/[0-9]+/)
+      ]
+    );
   }
 }
 
