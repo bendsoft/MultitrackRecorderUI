@@ -1,21 +1,21 @@
 <h2 mat-dialog-title>Kanal Eintrag erstellen</h2>
 
 <mat-dialog-content>
-  <form #createChannelForm="ngForm" class="example-form">
+  <form [formGroup]="createChannelForm" class="example-form">
     <mat-form-field>
-      <mat-select placeholder="Kanal Nummer" name="selectedChannel" ngModel>
-        <mat-option *ngFor="let nr of data.availableChannels" [value]="nr">
+      <mat-select placeholder="Kanal Nummer" formControlName="selectedChannel">
+        <mat-option *ngFor="let nr of availableChannels" [value]="nr">
           {{ nr }}
         </mat-option>
       </mat-select>
     </mat-form-field>
 
     <mat-form-field>
-      <input matInput placeholder="Kanal Name" name="name" ngModel>
+      <input matInput placeholder="Kanal Name" formControlName="name">
     </mat-form-field>
 
     <section>
-      <mat-slide-toggle name="active" ngModel>Aktiv </mat-slide-toggle>
+      <mat-slide-toggle formControlName="active">Aktiv </mat-slide-toggle>
     </section>
   </form>
 </mat-dialog-content>

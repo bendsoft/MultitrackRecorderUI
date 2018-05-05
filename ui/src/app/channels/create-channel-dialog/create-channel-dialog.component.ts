@@ -1,6 +1,7 @@
 import {Component, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA} from "@angular/material";
 import {Channel} from "../service/channel.service";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-create-channel-dialog',
@@ -8,9 +9,22 @@ import {Channel} from "../service/channel.service";
   styleUrls: ['./create-channel-dialog.component.css']
 })
 export class CreateChannelDialogComponent {
+  private availableChannels: number[];
+  private newChannel: Channel;
+
+  createChannelForm: FormGroup;
+
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: {
+    @Inject(MAT_DIALOG_DATA) data: {
       availableChannels: number[]
     }
-  ) {}
+  ) {
+    this.availableChannels = data.availableChannels;
+
+    this.createChannelForm = new FormGroup({
+      selectedChannel: new FormControl('',Validators.required),
+      name: new FormControl('',Validators.required),
+      active: new FormControl()
+    })
+  }
 }
