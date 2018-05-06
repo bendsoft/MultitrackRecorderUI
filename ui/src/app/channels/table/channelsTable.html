@@ -2,25 +2,26 @@
   <mat-icon>add</mat-icon>
 </button>
 
-<mat-table #table [dataSource]="channelRowData">
-
-  <ng-container matColumnDef="selectedChannel">
+<mat-table #table [dataSource]="channelRowData" [formGroup]="channelsFormGroup">
+  <ng-container matColumnDef="selectedChannel" formArrayName="selectedChannelsFormArray">
     <mat-header-cell *matHeaderCellDef> Nummer </mat-header-cell>
     <mat-cell *matCellDef="let channelRow">
       <mat-form-field class="channel-number-select">
         <mat-select
           [formControl]="channelRow.chooseChannelFormControl"
-          [errorStateMatcher]="channelRow.channelNumberErrorStateMatcher"
+          [errorStateMatcher]="channelRow.chooseChannelErrorStateMatcher"
           (selectionChange)="channelChanged(channelRow)"
         >
           <mat-option *ngFor="let channelNr of channelRow.allChannelNumbers" [value]="channelNr">
             {{channelNr}}
           </mat-option>
         </mat-select>
-        <mat-error *ngIf="channelRow.chooseChannelFormControl.hasError('required')">Kanal muss ausgew&auml;hlt werden</mat-error>
-        <mat-error *ngIf="channelRow.chooseChannelFormControl.hasError('pattern') && !selected.hasError('required')">
+        <!--
+        <mat-error *ngIf="selectedChannelsFormArray.hasError('required')">Kanal muss ausgew&auml;hlt werden</mat-error>
+        <mat-error *ngIf="selectedChannelsFormArray.hasError('pattern') && !selectedChannelsFormArray.hasError('required')">
           Kanal ist schon belegt
         </mat-error>
+        -->
       </mat-form-field>
     </mat-cell>
   </ng-container>

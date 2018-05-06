@@ -16,22 +16,14 @@ export class ChannelRow {
     selectedChannelValid: true
   };
 
-  channelNumberErrorStateMatcher = new ChannelNumberErrorStateMatcher();
+  chooseChannelErrorStateMatcher = new ChannelNumberErrorStateMatcher();
   chooseChannelFormControl: FormControl;
 
   public static create(channel: Channel) {
     return new ChannelRow(channel);
   }
 
-  private constructor(public channel: Channel) {
-    this.chooseChannelFormControl = new FormControl(
-      { value: channel.selectedChannel },
-      [
-        Validators.required,
-        Validators.pattern(/[0-9]+/)
-      ]
-    );
-  }
+  private constructor(public channel: Channel) {}
 }
 
 export class ChannelNumberErrorStateMatcher implements ErrorStateMatcher {

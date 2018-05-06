@@ -20,8 +20,21 @@ export class ChannelsTable {
   displayedColumns = ['selectedChannel', 'edit', 'name', 'active', 'action'];
   channelRowData;
 
+  channelsFormGroup: FormGroup;
+  selectedChannelsFormArray: FormArray;
+
   constructor(private channelService: ChannelService, private dialog: MatDialog) {
     this.channelRowData = new ChannelDataSource(channelService);
+    this.selectedChannelsFormArray = new FormArray([], this.validateSelectedChannels);
+
+    this.channelsFormGroup = new FormGroup({
+      selectedChannelsFormArray: this.selectedChannelsFormArray
+    });
+  }
+
+  private validateSelectedChannels(selectedChannels) {
+    console.log(selectedChannels);
+    return null;
   }
 
   addNewChannel() {
