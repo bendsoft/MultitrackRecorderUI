@@ -1,12 +1,16 @@
-import {Component} from '@angular/core';
-import {ChannelService} from "../service/channel.service";
-import {MatDialog} from "@angular/material";
+import {Component, OnInit} from '@angular/core';
+import {Channel, ChannelService} from "../service/channel.service";
+import {DialogPosition, MatDialog, MatSelectChange, MatSlideToggleChange} from "@angular/material";
 import {SecurityCheckDialogComponent} from "../../common/security-check-dialog/security-check-dialog.component";
-import {DialogPosition} from "@angular/material/typings/dialog";
 import {ChannelDataSource} from "./ChannelDataSource";
 import {ChannelRow} from "./ChannelRow";
 import {CreateChannelDialogComponent} from "../create-channel-dialog/create-channel-dialog.component";
-import {FormArray, FormGroup} from "@angular/forms";
+import {FormArray, FormControl, FormGroup} from "@angular/forms";
+
+interface ChannelRowFormControlPair {
+  formControl: FormControl,
+  channelRow: ChannelRow
+}
 
 /**
  * @title Channels table
@@ -16,25 +20,54 @@ import {FormArray, FormGroup} from "@angular/forms";
   styleUrls: ['channelsTable.css'],
   templateUrl: 'channelsTable.html'
 })
-export class ChannelsTable {
+export class ChannelsTable implements OnInit {
   displayedColumns = ['selectedChannel', 'edit', 'name', 'active', 'action'];
   channelRowData;
 
-  channelsFormGroup: FormGroup;
-  selectedChannelsFormArray: FormArray;
+  private channelsFormGroup = new FormGroup(
+    {
+      rows: new FormArray([])
+    }
+  );
 
-  constructor(private channelService: ChannelService, private dialog: MatDialog) {
-    this.channelRowData = new ChannelDataSource(channelService);
-    this.selectedChannelsFormArray = new FormArray([], this.validateSelectedChannels);
+  constructor(
+    private channelService: ChannelService,
+    private dialog: MatDialog
+  ) {}
 
-    this.channelsFormGroup = new FormGroup({
-      selectedChannelsFormArray: this.selectedChannelsFormArray
-    });
+  ngOnInit(): void {
+    this.channelRowData = new ChannelDataSource(this.channelService);
+    this.channelRowData.channelRowStream.subscribe(this.assignNewRowsFormArray.bind(this));
   }
 
-  private validateSelectedChannels(selectedChannels) {
-    console.log(selectedChannels);
-    return null;
+  private assignNewRowsFormArray(channelRows: ChannelRow[]) {
+    channelRows.forEach(channelRow => {
+      const formControl = channelRow.rowFormGroup.get('selectedChannel') as FormControl;
+
+      formControl.valueChanges.subscribe(channelNr =>
+        this.validateChangeSelectedChannel(
+          channelNr,
+          { formControl, channelRow },
+          channelRows
+        )
+      )
+    });
+
+    this.channelsFormGroup.setControl(
+      'rows',
+      new FormArray(channelRows.map(row => row.rowFormGroup))
+    );
+  }
+
+  private validateChangeSelectedChannel(
+    newChannelNr: number,
+    changedChannel: ChannelRowFormControlPair,
+    channelRows: ChannelRow[])
+  {
+    if((this.channelsFormGroup.get('rows') as FormArray).length === 0)
+      return;
+
+
   }
 
   addNewChannel() {
@@ -56,18 +89,31 @@ export class ChannelsTable {
     });
   }
 
-  toggleActive(channelRow: ChannelRow) {}
+  toggleActive(event: MatSlideToggleChange, channelRow: ChannelRow) {
+
+  }
 
   editChannelName(channelRow: ChannelRow) {
+
+  }
+
+  activateEditMode(channelRow: ChannelRow) {
     channelRow.viewState.editing = !channelRow.viewState.editing;
 
     if(!channelRow.viewState.editing) {
-      this.channelChanged(channelRow)
+      this.channelChanged(channelRow.channel)
     }
   }
 
-  channelChanged(newOrChangedChannel: ChannelRow) {
-    this.channelService.createOrUpdateChannel(newOrChangedChannel.channel);
+  selectedChannelChanged(newChannel: MatSelectChange, oldChannel: ChannelRow) {
+    //const changedChannel = Object.assign({}, oldChannel.channel);
+    //changedChannel.selectedChannel = newChannel.value;
+
+    //this.channelChanged(changedChannel);
+  }
+
+  private channelChanged(newOrChangedChannel: Channel) {
+    this.channelService.createOrUpdateChannel(newOrChangedChannel);
   }
 
   removeChannel(channelRow: ChannelRow) {

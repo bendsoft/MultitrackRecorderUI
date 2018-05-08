@@ -3,9 +3,13 @@ import {DataSource} from "@angular/cdk/table";
 import {CollectionViewer} from "@angular/cdk/collections";
 import {Channel, ChannelService} from "../service/channel.service";
 import {Observable} from "rxjs/internal/Observable";
-import {map} from 'rxjs/operators';
+import {map, tap} from 'rxjs/operators';
+import {BehaviorSubject} from "rxjs/internal/BehaviorSubject";
 
 export class ChannelDataSource extends DataSource<ChannelRow> {
+  private _channelRowStream = new BehaviorSubject<ChannelRow[]>([]);
+  public channelRowStream = this._channelRowStream.asObservable();
+
   constructor(
     public channelService: ChannelService,
   ) {
@@ -14,9 +18,11 @@ export class ChannelDataSource extends DataSource<ChannelRow> {
 
   connect(collectionViewer: CollectionViewer): Observable<ChannelRow[]> {
     return this.channelService.channelsStream.pipe(
-      map(this.transformChannelToSortedChannelRow)
+      map(this.transformChannelToSortedChannelRow),
+      tap(channelRows => this._channelRowStream.next(channelRows))
     );
   }
+
   disconnect(collectionViewer: CollectionViewer): void {
   }
 

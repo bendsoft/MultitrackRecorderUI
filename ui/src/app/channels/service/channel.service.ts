@@ -15,14 +15,24 @@ export class ChannelService {
   }
 
   createOrUpdateChannel(channel: Channel) {
-    let foundChannelIndex = CHANNEL_DATA.findIndex(existingChannel => existingChannel.id === channel.id);
-    if(foundChannelIndex > -1) {
-      CHANNEL_DATA[foundChannelIndex] = channel;
+    const foundIndex = this.findChannelIndex(channel);
+    if(foundIndex > -1) {
+      CHANNEL_DATA[foundIndex] = channel;
     } else {
       CHANNEL_DATA.push(channel);
     }
 
     this._channelDataStream.next(this.getChannels());
+  }
+
+  private findChannelIndex(channel): number {
+    if(!channel.hasOwnProperty('id')
+      || channel.id === null
+      || channel.id === undefined) {
+      return -1;
+    }
+
+    return CHANNEL_DATA.findIndex(existingChannel => existingChannel.id === channel.id);
   }
 }
 

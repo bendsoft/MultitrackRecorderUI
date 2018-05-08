@@ -1,4 +1,4 @@
-import {FormControl, FormGroupDirective, NgForm, Validators} from "@angular/forms";
+import {FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from "@angular/forms";
 import {ErrorStateMatcher} from "@angular/material";
 import {Channel} from "../service/channel.service";
 
@@ -9,21 +9,26 @@ export class ChannelRow {
   }
 
   viewState: {
-    editing,
-    selectedChannelValid
+    editing
   } = {
-    editing: false,
-    selectedChannelValid: true
+    editing: false
   };
 
   chooseChannelErrorStateMatcher = new ChannelNumberErrorStateMatcher();
-  chooseChannelFormControl: FormControl;
+
+  rowFormGroup: FormGroup;
 
   public static create(channel: Channel) {
     return new ChannelRow(channel);
   }
 
-  private constructor(public channel: Channel) {}
+  private constructor(public channel: Channel) {
+    this.rowFormGroup = new FormGroup({
+      selectedChannel: new FormControl(channel.selectedChannel, Validators.required),
+      name: new FormControl(channel.name, Validators.required),
+      active: new FormControl(channel.active)
+    });
+  }
 }
 
 export class ChannelNumberErrorStateMatcher implements ErrorStateMatcher {
