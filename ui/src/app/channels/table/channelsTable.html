@@ -10,18 +10,12 @@
         <mat-select
           [formControl]="channelRow.rowFormGroup.get('selectedChannel')"
           [errorStateMatcher]="channelRow.chooseChannelErrorStateMatcher"
-          (selectionChange)="selectedChannelChanged($event, channelRow)"
         >
           <mat-option *ngFor="let channelNr of channelRow.allChannelNumbers" [value]="channelNr">
             {{channelNr}}
           </mat-option>
         </mat-select>
-        <!--
-        <mat-error *ngIf="channelRow.chooseChannelFormControl.hasError('required')">Kanal muss ausgew&auml;hlt werden</mat-error>
-        <mat-error *ngIf="channelRow.chooseChannelFormControl.hasError('pattern') && !channelRow.chooseChannelFormControl.hasError('required')">
-          Kanal ist schon belegt
-        </mat-error>
-        -->
+        <mat-error *ngIf="channelRow.rowFormGroup.get('selectedChannel').hasError('notUnique')">Kanal ist schon belegt</mat-error>
       </mat-form-field>
     </mat-cell>
   </ng-container>
@@ -29,7 +23,7 @@
   <ng-container matColumnDef="edit">
     <mat-header-cell *matHeaderCellDef></mat-header-cell>
     <mat-cell *matCellDef="let channelRow">
-      <button (click)="activateEditMode(channelRow)" mat-icon-button>
+      <button (click)="toggleEditMode(channelRow)" mat-icon-button>
         <mat-icon *ngIf="!channelRow.viewState.editing"
           color="accent"
           aria-label="Bearbeite Kanal-Eintrag"
@@ -46,7 +40,7 @@
     <mat-cell *matCellDef="let channelRow">
       <span *ngIf="!channelRow.viewState.editing">{{channelRow.channel.name}}</span>
       <mat-form-field class="edit-name" *ngIf="channelRow.viewState.editing">
-        <input matInput placeholder="Kanalname" [formControl]="channelRow.rowFormGroup.get('name')" (blur)="editChannelName(channelRow)">
+        <input matInput placeholder="Kanalname" [formControl]="channelRow.rowFormGroup.get('name')">
       </mat-form-field>
     </mat-cell>
   </ng-container>
@@ -56,7 +50,6 @@
     <mat-cell *matCellDef="let channelRow">
       <mat-slide-toggle
          color="primary"
-        (change)="toggleActive($event, channelRow)"
         [formControl]="channelRow.rowFormGroup.get('active')">
       </mat-slide-toggle>
     </mat-cell>

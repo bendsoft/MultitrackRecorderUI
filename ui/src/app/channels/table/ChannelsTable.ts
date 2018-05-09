@@ -6,11 +6,7 @@ import {ChannelDataSource} from "./ChannelDataSource";
 import {ChannelRow} from "./ChannelRow";
 import {CreateChannelDialogComponent} from "../create-channel-dialog/create-channel-dialog.component";
 import {FormArray, FormControl, FormGroup} from "@angular/forms";
-
-interface ChannelRowFormControlPair {
-  formControl: FormControl,
-  channelRow: ChannelRow
-}
+import {noop} from "rxjs/internal-compatibility";
 
 /**
  * @title Channels table
@@ -41,33 +37,42 @@ export class ChannelsTable implements OnInit {
   }
 
   private assignNewRowsFormArray(channelRows: ChannelRow[]) {
-    channelRows.forEach(channelRow => {
-      const formControl = channelRow.rowFormGroup.get('selectedChannel') as FormControl;
-
-      formControl.valueChanges.subscribe(channelNr =>
-        this.validateChangeSelectedChannel(
-          channelNr,
-          { formControl, channelRow },
-          channelRows
-        )
-      )
-    });
-
     this.channelsFormGroup.setControl(
       'rows',
       new FormArray(channelRows.map(row => row.rowFormGroup))
     );
+
+    channelRows.forEach(channelRow => {
+      this.subscribeToChannelChange(channelRow, channelRows);
+    });
+  }
+
+  private subscribeToChannelChange(channelRow, channelRows: ChannelRow[]) {
+    const formControl = channelRow.rowFormGroup.get('selectedChannel') as FormControl;
+
+    formControl.setValidators(this.validateChangeSelectedChannel.bind(this, channelRows));
+
+    formControl.valueChanges.subscribe(channelNr => noop()
+    )
   }
 
   private validateChangeSelectedChannel(
-    newChannelNr: number,
-    changedChannel: ChannelRowFormControlPair,
-    channelRows: ChannelRow[])
-  {
-    if((this.channelsFormGroup.get('rows') as FormArray).length === 0)
-      return;
+    channelRows: ChannelRow[],
+    changedFormControl: FormControl
+  ) {
+    let isUnique = true;
+    channelRows
+      .map(row => row.rowFormGroup.get('selectedChannel') as FormControl)
+      .forEach(formControl => {
+        if(formControl.value === changedFormControl.value && formControl !== changedFormControl) {
+          formControl.setErrors({ 'notUnique': true });
+          isUnique = false;
+        } else {
+          formControl.setErrors(null);
+        }
+      });
 
-
+    return isUnique ? null : { 'notUnique': true };
   }
 
   addNewChannel() {
@@ -89,20 +94,8 @@ export class ChannelsTable implements OnInit {
     });
   }
 
-  toggleActive(event: MatSlideToggleChange, channelRow: ChannelRow) {
-
-  }
-
-  editChannelName(channelRow: ChannelRow) {
-
-  }
-
-  activateEditMode(channelRow: ChannelRow) {
+  toggleEditMode(channelRow: ChannelRow) {
     channelRow.viewState.editing = !channelRow.viewState.editing;
-
-    if(!channelRow.viewState.editing) {
-      this.channelChanged(channelRow.channel)
-    }
   }
 
   selectedChannelChanged(newChannel: MatSelectChange, oldChannel: ChannelRow) {

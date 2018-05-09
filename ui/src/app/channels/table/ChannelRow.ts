@@ -1,4 +1,4 @@
-import {FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from "@angular/forms";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {ErrorStateMatcher} from "@angular/material";
 import {Channel} from "../service/channel.service";
 
@@ -15,7 +15,6 @@ export class ChannelRow {
   };
 
   chooseChannelErrorStateMatcher = new ChannelNumberErrorStateMatcher();
-
   rowFormGroup: FormGroup;
 
   public static create(channel: Channel) {
@@ -23,6 +22,8 @@ export class ChannelRow {
   }
 
   private constructor(public channel: Channel) {
+    Object.freeze(this.channel);
+
     this.rowFormGroup = new FormGroup({
       selectedChannel: new FormControl(channel.selectedChannel, Validators.required),
       name: new FormControl(channel.name, Validators.required),
@@ -32,8 +33,7 @@ export class ChannelRow {
 }
 
 export class ChannelNumberErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
-    const isSubmitted = form && form.submitted;
-    return (control && control.invalid && (control.dirty || control.touched || isSubmitted));
+  isErrorState(control: FormControl | null): boolean {
+    return (control && control.invalid && control.errors !== null);
   }
 }

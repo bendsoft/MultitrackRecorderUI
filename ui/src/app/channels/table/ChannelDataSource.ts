@@ -31,7 +31,7 @@ export class ChannelDataSource extends DataSource<ChannelRow> {
     channels
       .map(ChannelRow.create)
       .forEach(channelRow => {
-        sortedChannels[channelRow.channel.selectedChannel] = channelRow;
+        sortedChannels[channelRow.rowFormGroup.get('selectedChannel').value] = channelRow;
       });
 
     return sortedChannels
