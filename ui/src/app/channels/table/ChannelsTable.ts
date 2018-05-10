@@ -43,17 +43,12 @@ export class ChannelsTable implements OnInit {
     );
 
     channelRows.forEach(channelRow => {
-      this.subscribeToChannelChange(channelRow, channelRows);
+      channelRow.rowFormGroup.get('selectedChannel').setValidators(this.validateChangeSelectedChannel.bind(this, channelRows));
+
+      Object.values(channelRow.rowFormGroup.controls).forEach(formControl =>
+        formControl.valueChanges.subscribe(() => this.channelChanged(channelRow))
+      );
     });
-  }
-
-  private subscribeToChannelChange(channelRow, channelRows: ChannelRow[]) {
-    const formControl = channelRow.rowFormGroup.get('selectedChannel') as FormControl;
-
-    formControl.setValidators(this.validateChangeSelectedChannel.bind(this, channelRows));
-
-    formControl.valueChanges.subscribe(channelNr => noop()
-    )
   }
 
   private validateChangeSelectedChannel(
@@ -98,15 +93,23 @@ export class ChannelsTable implements OnInit {
     channelRow.viewState.editing = !channelRow.viewState.editing;
   }
 
-  selectedChannelChanged(newChannel: MatSelectChange, oldChannel: ChannelRow) {
-    //const changedChannel = Object.assign({}, oldChannel.channel);
-    //changedChannel.selectedChannel = newChannel.value;
+  private channelChanged(newOrChangedChannel: ChannelRow) {
+    if(this.channelsFormGroup.valid) {
+      const createNewOrChangedChannel = changedChannel => {
+        changedChannel = Object.assign({}, newOrChangedChannel.channel);
+        changedChannel.selectedChannel = newOrChangedChannel.rowFormGroup.get('selectedChannel').value;
+        changedChannel.name = newOrChangedChannel.rowFormGroup.get('name').value;
+        changedChannel.active = newOrChangedChannel.rowFormGroup.get('active').value;
 
-    //this.channelChanged(changedChannel);
-  }
+        return changedChannel;
+      };
 
-  private channelChanged(newOrChangedChannel: Channel) {
-    this.channelService.createOrUpdateChannel(newOrChangedChannel);
+      this.channelService.createOrUpdateChannel(
+        (this.channelsFormGroup.get('rows') as FormArray).controls
+        .filter(formControl => formControl.dirty)
+        .map(createNewOrChangedChannel)
+      );
+    }
   }
 
   removeChannel(channelRow: ChannelRow) {

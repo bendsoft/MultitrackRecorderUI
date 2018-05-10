@@ -14,13 +14,17 @@ export class ChannelService {
     return CHANNEL_DATA.find(channel => channel.id === id)
   }
 
-  createOrUpdateChannel(channel: Channel) {
-    const foundIndex = this.findChannelIndex(channel);
-    if(foundIndex > -1) {
-      CHANNEL_DATA[foundIndex] = channel;
-    } else {
-      CHANNEL_DATA.push(channel);
-    }
+  createOrUpdateChannel(newOrChangedChannel: Channel | Channel[]) {
+    const channels = Array.isArray(newOrChangedChannel) ? newOrChangedChannel : [newOrChangedChannel];
+
+    channels.forEach(channel => {
+      const foundIndex = this.findChannelIndex(channel);
+      if(foundIndex > -1) {
+        CHANNEL_DATA[foundIndex] = channel;
+      } else {
+        CHANNEL_DATA.push(channel);
+      }
+    });
 
     this._channelDataStream.next(this.getChannels());
   }

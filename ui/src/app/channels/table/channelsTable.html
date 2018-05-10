@@ -15,7 +15,7 @@
             {{channelNr}}
           </mat-option>
         </mat-select>
-        <mat-error *ngIf="channelRow.rowFormGroup.get('selectedChannel').hasError('notUnique')">Kanal ist schon belegt</mat-error>
+        <mat-error *ngIf="channelRow.rowFormGroup.get('selectedChannel').hasError('notUnique')">Kanal doppelt</mat-error>
       </mat-form-field>
     </mat-cell>
   </ng-container>
@@ -68,5 +68,5 @@
   </ng-container>
 
   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  <mat-row *matRowDef="let channelRow; columns: displayedColumns;"></mat-row>
 </mat-table>
