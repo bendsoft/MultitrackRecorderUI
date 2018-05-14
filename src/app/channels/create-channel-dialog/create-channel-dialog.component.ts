@@ -1,6 +1,6 @@
 import {Component, Inject} from '@angular/core';
-import {MAT_DIALOG_DATA} from "@angular/material";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {MAT_DIALOG_DATA} from '@angular/material';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-create-channel-dialog',
@@ -20,9 +20,9 @@ export class CreateChannelDialogComponent {
     this.availableChannels = data.availableChannels;
 
     this.createChannelForm = new FormGroup({
-      selectedChannel: new FormControl('',Validators.required),
-      name: new FormControl('',Validators.required),
+      selectedChannel: new FormControl('', Validators.required),
+      name: new FormControl('', Validators.required),
       active: new FormControl()
-    })
+    });
   }
 }

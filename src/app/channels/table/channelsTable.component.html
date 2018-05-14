@@ -24,11 +24,11 @@
     <mat-header-cell *matHeaderCellDef></mat-header-cell>
     <mat-cell *matCellDef="let channelRow">
       <button (click)="toggleEditMode(channelRow)" mat-icon-button>
-        <mat-icon *ngIf="!channelRow.viewState.editing"
+        <mat-icon *ngIf="channelRow.rowFormGroup.get('name').disabled"
           color="accent"
           aria-label="Bearbeite Kanal-Eintrag"
         >edit</mat-icon>
-        <mat-icon *ngIf="channelRow.viewState.editing"
+        <mat-icon *ngIf="channelRow.rowFormGroup.get('name').enabled"
           color="accent"
           aria-label="Speichere &Auml;nderung"
         >save</mat-icon>
@@ -38,9 +38,13 @@
   <ng-container matColumnDef="name">
     <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
     <mat-cell *matCellDef="let channelRow">
-      <span *ngIf="!channelRow.viewState.editing">{{channelRow.channel.name}}</span>
-      <mat-form-field class="edit-name" *ngIf="channelRow.viewState.editing">
-        <input matInput placeholder="Kanalname" [formControl]="channelRow.rowFormGroup.get('name')">
+      <mat-form-field class="edit-name" [floatLabel]="channelRow.rowFormGroup.get('name').enabled ? 'auto' : 'never'">
+        <input matInput
+               placeholder="Kanalname"
+               [formControl]="channelRow.rowFormGroup.get('name')"
+               [errorStateMatcher]="channelRow.nameErrorStateMatcher"
+        >
+        <mat-error *ngIf="channelRow.rowFormGroup.get('name').hasError('notUnique')">Name muss eindeutig sein</mat-error>
       </mat-form-field>
     </mat-cell>
   </ng-container>
@@ -58,7 +62,7 @@
   <ng-container matColumnDef="action">
     <mat-header-cell *matHeaderCellDef> Aktion </mat-header-cell>
     <mat-cell *matCellDef="let channelRow">
-      <button (click)="removeChannel(channelRow)" mat-icon-button>
+      <button (click)="removeChannel(channelRow)" [disabled]="channelRow.rowFormGroup.invalid" mat-icon-button>
         <mat-icon
           color="warn"
           aria-label="L&ouml;sche Kanal-Eintrag"

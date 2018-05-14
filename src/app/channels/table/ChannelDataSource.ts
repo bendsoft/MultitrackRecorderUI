@@ -1,10 +1,10 @@
-import {ChannelRow} from "./ChannelRow";
-import {DataSource} from "@angular/cdk/table";
-import {CollectionViewer} from "@angular/cdk/collections";
-import {Channel, ChannelService} from "../service/channel.service";
-import {Observable} from "rxjs/internal/Observable";
+import {ChannelRow} from './ChannelRow';
+import {DataSource} from '@angular/cdk/table';
+import {CollectionViewer} from '@angular/cdk/collections';
+import {Channel, ChannelService} from '../service/channel.service';
+import {Observable} from 'rxjs/internal/Observable';
 import {map, tap} from 'rxjs/operators';
-import {BehaviorSubject} from "rxjs/internal/BehaviorSubject";
+import {BehaviorSubject} from 'rxjs/internal/BehaviorSubject';
 
 export class ChannelDataSource extends DataSource<ChannelRow> {
   private _channelRowStream = new BehaviorSubject<ChannelRow[]>([]);

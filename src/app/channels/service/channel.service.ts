@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {BehaviorSubject} from "rxjs/internal/BehaviorSubject";
+import {BehaviorSubject} from 'rxjs/internal/BehaviorSubject';
 
 @Injectable()
 export class ChannelService {
@@ -7,11 +7,11 @@ export class ChannelService {
   public channelsStream = this._channelDataStream.asObservable();
 
   getChannels(): Channel[] {
-    return CHANNEL_DATA
+    return CHANNEL_DATA;
   }
 
   getChannel(id: number) {
-    return CHANNEL_DATA.find(channel => channel.id === id)
+    return CHANNEL_DATA.find(channel => channel.id === id);
   }
 
   createOrUpdateChannel(newOrChangedChannel: Channel | Channel[]) {
@@ -19,7 +19,7 @@ export class ChannelService {
 
     channels.forEach(channel => {
       const foundIndex = this.findChannelIndex(channel);
-      if(foundIndex > -1) {
+      if (foundIndex > -1) {
         CHANNEL_DATA[foundIndex] = channel;
       } else {
         CHANNEL_DATA.push(channel);
@@ -30,7 +30,7 @@ export class ChannelService {
   }
 
   private findChannelIndex(channel): number {
-    if(!channel.hasOwnProperty('id')
+    if (!channel.hasOwnProperty('id')
       || channel.id === null
       || channel.id === undefined) {
       return -1;
@@ -41,11 +41,11 @@ export class ChannelService {
 }
 
 export interface Channel {
-  id?: number
-  selectedChannel: number
-  name: string
-  active: boolean
-  profile?: number
+  id?: number;
+  selectedChannel: number;
+  name: string;
+  active: boolean;
+  profile?: number;
 }
 
 const CHANNEL_DATA: Channel[] = [

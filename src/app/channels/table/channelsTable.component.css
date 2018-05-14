@@ -22,5 +22,8 @@
 
 .edit-name {
   width: 300px;
-  margin-bottom: -6px;
+}
+
+.edit-name.mat-form-field-disabled .mat-form-field-label {
+  display: none !important;
 }

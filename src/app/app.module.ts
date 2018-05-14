@@ -27,14 +27,14 @@ import {
 } from '@angular/material';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
-import {ChannelsTable} from "./channels/table/ChannelsTable";
+import {ChannelsTableComponent} from "./channels/table/channelsTable.component";
 import { SecurityCheckDialogComponent } from './common/security-check-dialog/security-check-dialog.component';
 import {ChannelService} from "./channels/service/channel.service";
 import { CreateChannelDialogComponent } from './channels/create-channel-dialog/create-channel-dialog.component';
 
 @NgModule({
   declarations: [
-    AppComponent, ChannelsTable, SecurityCheckDialogComponent, CreateChannelDialogComponent
+    AppComponent, ChannelsTableComponent, SecurityCheckDialogComponent, CreateChannelDialogComponent
   ],
   entryComponents: [SecurityCheckDialogComponent, CreateChannelDialogComponent],
   imports: [
