@@ -2,7 +2,6 @@
 /out/
 /classes/
 /.idea
-/rest/.idea
 *.iml
 
 # gradle
@@ -21,30 +20,30 @@ crashlytics-build.properties
 fabric.properties
 
 # compiled output
-/ui/dist
-/ui/tmp
+/dist
+/tmp
 /build/
 
 # dependencies
-/ui/node_modules
-/ui/bower_components
+/node_modules
+/bower_components
 
 # misc
-/ui/.sass-cache
-/ui/connect.lock
-/ui/coverage/*
-/ui/libpeerconnection.log
-/ui/npm-debug.log
-/ui/testem.log
-/ui/typings
+/.sass-cache
+connect.lock
+/coverage/*
+libpeerconnection.log
+npm-debug.log
+testem.log
+/typings
 
 # e2e
-/ui/e2e/*.js
-/ui/e2e/*.map
+/e2e/*.js
+/e2e/*.map
 
 #System Files
-/ui/.DS_Store
-/ui/Thumbs.db
+/.DS_Store
+Thumbs.db
 
 /server/build/
 
@@ -57,19 +56,19 @@ fabric.properties
 /server/.springBeans
 
 # Ignores compiled TypeScript files
-/ui/src/app/**/*.map
-/ui/src/app/**/*.js
-/ui/src/environments/**/*.map
-/ui/src/environments/**/*.js
-/ui/src/test.map
-/ui/src/test.js
-/ui/src/test.js.map
-/ui/src/polyfills.map
-/ui/src/polyfills.js
-/ui/src/polyfills.js.map
-/ui/src/main.map
-/ui/src/main.js
-/ui/src/main.js.map
+/src/app/**/*.map
+/src/app/**/*.js
+/src/environments/**/*.map
+/src/environments/**/*.js
+/src/test.map
+/src/test.js
+/src/test.js.map
+/src/polyfills.map
+/src/polyfills.js
+/src/polyfills.js.map
+/src/main.map
+/src/main.js
+/src/main.js.map
 
 # compiled output
 /dist
@@ -85,6 +84,6 @@ fabric.properties
 !.vscode/extensions.json
 
 # misc
-/ui/coverage
-/ui/yarn-error.log
-/ui/yarn.lock
+/coverage
+yarn-error.log
+yarn.lock
