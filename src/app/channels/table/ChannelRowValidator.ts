@@ -5,15 +5,18 @@ export class ChannelRowValidator {
   public static checkUnique(
     formControlName: string,
     channelRows: ChannelRow[],
+    propagateErrorToDuplicates: boolean,
     changedFormControl: FormControl
   ) {
     let isUnique = true;
     channelRows
       .map(row => row.rowFormGroup.get(formControlName) as FormControl)
+      .filter(formControl => !Object.is(formControl, changedFormControl) && formControl.value === changedFormControl.value)
       .forEach(formControl => {
-        if (formControl.value === changedFormControl.value && formControl !== changedFormControl) {
-          formControl.setErrors({ 'notUnique': true });
-          isUnique = false;
+        isUnique = false;
+
+        if (propagateErrorToDuplicates) {
+          formControl.setErrors({'notUnique': true});
         } else {
           formControl.setErrors(null);
         }

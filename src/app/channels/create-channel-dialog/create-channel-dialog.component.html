@@ -3,15 +3,27 @@
 <mat-dialog-content>
   <form [formGroup]="createChannelForm" class="example-form">
     <mat-form-field>
-      <mat-select placeholder="Kanal Nummer" formControlName="selectedChannel">
+      <mat-select
+        placeholder="Kanal Nummer"
+        formControlName="selectedChannel"
+        [errorStateMatcher]="chooseChannelErrorStateMatcher"
+      >
         <mat-option *ngFor="let nr of availableChannels" [value]="nr">
           {{ nr }}
         </mat-option>
       </mat-select>
+      <mat-error *ngIf="createChannelForm.get('selectedChannel').hasError('notUnique')">Kanal ist bereits vergeben</mat-error>
+      <mat-error *ngIf="createChannelForm.get('selectedChannel').hasError('required')">Es muss ein Kanal ausgew&auml;hlt werden</mat-error>
     </mat-form-field>
 
     <mat-form-field>
-      <input matInput placeholder="Kanal Name" formControlName="name">
+      <input matInput
+        placeholder="Kanal Name"
+        formControlName="name"
+        [errorStateMatcher]="nameErrorStateMatcher"
+      >
+      <mat-error *ngIf="createChannelForm.get('name').hasError('notUnique')">Name muss eindeutig sein</mat-error>
+      <mat-error *ngIf="createChannelForm.get('name').hasError('required')">Es muss ein Name vergeben werden</mat-error>
     </mat-form-field>
 
     <section>
@@ -22,6 +34,5 @@
 
 <mat-dialog-actions>
   <button mat-button mat-dialog-close>Abbrechen<mat-icon>cancel</mat-icon></button>
-  <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. -->
-  <button mat-button [mat-dialog-close]="createChannelForm.value">Speichern<mat-icon>save</mat-icon></button>
+  <button mat-button [mat-dialog-close]="createChannelForm.valid ? createChannelForm.value : null" [disabled]="createChannelForm.invalid">Speichern<mat-icon>save</mat-icon></button>
 </mat-dialog-actions>

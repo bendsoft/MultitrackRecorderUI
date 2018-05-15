@@ -7,6 +7,7 @@ import {ChannelRow} from './ChannelRow';
 import {CreateChannelDialogComponent} from '../create-channel-dialog/create-channel-dialog.component';
 import {FormArray, FormGroup} from '@angular/forms';
 import {ChannelRowValidator} from './ChannelRowValidator';
+import {filter} from 'rxjs/operators';
 
 /**
  * @title Channels table
@@ -44,10 +45,10 @@ export class ChannelsTableComponent implements OnInit {
 
     channelRows.forEach(channelRow => {
       channelRow.rowFormGroup.get('selectedChannel').setValidators(
-        ChannelRowValidator.checkUnique.bind(this, 'selectedChannel', channelRows)
+        ChannelRowValidator.checkUnique.bind(this, 'selectedChannel', channelRows, true)
       );
       channelRow.rowFormGroup.get('name').setValidators(
-        ChannelRowValidator.checkUnique.bind(this, 'name', channelRows)
+        ChannelRowValidator.checkUnique.bind(this, 'name', channelRows, true)
       );
 
       Object.values(channelRow.rowFormGroup.controls).forEach(formControl =>
@@ -66,11 +67,14 @@ export class ChannelsTableComponent implements OnInit {
       width: '25rem',
       position,
       data: {
-        availableChannels: ChannelRow._allChannelNumbers
+        availableChannels: ChannelRow._allChannelNumbers,
+        channelRowStream: this.channelRowData.channelRowStream
       }
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().pipe(
+      filter(result => !!result)
+    ).subscribe(result => {
       this.channelService.createOrUpdateChannel(result);
     });
   }
