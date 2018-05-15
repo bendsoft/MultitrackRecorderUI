@@ -23,7 +23,7 @@ import {
   MatCheckboxModule,
   MatDialogModule,
   MatSlideToggleModule,
-  MatSortModule
+  MatSortModule, MAT_DATE_LOCALE
 } from '@angular/material';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
@@ -32,6 +32,7 @@ import { SecurityCheckDialogComponent } from './common/security-check-dialog/sec
 import {ChannelService} from './channels/service/channel.service';
 import { CreateChannelDialogComponent } from './channels/create-channel-dialog/create-channel-dialog.component';
 import {RecorderComponent} from './recorder/recorder.component';
+import {MatMomentDateModule} from '@angular/material-moment-adapter';
 
 @NgModule({
   declarations: [
@@ -63,9 +64,9 @@ import {RecorderComponent} from './recorder/recorder.component';
     ReactiveFormsModule,
     MatSelectModule,
     MatSlideToggleModule,
-    MatSortModule
+    MatSortModule, MatMomentDateModule
   ],
-  providers: [ChannelService],
+  providers: [ChannelService, {provide: MAT_DATE_LOCALE, useValue: 'de-CH'}],
   bootstrap: [AppComponent]
 })
 

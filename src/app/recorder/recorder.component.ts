@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import {FormControl, Validators} from '@angular/forms';
+
+import * as _moment from 'moment';
+const moment = _moment;
 
 @Component({
   selector: 'app-recorder',
@@ -6,10 +10,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./recorder.component.css']
 })
 export class RecorderComponent implements OnInit {
+  recordingDate = new FormControl(moment(), Validators.required);
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
 }
