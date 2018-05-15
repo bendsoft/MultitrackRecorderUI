@@ -1,0 +1,16 @@
+.addNewRecording {
+  margin-left: auto;
+}
+
+mat-card-header {
+  justify-content: flex-start;
+}
+
+.recorder mat-button-toggle.btnRecord.mat-button-toggle-checked mat-icon {
+  color: red;
+}
+
+.recorder-header-image {
+  background-image: url("../../assets/img/microphone.jpg");
+  background-size: cover;
+}

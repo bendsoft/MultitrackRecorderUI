@@ -25,16 +25,17 @@ import {
   MatSlideToggleModule,
   MatSortModule
 } from '@angular/material';
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {HttpClientModule} from "@angular/common/http";
-import {ChannelsTableComponent} from "./channels/table/channelsTable.component";
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {HttpClientModule} from '@angular/common/http';
+import {ChannelsTableComponent} from './channels/table/channelsTable.component';
 import { SecurityCheckDialogComponent } from './common/security-check-dialog/security-check-dialog.component';
-import {ChannelService} from "./channels/service/channel.service";
+import {ChannelService} from './channels/service/channel.service';
 import { CreateChannelDialogComponent } from './channels/create-channel-dialog/create-channel-dialog.component';
+import {RecorderComponent} from './recorder/recorder.component';
 
 @NgModule({
   declarations: [
-    AppComponent, ChannelsTableComponent, SecurityCheckDialogComponent, CreateChannelDialogComponent
+    AppComponent, ChannelsTableComponent, SecurityCheckDialogComponent, CreateChannelDialogComponent, RecorderComponent
   ],
   entryComponents: [SecurityCheckDialogComponent, CreateChannelDialogComponent],
   imports: [

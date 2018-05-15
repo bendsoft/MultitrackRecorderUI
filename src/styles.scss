@@ -37,27 +37,7 @@ mat-sidenav-container {
   display: block;
 }
 
-.recorder .fab {
-  position: absolute;
-  right: 20px;
-  bottom: 20px;
-}
-
-.recorder mat-button-toggle.btnRecord.mat-button-toggle-checked mat-icon {
-  color: red;
-}
-
-.recorder-header-image {
-  background-image: url("assets/img/microphone.jpg");
-  background-size: cover;
-}
-
 .channels-header-image {
   background-image: url("assets/img/channels.jpg");
   background-size: cover;
-}
-
-.mat-table {
-  overflow: auto;
-  max-height: 500px;
 }
