@@ -18,7 +18,25 @@
   </mat-card-header>
 
   <mat-card-content>
+    <div *ngIf="!isRecording">
+      <button mat-fab
+              color="warn"
+              aria-label="Aufnahme starten"
+              (click)="toggleRecording()"
+      >
+        <mat-icon>mic</mat-icon>
+      </button>
+    </div>
+    <div *ngIf="isRecording" class="recording">
+      <mat-spinner></mat-spinner>
 
+      <button mat-fab
+              aria-label="Aufnahme stoppen"
+              (click)="toggleRecording()"
+      >
+        <mat-icon>stop</mat-icon>
+      </button>
+    </div>
   </mat-card-content>
 
   <mat-card-footer>

@@ -23,7 +23,7 @@ import {
   MatCheckboxModule,
   MatDialogModule,
   MatSlideToggleModule,
-  MatSortModule, MAT_DATE_LOCALE
+  MatSortModule, MAT_DATE_LOCALE, MatProgressSpinnerModule
 } from '@angular/material';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
@@ -64,7 +64,7 @@ import {MatMomentDateModule} from '@angular/material-moment-adapter';
     ReactiveFormsModule,
     MatSelectModule,
     MatSlideToggleModule,
-    MatSortModule, MatMomentDateModule
+    MatSortModule, MatMomentDateModule, MatProgressSpinnerModule
   ],
   providers: [ChannelService, {provide: MAT_DATE_LOCALE, useValue: 'de-CH'}],
   bootstrap: [AppComponent]

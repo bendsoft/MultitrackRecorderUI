@@ -6,6 +6,17 @@ mat-card-header {
   justify-content: flex-start;
 }
 
+mat-card-content {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-content: flex-start;
+}
+
+.recording {
+  width: 100%;
+}
+
 .recorder mat-button-toggle.btnRecord.mat-button-toggle-checked mat-icon {
   color: red;
 }
