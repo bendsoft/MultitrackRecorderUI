@@ -18,21 +18,21 @@
   </mat-card-header>
 
   <mat-card-content>
-    <div *ngIf="!isRecording">
+    <div *ngIf="!isRecording" class="recorderController recordingReady">
       <button mat-fab
-              color="warn"
+              color="primary"
               aria-label="Aufnahme starten"
               (click)="toggleRecording()"
       >
         <mat-icon>mic</mat-icon>
       </button>
     </div>
-    <div *ngIf="isRecording" class="recording">
-      <mat-spinner></mat-spinner>
-
+    <div *ngIf="isRecording" class="recorderController recording">
       <button mat-fab
+              color="warn"
               aria-label="Aufnahme stoppen"
               (click)="toggleRecording()"
+              class="pulse"
       >
         <mat-icon>stop</mat-icon>
       </button>

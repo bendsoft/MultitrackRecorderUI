@@ -7,14 +7,23 @@ mat-card-header {
 }
 
 mat-card-content {
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: center;
-  align-content: flex-start;
+  height: 10rem;
 }
 
-.recording {
+.recorderController {
+  display: flex;
+  justify-content: center;
+  align-content: flex-start;
+  align-items: center;
+}
+
+.recorderController.recordingReady {
+  flex-flow: row nowrap;
+}
+
+.recorderController.recording {
   width: 100%;
+  flex-flow: column wrap;
 }
 
 .recorder mat-button-toggle.btnRecord.mat-button-toggle-checked mat-icon {
