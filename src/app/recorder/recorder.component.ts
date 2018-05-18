@@ -11,7 +11,7 @@ const moment = _moment;
 })
 export class RecorderComponent implements OnInit {
   recordingDate = new FormControl(moment(), Validators.required);
-  isRecording: boolean = false;
+  isRecording = false;
 
   constructor() {}
 
