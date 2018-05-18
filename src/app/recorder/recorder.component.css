@@ -6,28 +6,29 @@ mat-card-header {
   justify-content: flex-start;
 }
 
-.recorderController {
+.flexTopCenter {
   display: flex;
-  height: 10rem;
-  justify-content: center;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
   align-content: flex-start;
   align-items: center;
 }
 
+.recorderController {
+  height: 10rem;
+}
+
 .recordingReady {
-  flex-flow: row nowrap;
 }
 
 .recording {
-  display: flex;
-  flex-flow: column nowrap;
 }
 
 .recorderClock {
   margin: 25px;
   font-family: "Courier New", Courier, monospace;
   color: black;
-  font-size: 2rem;
+  font-size: 1.7rem;
 }
 
 .recorder mat-button-toggle.btnRecord.mat-button-toggle-checked mat-icon {

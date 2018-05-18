@@ -18,7 +18,7 @@
   </mat-card-header>
 
   <mat-card-content>
-    <div class="recorderController">
+    <div class="recorderController flexTopCenter">
       <div *ngIf="!isRecording" class="recordingReady">
         <button mat-fab
                 color="primary"
@@ -28,7 +28,7 @@
           <mat-icon>mic</mat-icon>
         </button>
       </div>
-      <div *ngIf="isRecording" class="recording">
+      <div *ngIf="isRecording" class="recording flexTopCenter">
         <div>
           <button mat-fab
                   color="warn"
@@ -39,7 +39,7 @@
             <mat-icon>stop</mat-icon>
           </button>
         </div>
-        <div class="recorderClock">00&nbsp;:&nbsp;00:&nbsp;00.00</div>
+        <div class="recorderClock">00&nbsp;:&nbsp;00&nbsp;:&nbsp;00.00</div>
       </div>
     </div>
   </mat-card-content>
