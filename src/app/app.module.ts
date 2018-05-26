@@ -23,7 +23,7 @@ import {
   MatCheckboxModule,
   MatDialogModule,
   MatSlideToggleModule,
-  MatSortModule, MAT_DATE_LOCALE
+  MatSortModule, MAT_DATE_LOCALE, MatTreeModule
 } from '@angular/material';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
@@ -31,12 +31,20 @@ import {ChannelsTableComponent} from './channels/table/channelsTable.component';
 import { SecurityCheckDialogComponent } from './common/security-check-dialog/security-check-dialog.component';
 import {ChannelService} from './channels/service/channel.service';
 import { CreateChannelDialogComponent } from './channels/create-channel-dialog/create-channel-dialog.component';
-import {RecorderComponent} from './recorder/recorder.component';
+import {RecorderComponent} from './recorder/recorder/recorder.component';
 import {MatMomentDateModule} from '@angular/material-moment-adapter';
+import { RecordingTimerComponent } from './recorder/recording-timer/recording-timer.component';
+import { RecordingsListComponent } from './recordings-list/recordings-list.component';
 
 @NgModule({
   declarations: [
-    AppComponent, ChannelsTableComponent, SecurityCheckDialogComponent, CreateChannelDialogComponent, RecorderComponent
+    AppComponent,
+    ChannelsTableComponent,
+    SecurityCheckDialogComponent,
+    CreateChannelDialogComponent,
+    RecorderComponent,
+    RecordingTimerComponent,
+    RecordingsListComponent
   ],
   entryComponents: [SecurityCheckDialogComponent, CreateChannelDialogComponent],
   imports: [
@@ -64,7 +72,9 @@ import {MatMomentDateModule} from '@angular/material-moment-adapter';
     ReactiveFormsModule,
     MatSelectModule,
     MatSlideToggleModule,
-    MatSortModule, MatMomentDateModule
+    MatSortModule,
+    MatMomentDateModule,
+    MatTreeModule
   ],
   providers: [ChannelService, {provide: MAT_DATE_LOCALE, useValue: 'de-CH'}],
   bootstrap: [AppComponent]

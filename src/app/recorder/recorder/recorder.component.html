@@ -23,7 +23,7 @@
         <button mat-fab
                 color="primary"
                 aria-label="Aufnahme starten"
-                (click)="toggleRecording()"
+                (click)="startRecording()"
         >
           <mat-icon>mic</mat-icon>
         </button>
@@ -33,13 +33,22 @@
           <button mat-fab
                   color="warn"
                   aria-label="Aufnahme stoppen"
-                  (click)="toggleRecording()"
+                  (click)="stopRecording()"
                   class="pulse"
           >
             <mat-icon>stop</mat-icon>
           </button>
         </div>
-        <div class="recorderClock">{{ timer.formattedValue }}</div>
+        <app-recording-timer></app-recording-timer>
+        <div>
+          <button mat-fab
+                  color="primary"
+                  aria-label="N&aumlchste Aufnahme starten"
+                  (click)="restartRecording()"
+          >
+            <mat-icon>skip_next</mat-icon>
+          </button>
+        </div>
       </div>
     </div>
   </mat-card-content>

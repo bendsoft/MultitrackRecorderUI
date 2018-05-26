@@ -15,20 +15,7 @@ mat-card-header {
 }
 
 .recorderController {
-  height: 10rem;
-}
-
-.recordingReady {
-}
-
-.recording {
-}
-
-.recorderClock {
-  margin: 25px;
-  font-family: "Courier New", Courier, monospace;
-  color: black;
-  font-size: 1.7rem;
+  height: 13rem;
 }
 
 .recorder mat-button-toggle.btnRecord.mat-button-toggle-checked mat-icon {
@@ -36,6 +23,6 @@ mat-card-header {
 }
 
 .recorder-header-image {
-  background-image: url("../../assets/img/microphone.jpg");
+  background-image: url("../../../assets/img/microphone.jpg");
   background-size: cover;
 }
