@@ -3,13 +3,13 @@ import {BehaviorSubject, Observable, of} from 'rxjs';
 import {FlatTreeControl} from '@angular/cdk/tree';
 import {MatTreeFlatDataSource, MatTreeFlattener} from '@angular/material';
 
-export class FileNode {
+class FileNode {
   children: FileNode[];
   filename: string;
   metadata: any;
 }
 
-export class FileFlatNode {
+class FileFlatNode {
   filename: string;
   metadata: any;
   level: number;
