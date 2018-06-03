@@ -42,15 +42,25 @@ export class FileDatabase {
     Object.entries(value).forEach(keyValue => {
       const node = new FileNode();
       node.filename = `${keyValue[0]}`;
-      if (typeof keyValue[1] === 'object') {
-        node.children = this.buildFileTree(keyValue[1], level + 1);
-      } else {
-        node.metadata = keyValue[1];
+
+      const nodeValue = keyValue[1] as FileNode;
+      if (this.isFileMetadata(nodeValue)) {
+        node.metadata = nodeValue;
+      } else if (typeof nodeValue === 'object') {
+        node.children = this.buildFileTree(nodeValue, level + 1);
       }
       data.push(node);
     });
 
     return data;
+  }
+
+  private isFileMetadata(node: FileNode) {
+    const metadataProperties = ['id', 'size'];
+
+    return metadataProperties
+      .filter(prop => node.hasOwnProperty(prop))
+      .length > 0;
   }
 
   private sortBy(data: FileNode[], key: string, sortWay: SORT_WAY = SORT_WAY.ASC): FileNode[] {
