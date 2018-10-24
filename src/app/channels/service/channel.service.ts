@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
 import {BehaviorSubject} from 'rxjs/internal/BehaviorSubject';
+import {Observable} from "rxjs";
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class ChannelService {
-  private _channelDataStream = new BehaviorSubject<Channel[]>(this.getChannels());
+  public _channelDataStream = new BehaviorSubject<Channel[]>(this.getChannels());
   public channelsStream = this._channelDataStream.asObservable();
 
   getChannels(): Channel[] {
@@ -27,6 +30,17 @@ export class ChannelService {
     });
 
     this._channelDataStream.next(this.getChannels());
+  }
+
+  removeChannel(channel: Channel): Observable<boolean> {
+    const foundIndex = this.findChannelIndex(channel);
+    if (foundIndex > -1) {
+      CHANNEL_DATA.splice(foundIndex, 1);
+    }
+
+    this._channelDataStream.next(this.getChannels());
+
+    return Observable.create(observer => observer.next(true));
   }
 
   private findChannelIndex(channel): number {

@@ -1,14 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {ChannelService} from '../service/channel.service';
-import {DialogPosition, MatDialog} from '@angular/material';
+import {DialogPosition, MatDialog, MatSnackBar} from '@angular/material';
 import {SecurityCheckDialogComponent} from '../../common/security-check-dialog/security-check-dialog.component';
 import {ChannelDataSource} from './ChannelDataSource';
 import {ChannelRow} from './ChannelRow';
 import {CreateChannelDialogComponent} from '../create-channel-dialog/create-channel-dialog.component';
-import {FormArray, FormGroup} from '@angular/forms';
+import {FormArray, FormGroup, Validators} from '@angular/forms';
 import {ChannelRowValidator} from './ChannelRowValidator';
-import {filter} from 'rxjs/operators';
-
 /**
  * @title Channels table
  */
@@ -19,7 +17,6 @@ import {filter} from 'rxjs/operators';
 })
 export class ChannelsTableComponent implements OnInit {
   displayedColumns = ['selectedChannel', 'edit', 'name', 'active', 'action'];
-  channelRowData;
 
   private channelsFormGroup = new FormGroup(
     {
@@ -28,29 +25,22 @@ export class ChannelsTableComponent implements OnInit {
   );
 
   constructor(
-    private channelService: ChannelService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private channelDataSource: ChannelDataSource,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
-    this.channelRowData = new ChannelDataSource(this.channelService);
-    this.channelRowData.channelRowStream.subscribe(this.assignNewRowsFormArray.bind(this));
+    this.channelDataSource.channelRowStream.subscribe(this.handleRows.bind(this));
   }
 
-  private assignNewRowsFormArray(channelRows: ChannelRow[]) {
+  private handleRows(channelRows: ChannelRow[]) {
     this.channelsFormGroup.setControl(
       'rows',
       new FormArray(channelRows.map(row => row.rowFormGroup))
     );
 
     channelRows.forEach(channelRow => {
-      channelRow.rowFormGroup.get('selectedChannel').setValidators(
-        ChannelRowValidator.checkUnique.bind(this, 'selectedChannel', channelRows, true)
-      );
-      channelRow.rowFormGroup.get('name').setValidators(
-        ChannelRowValidator.checkUnique.bind(this, 'name', channelRows, true)
-      );
-
       Object.values(channelRow.rowFormGroup.controls).forEach(formControl =>
         formControl.valueChanges.subscribe(() => this.channelChanged(channelRow))
       );
@@ -62,20 +52,19 @@ export class ChannelsTableComponent implements OnInit {
       top: '200px'
     };
 
-    const dialogRef = this.dialog.open(CreateChannelDialogComponent, {
+    const addChannelDialog = this.dialog.open(CreateChannelDialogComponent, {
       height: '20rem',
       width: '25rem',
       position,
       data: {
-        availableChannels: ChannelRow._allChannelNumbers,
-        channelRowStream: this.channelRowData.channelRowStream
+        availableChannels: ChannelRow._allChannelNumbers
       }
     });
 
-    dialogRef.afterClosed().pipe(
-      filter(result => !!result)
-    ).subscribe(result => {
-      this.channelService.createOrUpdateChannel(result);
+    addChannelDialog.afterClosed().subscribe(result => {
+      if (!!result) {
+        this.channelDataSource.channelService.createOrUpdateChannel(result);
+      }
     });
   }
 
@@ -83,11 +72,13 @@ export class ChannelsTableComponent implements OnInit {
     const options = { onlySelf: true, emitEvent: false };
     const nameFormControl = channelRow.rowFormGroup.get('name');
 
-    if (nameFormControl.disabled) {
-      nameFormControl.enable(options);
-      console.log(channelRow);
-    } else if (nameFormControl.valid) {
-      nameFormControl.disable(options);
+    if (channelRow.rowFormGroup.status === 'VALID') {
+      if (nameFormControl.disabled) {
+        nameFormControl.enable(options);
+        console.log(channelRow);
+      } else if (nameFormControl.valid) {
+        nameFormControl.disable(options);
+      }
     }
   }
 
@@ -105,10 +96,10 @@ export class ChannelsTableComponent implements OnInit {
       return changedChannel;
     };
 
-    this.channelService.createOrUpdateChannel(
+    this.channelDataSource.channelService.createOrUpdateChannel(
       (this.channelsFormGroup.get('rows') as FormArray).controls
-      .filter(formControl => formControl.dirty)
-      .map(createNewOrChangedChannel)
+        .filter(formControl => formControl.dirty)
+        .map(createNewOrChangedChannel)
     );
   }
 
@@ -117,14 +108,20 @@ export class ChannelsTableComponent implements OnInit {
       top: '200px'
     };
 
-    const dialogRef = this.dialog.open(SecurityCheckDialogComponent, {
+    const checkChannelRemovalDialog = this.dialog.open(SecurityCheckDialogComponent, {
       height: '190px',
       width: '400px',
       position
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+    checkChannelRemovalDialog.afterClosed().subscribe(removeChannel => {
+      if(removeChannel === true) {
+        this.channelDataSource.channelService.removeChannel(channelRow.channel)
+          .subscribe(result => this.snackBar.open(`Kanal wurde ${ result ? '' : 'nicht ' }entfernt`, '' ,{
+              duration: 2000,
+            })
+          );
+      }
     });
   }
 }

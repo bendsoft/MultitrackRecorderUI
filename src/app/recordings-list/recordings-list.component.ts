@@ -124,85 +124,90 @@ export class RecordingsListComponent {
 /**
  * The file structure tree data in string. The data could be parsed into a Json object
  */
-const TREE_DATA = `{
-  "20171105": {
-    "Aufnahme 1": {
-      "Gesang Robin": {
-        "id": 12,
-        "size": 2345345
+const TREE_DATA = `
+  {
+    "2017": {
+      "5. November": {
+          "Aufnahme 1": {
+            "Gesang Robin": {
+              "id": 12,
+              "size": 2345345
+            },
+            "Gesang Beni": {
+              "id": 13,
+              "size": 2698567
+            },
+            "Gesang Silvan": {
+              "id": 14,
+              "size": 3456345
+          }
+        }
       },
-      "Gesang Beni": {
-        "id": 13,
-        "size": 2698567
+      "8. Dezember": {
+          "Aufnahme 1": {
+            "Gesang Robin": {
+              "id": 22,
+              "size": 2345345
+            },
+            "Gesang Beni": {
+              "id": 23,
+              "size": 2698567
+            },
+            "Gesang Silvan": {
+              "id": 24,
+              "size": 3456345
+            }
+        }
+      }
+    },
+    "2018": {
+      "15. Januar": {
+          "Aufnahme 1": {
+            "Gesang Robin": {
+              "id": 32,
+              "size": 2345345
+            },
+            "Gesang Beni": {
+              "id": 33,
+              "size": 2698567
+            },
+            "Gesang Silvan": {
+              "id": 34,
+              "size": 3456345
+            }
+        }
       },
-      "Gesang Silvan": {
-        "id": 14,
-        "size": 3456345
+      "25. Februar": {
+          "Aufnahme 1": {
+            "Gesang Robin": {
+              "id": 42,
+              "size": 2345345
+            },
+            "Gesang Beni": {
+              "id": 443,
+              "size": 2698567
+            },
+            "Gesang Silvan": {
+              "id": 44,
+              "size": 3456345
+            }
+        }
+      },
+      "16. März": {
+          "Aufnahme 1": {
+            "Gesang Robin": {
+              "id": 52,
+              "size": 2345345
+            },
+            "Gesang Beni": {
+              "id": 53,
+              "size": 2698567
+            },
+            "Gesang Silvan": {
+              "id": 54,
+              "size": 3456345
+            }
+          }
       }
     }
-  },
-  "20171208": {
-    "Aufnahme 1": {
-      "Gesang Robin": {
-        "id": 22,
-        "size": 2345345
-      },
-      "Gesang Beni": {
-        "id": 23,
-        "size": 2698567
-      },
-      "Gesang Silvan": {
-        "id": 24,
-        "size": 3456345
-      }
-    }
-  },
-  "20180115": {
-    "Aufnahme 1": {
-      "Gesang Robin": {
-        "id": 32,
-        "size": 2345345
-      },
-      "Gesang Beni": {
-        "id": 33,
-        "size": 2698567
-      },
-      "Gesang Silvan": {
-        "id": 34,
-        "size": 3456345
-      }
-    }
-  },
-  "20180225": {
-    "Aufnahme 1": {
-      "Gesang Robin": {
-        "id": 42,
-        "size": 2345345
-      },
-      "Gesang Beni": {
-        "id": 443,
-        "size": 2698567
-      },
-      "Gesang Silvan": {
-        "id": 44,
-        "size": 3456345
-      }
-    }
-  },
-  "20180316": {
-    "Aufnahme 1": {
-      "Gesang Robin": {
-        "id": 52,
-        "size": 2345345
-      },
-      "Gesang Beni": {
-        "id": 53,
-        "size": 2698567
-      },
-      "Gesang Silvan": {
-        "id": 54,
-        "size": 3456345
-      }
-    }
-  }
 }`;

@@ -7,33 +7,48 @@
 
 <mat-sidenav-container>
   <mat-sidenav #sidenav mode="over">
-    <mat-list class="sideNavMenu">
-      <mat-list-item>
-        <button (click)="menuItemClicked($event.target)" mat-button><mat-icon>settings</mat-icon> Settings </button>
-      </mat-list-item>
-      <mat-list-item>
-        <button (click)="menuItemClicked($event.target)" mat-button><mat-icon>help</mat-icon> Help </button>
-      </mat-list-item>
-    </mat-list>
+    <mat-accordion class="plain-expansion-panel">
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <mat-icon>settings</mat-icon> Einstellungen
+          </mat-panel-title>
+         </mat-expansion-panel-header>
+
+        <p>TBD</p>
+
+      </mat-expansion-panel>
+      <mat-expansion-panel (opened)="panelOpenState = true"
+                           (closed)="panelOpenState = false">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <mat-icon>help</mat-icon> Hilfe
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <p>TBD</p>
+
+      </mat-expansion-panel>
+    </mat-accordion>
   </mat-sidenav>
 
   <mat-tab-group>
     <mat-tab label="Recorder">
       <app-recorder></app-recorder>
     </mat-tab>
-    <mat-tab label="Channels">
+    <mat-tab label="Kan&auml;le">
       <mat-card class="channels">
         <mat-card-header>
           <div mat-card-avatar class="channels-header-image"></div>
-          <mat-card-title>Channels</mat-card-title>
-          <mat-card-subtitle>Define Channels</mat-card-subtitle>
+          <mat-card-title>Kan&auml;le</mat-card-title>
+          <mat-card-subtitle>Kan&auml;le festlegen</mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
           <app-channels-table></app-channels-table>
         </mat-card-content>
       </mat-card>
     </mat-tab>
-    <mat-tab label="Recordings">
+    <mat-tab label="Aufnahmen">
       <app-recordings-list></app-recordings-list>
     </mat-tab>
   </mat-tab-group>

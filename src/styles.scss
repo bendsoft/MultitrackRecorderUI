@@ -14,27 +14,37 @@ $theme: mat-light-theme($primary, $accent, $warn);
 
 body {
   font-weight: normal;
+  margin: 0;
 }
 
 h1, h2, h3, h4 {
   font-weight: normal;
 }
 
-body {
-  padding: 2rem 2rem;
-  background:lightgray;
-}
-
 mat-toolbar, mat-sidenav-container {
-  min-width: 38rem;
+  min-width: 22rem;
 }
 
 mat-sidenav-container {
   min-height: 30rem;
 }
 
-.sideNavMenu {
-  display: block;
+mat-sidenav {
+  width: 17rem;
+
+  .mat-accordion.plain-expansion-panel mat-expansion-panel.mat-expansion-panel {
+    border-radius: 0;
+    box-shadow: none;
+    margin: 0;
+  }
+}
+
+.mat-expansion-panel-header-title {
+  align-items: center;
+
+  mat-icon {
+    margin-right: 1rem;
+  }
 }
 
 .channels-header-image {

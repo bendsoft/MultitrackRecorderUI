@@ -8,9 +8,7 @@
         formControlName="selectedChannel"
         [errorStateMatcher]="chooseChannelErrorStateMatcher"
       >
-        <mat-option *ngFor="let nr of availableChannels" [value]="nr">
-          {{ nr }}
-        </mat-option>
+        <mat-option *ngFor="let nr of availableChannels" [value]="nr">{{ nr }}</mat-option>
       </mat-select>
       <mat-error *ngIf="createChannelForm.get('selectedChannel').hasError('notUnique')">Kanal ist bereits vergeben</mat-error>
       <mat-error *ngIf="createChannelForm.get('selectedChannel').hasError('required')">Es muss ein Kanal ausgew&auml;hlt werden</mat-error>
@@ -27,7 +25,7 @@
     </mat-form-field>
 
     <section>
-      <mat-slide-toggle formControlName="active">Aktiv </mat-slide-toggle>
+      <mat-slide-toggle color="primary" formControlName="active">Aktiv </mat-slide-toggle>
     </section>
   </form>
 </mat-dialog-content>

@@ -23,7 +23,7 @@ import {
   MatCheckboxModule,
   MatDialogModule,
   MatSlideToggleModule,
-  MatSortModule, MAT_DATE_LOCALE, MatTreeModule
+  MatSortModule, MAT_DATE_LOCALE, MatTreeModule, MatExpansionModule, MatSnackBarModule
 } from '@angular/material';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
@@ -35,6 +35,7 @@ import {RecorderComponent} from './recorder/recorder/recorder.component';
 import {MatMomentDateModule} from '@angular/material-moment-adapter';
 import { RecordingTimerComponent } from './recorder/recording-timer/recording-timer.component';
 import { RecordingsListComponent } from './recordings-list/recordings-list.component';
+import { CreateRecordingDialogComponent } from './recorder/create-recording-dialog/create-recording-dialog.component';
 
 @NgModule({
   declarations: [
@@ -44,9 +45,10 @@ import { RecordingsListComponent } from './recordings-list/recordings-list.compo
     CreateChannelDialogComponent,
     RecorderComponent,
     RecordingTimerComponent,
-    RecordingsListComponent
+    RecordingsListComponent,
+    CreateRecordingDialogComponent
   ],
-  entryComponents: [SecurityCheckDialogComponent, CreateChannelDialogComponent],
+  entryComponents: [SecurityCheckDialogComponent, CreateChannelDialogComponent, CreateRecordingDialogComponent],
   imports: [
     BrowserModule,
     FormsModule,
@@ -74,7 +76,9 @@ import { RecordingsListComponent } from './recordings-list/recordings-list.compo
     MatSlideToggleModule,
     MatSortModule,
     MatMomentDateModule,
-    MatTreeModule
+    MatTreeModule,
+    MatExpansionModule,
+    MatSnackBarModule
   ],
   providers: [ChannelService, {provide: MAT_DATE_LOCALE, useValue: 'de-CH'}],
   bootstrap: [AppComponent]

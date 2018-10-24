@@ -1,9 +1,8 @@
 import {Component, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA} from '@angular/material';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormGroup} from '@angular/forms';
 import {ChannelErrorStateMatcher, ChannelRow} from '../table/ChannelRow';
-import {ChannelRowValidator} from '../table/ChannelRowValidator';
-import {Observable} from 'rxjs';
+import {ChannelDataSource} from "../table/ChannelDataSource";
 
 @Component({
   selector: 'app-create-channel-dialog',
@@ -18,26 +17,24 @@ export class CreateChannelDialogComponent {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) data: {
-      availableChannels: number[],
-      channelRowStream: Observable<ChannelRow[]>
-    }
-  ) {
+      availableChannels: number[]
+    },
+    channelDataSource: ChannelDataSource
+) {
     this.availableChannels = data.availableChannels;
 
-    data.channelRowStream.subscribe(channelRows => {
-      this.createChannelForm = new FormGroup({
-        selectedChannel: new FormControl('', [
-            Validators.required,
-            ChannelRowValidator.checkUnique.bind(this, 'selectedChannel', channelRows, false)
-          ]
-        ),
-        name: new FormControl('', [
-            Validators.required,
-            ChannelRowValidator.checkUnique.bind(this, 'name', channelRows, false)
-          ]
-        ),
-        active: new FormControl(true)
-      });
-    });
+    const channelRow = ChannelRow.create(
+      {
+        selectedChannel: null,
+        name: '',
+        active: true
+      },
+      channelDataSource,
+      {
+        name: { disabled: false }
+      }
+    );
+
+    this.createChannelForm = channelRow.rowFormGroup;
   }
 }

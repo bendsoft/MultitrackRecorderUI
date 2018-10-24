@@ -2,7 +2,7 @@
   <mat-icon>add</mat-icon>
 </button>
 
-<mat-table #table [dataSource]="channelRowData">
+<mat-table #table [dataSource]="channelDataSource">
   <ng-container matColumnDef="selectedChannel">
     <mat-header-cell *matHeaderCellDef> Nummer </mat-header-cell>
     <mat-cell *matCellDef="let channelRow">

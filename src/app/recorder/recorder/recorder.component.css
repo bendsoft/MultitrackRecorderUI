@@ -15,7 +15,7 @@ mat-card-header {
 }
 
 .recorderController {
-  height: 13rem;
+  height: 16rem;
 }
 
 .recorder mat-button-toggle.btnRecord.mat-button-toggle-checked mat-icon {
@@ -25,4 +25,8 @@ mat-card-header {
 .recorder-header-image {
   background-image: url("../../../assets/img/microphone.jpg");
   background-size: cover;
+}
+
+.recordingInfo {
+  margin-bottom: 3rem;
 }
