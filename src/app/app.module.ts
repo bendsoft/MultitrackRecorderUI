@@ -1,8 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { AppComponent } from './app.component';
-
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   MatButtonModule,
@@ -31,10 +29,10 @@ import {ChannelsTableComponent} from './channels/table/channelsTable.component';
 import { SecurityCheckDialogComponent } from './common/security-check-dialog/security-check-dialog.component';
 import {ChannelService} from './channels/service/channel.service';
 import { CreateChannelDialogComponent } from './channels/create-channel-dialog/create-channel-dialog.component';
-import {RecorderComponent} from './recorder/recorder/recorder.component';
+import {RecorderComponent} from './recorder/recorder-component/recorder.component';
 import {MatMomentDateModule} from '@angular/material-moment-adapter';
 import { RecordingTimerComponent } from './recorder/recording-timer/recording-timer.component';
-import { RecordingsListComponent } from './recordings-list/recordings-list.component';
+import { RecordingsListComponent } from './recordings-list/recordings-list-component/recordings-list.component';
 import { CreateRecordingDialogComponent } from './recorder/create-recording-dialog/create-recording-dialog.component';
 
 @NgModule({

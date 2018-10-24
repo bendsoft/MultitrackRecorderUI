@@ -1,7 +1,7 @@
 import {Component, ViewChild} from '@angular/core';
 import {RecordingTimerComponent} from '../recording-timer/recording-timer.component';
-import {MatDialog, MatSnackBar} from "@angular/material";
-import {CreateRecordingDialogComponent} from "../create-recording-dialog/create-recording-dialog.component";
+import {MatDialog, MatSnackBar} from '@angular/material';
+import {CreateRecordingDialogComponent} from '../create-recording-dialog/create-recording-dialog.component';
 
 @Component({
   selector: 'app-recorder',
@@ -33,24 +33,26 @@ export class RecorderComponent {
     });
 
     addChannelDialog.afterClosed().subscribe(result => {
-      this.recordingInfo = {
-        name: result.name,
-        recordingDate: result.recordingDate.locale('de-ch').format('LL')
-      };
+      if (result) {
+        this.recordingInfo = {
+          name: result.name,
+          recordingDate: result.recordingDate.locale('de-ch').format('LL')
+        };
+      }
     });
   }
 
   stopRecording() {
     this.isRecording = false;
     this.timer.stopTimer();
-    this.snackBar.open('Aufnahme gestoppt!', '' ,{
+    this.snackBar.open('Aufnahme gestoppt!', '' , {
       duration: 2000,
     });
   }
 
   startRecording() {
     this.isRecording = true;
-    this.snackBar.open('Aufnahme läuft!', '' ,{
+    this.snackBar.open('Aufnahme läuft!', '' , {
       duration: 2000,
     });
   }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {BehaviorSubject} from 'rxjs/internal/BehaviorSubject';
-import {Observable} from "rxjs";
+import {Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +17,7 @@ export class ChannelService {
     return CHANNEL_DATA.find(channel => channel.id === id);
   }
 
-  createOrUpdateChannel(newOrChangedChannel: Channel | Channel[]) {
+  createOrUpdateChannel(newOrChangedChannel: Channel | Channel[]): Observable<boolean> {
     const channels = Array.isArray(newOrChangedChannel) ? newOrChangedChannel : [newOrChangedChannel];
 
     channels.forEach(channel => {
@@ -30,6 +30,8 @@ export class ChannelService {
     });
 
     this._channelDataStream.next(this.getChannels());
+
+    return Observable.create(observer => observer.next(true));
   }
 
   removeChannel(channel: Channel): Observable<boolean> {
