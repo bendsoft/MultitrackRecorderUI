@@ -26,7 +26,7 @@ export class ChannelsTableComponent implements OnInit {
 
   constructor(
     private dialog: MatDialog,
-    private channelDataSource: ChannelDataSource,
+    public channelDataSource: ChannelDataSource,
     private snackBar: MatSnackBar
   ) {}
 
