@@ -8,16 +8,26 @@
   max-width: 130px;
 }
 
-.channel-number-select {
-  width: 70px;
-}
-
 .mat-table {
   overflow: auto;
 }
 
 .mat-column-active {
   overflow: visible;
+}
+
+
+.mat-column-selectedChannel {
+  flex: 1.2;
+}
+
+.channel-number-select {
+  min-width: 50px;
+}
+
+mat-header-cell.mat-header-cell.mat-column-name,
+mat-cell.mat-cell.mat-column-name {
+  flex: 3;
 }
 
 .edit-name {

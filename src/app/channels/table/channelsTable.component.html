@@ -4,7 +4,7 @@
 
 <mat-table #table [dataSource]="channelDataSource">
   <ng-container matColumnDef="selectedChannel">
-    <mat-header-cell *matHeaderCellDef> Nummer </mat-header-cell>
+    <mat-header-cell *matHeaderCellDef>Nummer</mat-header-cell>
     <mat-cell *matCellDef="let channelRow">
       <mat-form-field class="channel-number-select">
         <mat-select
@@ -36,7 +36,7 @@
     </mat-cell>
   </ng-container>
   <ng-container matColumnDef="name">
-    <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+    <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
     <mat-cell *matCellDef="let channelRow">
       <mat-form-field class="edit-name" [floatLabel]="channelRow.rowFormGroup.get('name').enabled ? 'auto' : 'never'">
         <input matInput
@@ -50,7 +50,7 @@
   </ng-container>
 
   <ng-container matColumnDef="active">
-    <mat-header-cell *matHeaderCellDef> Aktiv </mat-header-cell>
+    <mat-header-cell *matHeaderCellDef>Aktiv</mat-header-cell>
     <mat-cell *matCellDef="let channelRow">
       <mat-slide-toggle
          color="primary"
@@ -60,7 +60,7 @@
   </ng-container>
 
   <ng-container matColumnDef="action">
-    <mat-header-cell *matHeaderCellDef> Aktion </mat-header-cell>
+    <mat-header-cell *matHeaderCellDef>Aktion</mat-header-cell>
     <mat-cell *matCellDef="let channelRow">
       <button (click)="removeChannel(channelRow)" [disabled]="channelRow.rowFormGroup.invalid" mat-icon-button>
         <mat-icon
