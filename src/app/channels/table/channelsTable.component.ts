@@ -48,14 +48,9 @@ export class ChannelsTableComponent implements OnInit {
   }
 
   addNewChannel() {
-    const position: DialogPosition = {
-      top: '200px'
-    };
-
     const addChannelDialog = this.dialog.open(CreateChannelDialogComponent, {
       height: '20rem',
       width: '25rem',
-      position,
       data: {
         availableChannels: ChannelRow._allChannelNumbers
       }
@@ -104,14 +99,9 @@ export class ChannelsTableComponent implements OnInit {
   }
 
   removeChannel(channelRow: ChannelRow) {
-    const position: DialogPosition = {
-      top: '200px'
-    };
-
     const checkChannelRemovalDialog = this.dialog.open(SecurityCheckDialogComponent, {
       height: '190px',
-      width: '400px',
-      position
+      width: '400px'
     });
 
     checkChannelRemovalDialog.afterClosed().subscribe(removeChannel => {

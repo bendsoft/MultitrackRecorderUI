@@ -26,10 +26,7 @@ export class RecorderComponent {
   openCreateRecordingDialog() {
     const addChannelDialog = this.dialog.open(CreateRecordingDialogComponent, {
       height: '18rem',
-      width: '22rem',
-      position: {
-        top: '200px'
-      }
+      width: '22rem'
     });
 
     addChannelDialog.afterClosed().subscribe(result => {
