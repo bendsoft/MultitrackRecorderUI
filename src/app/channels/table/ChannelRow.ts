@@ -3,7 +3,6 @@ import {Channel} from '../service/channel.service';
 import {ErrorStateMatcher} from '@angular/material';
 import {ChannelDataSource} from "./ChannelDataSource";
 import {ChannelRowValidator} from "./ChannelRowValidator";
-import * as _ from "lodash";
 
 export class ChannelRow {
   static readonly _allChannelNumbers = Array.from(Array(17).keys()).slice(1);
@@ -11,56 +10,68 @@ export class ChannelRow {
     return ChannelRow._allChannelNumbers;
   }
 
+  private _isLoading = false;
+  set isLoading(state) {
+    this._isLoading = state;
+    this.toggleControlsEneable();
+  }
+
   chooseChannelErrorStateMatcher = new ChannelErrorStateMatcher(false, false);
   nameErrorStateMatcher = new ChannelErrorStateMatcher(false, false);
-  rowFormGroup: FormGroup;
 
-  public static create(channel: Channel, channelRowData: ChannelDataSource, formStates?) {
-    return new ChannelRow(channel, channelRowData, formStates);
+  rowFormGroup: FormGroup;
+  private readonly allControls: FormControl[];
+  private static readonly ENABLE_DISABLE_OPTIONS = { onlySelf: true, emitEvent: false };
+
+  public static create(channel: Channel, channelRowData: ChannelDataSource, isChannelRowForTable?: Boolean) {
+    return new ChannelRow(channel, channelRowData, isChannelRowForTable);
   }
 
   private constructor(
     public channel: Channel,
     private channelRowData: ChannelDataSource,
-    formStates
+    private isChannelRowForTable: Boolean = true
   ) {
     Object.freeze(this.channel);
-    const formStateWithDefaults = {
-      name: { disabled: true },
-      active: { disabled: false }
-    };
 
-    _.merge(formStates, formStateWithDefaults);
+    const selectedChannel = new FormControl(channel.selectedChannel, [
+      Validators.required,
+      ChannelRowValidator.checkUnique.bind(this, 'selectedChannel', this.channelRowData, true)
+    ]);
+    const name = new FormControl(channel.name, [
+      Validators.required,
+      ChannelRowValidator.checkUnique.bind(this, 'name', this.channelRowData, true)
+    ]);
+    const active = new FormControl(channel.active);
+
+    this.allControls = [selectedChannel, name, active];
+    this.toggleControlsEneable();
 
     this.rowFormGroup = new FormGroup({
-      selectedChannel: new FormControl(channel.selectedChannel, [
-        Validators.required,
-        ChannelRowValidator.checkUnique.bind(this, 'selectedChannel', this.channelRowData, true)
-      ]),
-      name: new FormControl({ value: channel.name, disabled: formStateWithDefaults.name.disabled }, [
-        Validators.required,
-        ChannelRowValidator.checkUnique.bind(this, 'name', this.channelRowData, true)
-      ]),
-      active: new FormControl({ value: channel.active, disabled: formStateWithDefaults.active.disabled })
+      selectedChannel: selectedChannel,
+      name: name,
+      active: active
     });
 
-    const activeFormControl = this.rowFormGroup.get('active');
-    const nameFormControl = this.rowFormGroup.get('name');
-
-    const options = { onlySelf: true, emitEvent: false };
-    this.rowFormGroup.statusChanges.subscribe(status => {
-      if (status === 'VALID') {
-        activeFormControl.enable(options);
-      } else {
-        activeFormControl.disable(options);
-      }
-    });
-
-    nameFormControl.statusChanges.subscribe(status => {
+    name.statusChanges.subscribe(status => {
       if (status === 'INVALID') {
-        nameFormControl.enable(options);
+        name.enable(ChannelRow.ENABLE_DISABLE_OPTIONS);
       }
     });
+  }
+
+  private toggleControlsEneable() {
+    if (this._isLoading) {
+      this.allControls.forEach(control => control.disable(ChannelRow.ENABLE_DISABLE_OPTIONS));
+    } else {
+      this.allControls.forEach((control, index) => {
+        if (this.isChannelRowForTable && index === 1) {
+          control.disable(ChannelRow.ENABLE_DISABLE_OPTIONS);
+        } else {
+          control.enable(ChannelRow.ENABLE_DISABLE_OPTIONS)
+        }
+      });
+    }
   }
 }
 

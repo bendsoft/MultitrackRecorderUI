@@ -30,9 +30,7 @@ export class CreateChannelDialogComponent {
         active: true
       },
       channelDataSource,
-      {
-        name: { disabled: false }
-      }
+      false
     );
 
     this.createChannelForm = channelRow.rowFormGroup;

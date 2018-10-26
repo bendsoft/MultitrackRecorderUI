@@ -23,7 +23,7 @@
   <ng-container matColumnDef="edit">
     <mat-header-cell *matHeaderCellDef></mat-header-cell>
     <mat-cell *matCellDef="let channelRow">
-      <button (click)="toggleEditMode(channelRow)" mat-icon-button>
+      <button (click)="toggleEditMode(channelRow)" mat-icon-button [disabled]="channelRow._isLoading">
         <mat-icon *ngIf="channelRow.rowFormGroup.get('name').disabled"
           color="accent"
           aria-label="Bearbeite Kanal-Eintrag"

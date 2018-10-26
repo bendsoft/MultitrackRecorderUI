@@ -1,12 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {ChannelService} from '../service/channel.service';
-import {DialogPosition, MatDialog, MatSnackBar} from '@angular/material';
+import {MatDialog, MatSnackBar} from '@angular/material';
 import {SecurityCheckDialogComponent} from '../../common/security-check-dialog/security-check-dialog.component';
 import {ChannelDataSource} from './ChannelDataSource';
 import {ChannelRow} from './ChannelRow';
 import {CreateChannelDialogComponent} from '../create-channel-dialog/create-channel-dialog.component';
-import {FormArray, FormGroup, Validators} from '@angular/forms';
-import {ChannelRowValidator} from './ChannelRowValidator';
+import {FormArray, FormGroup} from '@angular/forms';
+
 /**
  * @title Channels table
  */
@@ -70,9 +69,10 @@ export class ChannelsTableComponent implements OnInit {
     if (channelRow.rowFormGroup.status === 'VALID') {
       if (nameFormControl.disabled) {
         nameFormControl.enable(options);
-        console.log(channelRow);
       } else if (nameFormControl.valid) {
         nameFormControl.disable(options);
+
+        this.channelChanged(channelRow);
       }
     }
   }
@@ -82,21 +82,27 @@ export class ChannelsTableComponent implements OnInit {
       return;
     }
 
-    const createNewOrChangedChannel = changedChannel => {
-      changedChannel = Object.assign({}, newOrChangedChannel.channel);
-      changedChannel.selectedChannel = newOrChangedChannel.rowFormGroup.get('selectedChannel').value;
-      changedChannel.name = newOrChangedChannel.rowFormGroup.get('name').value;
-      changedChannel.active = newOrChangedChannel.rowFormGroup.get('active').value;
-
-      return changedChannel;
-    };
-
-    this.channelDataSource.channelService.createOrUpdateChannel(
-      (this.channelsFormGroup.get('rows') as FormArray).controls
-        .filter(formControl => formControl.dirty)
-        .map(createNewOrChangedChannel)
+    newOrChangedChannel.isLoading = true;
+    setTimeout(() => {
+        this.channelDataSource.channelService
+          .createOrUpdateChannel(this.createNewOrChangedChannel(newOrChangedChannel))
+          .subscribe(result => {
+            this.backendProcessResponse(result,`Kanal wurde ${ result ? '' : 'nicht ' }gespeichert`);
+            newOrChangedChannel.isLoading = false
+          });
+      },
+      3000
     );
   }
+
+  private createNewOrChangedChannel(newOrChangedChannelRow) {
+    const changedChannel = Object.assign({}, newOrChangedChannelRow.channel);
+    changedChannel.selectedChannel = newOrChangedChannelRow.rowFormGroup.get('selectedChannel').value;
+    changedChannel.name = newOrChangedChannelRow.rowFormGroup.get('name').value;
+    changedChannel.active = newOrChangedChannelRow.rowFormGroup.get('active').value;
+
+    return changedChannel;
+  };
 
   removeChannel(channelRow: ChannelRow) {
     const checkChannelRemovalDialog = this.dialog.open(SecurityCheckDialogComponent, {
@@ -106,12 +112,16 @@ export class ChannelsTableComponent implements OnInit {
 
     checkChannelRemovalDialog.afterClosed().subscribe(removeChannel => {
       if(removeChannel === true) {
-        this.channelDataSource.channelService.removeChannel(channelRow.channel)
-          .subscribe(result => this.snackBar.open(`Kanal wurde ${ result ? '' : 'nicht ' }entfernt`, '' ,{
-              duration: 2000,
-            })
-          );
+        this.channelDataSource.channelService
+          .removeChannel(channelRow.channel)
+          .subscribe(result => this.backendProcessResponse(result,`Kanal wurde ${ result ? '' : 'nicht ' }entfernt`));
       }
     });
+  }
+
+  private backendProcessResponse(result, message: string) {
+    this.snackBar.open(message, '' ,{
+      duration: 2000,
+    })
   }
 }
