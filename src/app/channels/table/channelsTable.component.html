@@ -1,76 +1,83 @@
-<button mat-mini-fab class="fab" (click)="addNewChannel()">
-  <mat-icon>add</mat-icon>
-</button>
 
-<mat-table #table [dataSource]="channelDataSource">
-  <ng-container matColumnDef="selectedChannel">
-    <mat-header-cell *matHeaderCellDef>Nummer</mat-header-cell>
-    <mat-cell *matCellDef="let channelRow">
-      <mat-form-field class="channel-number-select">
-        <mat-select
-          [formControl]="channelRow.rowFormGroup.get('selectedChannel')"
-          [errorStateMatcher]="channelRow.chooseChannelErrorStateMatcher"
-        >
-          <mat-option *ngFor="let channelNr of channelRow.allChannelNumbers" [value]="channelNr">
-            {{channelNr}}
-          </mat-option>
-        </mat-select>
-        <mat-error *ngIf="channelRow.rowFormGroup.get('selectedChannel').hasError('notUnique')">Kanal doppelt</mat-error>
-      </mat-form-field>
-    </mat-cell>
-  </ng-container>
+  <button mat-mini-fab class="fab add-channel-button" (click)="addNewChannel()" [disabled]="isLoading">
+    <mat-icon>add</mat-icon>
+  </button>
 
-  <ng-container matColumnDef="edit">
-    <mat-header-cell *matHeaderCellDef></mat-header-cell>
-    <mat-cell *matCellDef="let channelRow">
-      <button (click)="toggleEditMode(channelRow)" mat-icon-button [disabled]="channelRow._isLoading">
-        <mat-icon *ngIf="channelRow.rowFormGroup.get('name').disabled"
-          color="accent"
-          aria-label="Bearbeite Kanal-Eintrag"
-        >edit</mat-icon>
-        <mat-icon *ngIf="channelRow.rowFormGroup.get('name').enabled"
-          color="accent"
-          aria-label="Speichere &Auml;nderung"
-        >save</mat-icon>
-      </button>
-    </mat-cell>
-  </ng-container>
-  <ng-container matColumnDef="name">
-    <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
-    <mat-cell *matCellDef="let channelRow">
-      <mat-form-field class="edit-name" [floatLabel]="channelRow.rowFormGroup.get('name').enabled ? 'auto' : 'never'">
-        <input matInput
-               placeholder="Kanalname"
-               [formControl]="channelRow.rowFormGroup.get('name')"
-               [errorStateMatcher]="channelRow.nameErrorStateMatcher"
-        >
-        <mat-error *ngIf="channelRow.rowFormGroup.get('name').hasError('notUnique')">Name muss eindeutig sein</mat-error>
-      </mat-form-field>
-    </mat-cell>
-  </ng-container>
+  <div class="container">
+    <div class="loading-shade" *ngIf="isLoading">
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+      <div class="loading-text">Änderung wird gespeichert</div>
+    </div>
+    <mat-table #table [dataSource]="channelDataSource">
+      <ng-container matColumnDef="selectedChannel">
+        <mat-header-cell *matHeaderCellDef>Nummer</mat-header-cell>
+        <mat-cell *matCellDef="let channelRow">
+          <mat-form-field class="channel-number-select">
+            <mat-select
+              [formControl]="channelRow.rowFormGroup.get('selectedChannel')"
+              [errorStateMatcher]="channelRow.chooseChannelErrorStateMatcher"
+            >
+              <mat-option *ngFor="let channelNr of channelRow.allChannelNumbers" [value]="channelNr">
+                {{channelNr}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="channelRow.rowFormGroup.get('selectedChannel').hasError('notUnique')">Kanal doppelt</mat-error>
+          </mat-form-field>
+        </mat-cell>
+      </ng-container>
 
-  <ng-container matColumnDef="active">
-    <mat-header-cell *matHeaderCellDef>Aktiv</mat-header-cell>
-    <mat-cell *matCellDef="let channelRow">
-      <mat-slide-toggle
-         color="primary"
-        [formControl]="channelRow.rowFormGroup.get('active')">
-      </mat-slide-toggle>
-    </mat-cell>
-  </ng-container>
+      <ng-container matColumnDef="edit">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let channelRow">
+          <button (click)="toggleEditMode(channelRow)" mat-icon-button [disabled]="channelRow._isLoading">
+            <mat-icon *ngIf="channelRow.rowFormGroup.get('name').disabled"
+              color="accent"
+              aria-label="Bearbeite Kanal-Eintrag"
+            >edit</mat-icon>
+            <mat-icon *ngIf="channelRow.rowFormGroup.get('name').enabled"
+              color="accent"
+              aria-label="Speichere &Auml;nderung"
+            >save</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+        <mat-cell *matCellDef="let channelRow">
+          <mat-form-field class="edit-name" [floatLabel]="channelRow.rowFormGroup.get('name').enabled ? 'auto' : 'never'">
+            <input matInput
+                   placeholder="Kanalname"
+                   [formControl]="channelRow.rowFormGroup.get('name')"
+                   [errorStateMatcher]="channelRow.nameErrorStateMatcher"
+            >
+            <mat-error *ngIf="channelRow.rowFormGroup.get('name').hasError('notUnique')">Name muss eindeutig sein</mat-error>
+          </mat-form-field>
+        </mat-cell>
+      </ng-container>
 
-  <ng-container matColumnDef="action">
-    <mat-header-cell *matHeaderCellDef>Aktion</mat-header-cell>
-    <mat-cell *matCellDef="let channelRow">
-      <button (click)="removeChannel(channelRow)" [disabled]="channelRow.rowFormGroup.invalid" mat-icon-button>
-        <mat-icon
-          color="warn"
-          aria-label="L&ouml;sche Kanal-Eintrag"
-        >delete</mat-icon>
-      </button>
-    </mat-cell>
-  </ng-container>
+      <ng-container matColumnDef="active">
+        <mat-header-cell *matHeaderCellDef>Aktiv</mat-header-cell>
+        <mat-cell *matCellDef="let channelRow">
+          <mat-slide-toggle
+             color="primary"
+            [formControl]="channelRow.rowFormGroup.get('active')">
+          </mat-slide-toggle>
+        </mat-cell>
+      </ng-container>
 
-  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-  <mat-row *matRowDef="let channelRow; columns: displayedColumns;"></mat-row>
-</mat-table>
+      <ng-container matColumnDef="action">
+        <mat-header-cell *matHeaderCellDef>Aktion</mat-header-cell>
+        <mat-cell *matCellDef="let channelRow">
+          <button (click)="removeChannel(channelRow)" [disabled]="channelRow.rowFormGroup.invalid" mat-icon-button>
+            <mat-icon
+              color="warn"
+              aria-label="L&ouml;sche Kanal-Eintrag"
+            >delete</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let channelRow; columns: displayedColumns;"></mat-row>
+    </mat-table>
+</div>

@@ -29,9 +29,7 @@ export class ChannelService {
       }
     });
 
-    this._channelDataStream.next(this.getChannels());
-
-    return Observable.create(observer => observer.next(true));
+    return this.handleBackendRequest()
   }
 
   removeChannel(channel: Channel): Observable<boolean> {
@@ -40,9 +38,16 @@ export class ChannelService {
       CHANNEL_DATA.splice(foundIndex, 1);
     }
 
-    this._channelDataStream.next(this.getChannels());
+    return this.handleBackendRequest();
+  }
 
-    return Observable.create(observer => observer.next(true));
+  private handleBackendRequest() {
+    return Observable.create(observer => {
+      setTimeout(() => {
+        this._channelDataStream.next(this.getChannels());
+        observer.next(true)
+      }, 3000);
+    });
   }
 
   private findChannelIndex(channel): number {

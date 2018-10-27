@@ -21,6 +21,10 @@ h1, h2, h3, h4 {
   font-weight: normal;
 }
 
+.loading-text {
+  color: mat-color($primary);
+}
+
 mat-toolbar, mat-sidenav-container {
   min-width: 22rem;
 }

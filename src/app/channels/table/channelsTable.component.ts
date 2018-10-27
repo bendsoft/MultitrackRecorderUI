@@ -15,6 +15,14 @@ import {FormArray, FormGroup} from '@angular/forms';
   templateUrl: 'channelsTable.component.html'
 })
 export class ChannelsTableComponent implements OnInit {
+  private _isLoading = false;
+  get isLoading() {
+    return this._isLoading;
+  }
+  set isLoading(state) {
+    this._isLoading = state;
+  }
+
   displayedColumns = ['selectedChannel', 'edit', 'name', 'active', 'action'];
 
   private channelsFormGroup = new FormGroup(
@@ -57,7 +65,11 @@ export class ChannelsTableComponent implements OnInit {
 
     addChannelDialog.afterClosed().subscribe(result => {
       if (!!result) {
-        this.channelDataSource.channelService.createOrUpdateChannel(result);
+        this.toggleLoadingStatus();
+        this.channelDataSource.channelService.createOrUpdateChannel(result)
+          .subscribe(result => {
+            this.backendProcessResponse(`Kanal wurde ${ result ? '' : 'nicht ' }gespeichert`);
+        });
       }
     });
   }
@@ -82,17 +94,13 @@ export class ChannelsTableComponent implements OnInit {
       return;
     }
 
-    newOrChangedChannel.isLoading = true;
-    setTimeout(() => {
-        this.channelDataSource.channelService
-          .createOrUpdateChannel(this.createNewOrChangedChannel(newOrChangedChannel))
-          .subscribe(result => {
-            this.backendProcessResponse(result,`Kanal wurde ${ result ? '' : 'nicht ' }gespeichert`);
-            newOrChangedChannel.isLoading = false
-          });
-      },
-      3000
-    );
+    this.toggleLoadingStatus(newOrChangedChannel);
+
+    this.channelDataSource.channelService
+      .createOrUpdateChannel(this.createNewOrChangedChannel(newOrChangedChannel))
+      .subscribe(result => {
+        this.backendProcessResponse(`Kanal wurde ${ result ? '' : 'nicht ' }gespeichert`, newOrChangedChannel);
+      });
   }
 
   private createNewOrChangedChannel(newOrChangedChannelRow) {
@@ -112,16 +120,28 @@ export class ChannelsTableComponent implements OnInit {
 
     checkChannelRemovalDialog.afterClosed().subscribe(removeChannel => {
       if(removeChannel === true) {
+        this.toggleLoadingStatus(removeChannel);
+
         this.channelDataSource.channelService
           .removeChannel(channelRow.channel)
-          .subscribe(result => this.backendProcessResponse(result,`Kanal wurde ${ result ? '' : 'nicht ' }entfernt`));
+          .subscribe(result => {
+            this.backendProcessResponse(`Kanal wurde ${ result ? '' : 'nicht ' }entfernt`, removeChannel);
+          });
       }
     });
   }
 
-  private backendProcessResponse(result, message: string) {
+  private toggleLoadingStatus(channelRow?: ChannelRow) {
+    if(channelRow) {
+      channelRow.isLoading = !channelRow.isLoading;
+    }
+    this.isLoading = !this.isLoading;
+  }
+
+  private backendProcessResponse(message: string, channelRow?: ChannelRow) {
     this.snackBar.open(message, '' ,{
       duration: 2000,
-    })
+    });
+    this.toggleLoadingStatus(channelRow);
   }
 }

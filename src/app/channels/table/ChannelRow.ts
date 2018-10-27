@@ -11,6 +11,9 @@ export class ChannelRow {
   }
 
   private _isLoading = false;
+  get isLoading() {
+    return this._isLoading;
+  }
   set isLoading(state) {
     this._isLoading = state;
     this.toggleControlsEneable();
