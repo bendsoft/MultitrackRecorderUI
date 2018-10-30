@@ -1,10 +1,11 @@
-import {ChannelRow} from './ChannelRow';
+import {ChannelRow} from '../types/ChannelRow';
 import {DataSource} from '@angular/cdk/table';
 import {CollectionViewer} from '@angular/cdk/collections';
-import {Channel, ChannelService} from '../service/channel.service';
+import {ChannelService} from '../service/channel.service';
 import {Observable} from 'rxjs/internal/Observable';
 import {BehaviorSubject} from 'rxjs/internal/BehaviorSubject';
 import {Injectable} from "@angular/core";
+import {Channel} from "../types/Channel";
 
 @Injectable({
   providedIn: 'root',

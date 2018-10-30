@@ -1,6 +1,7 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {BehaviorSubject} from 'rxjs/internal/BehaviorSubject';
 import {Observable} from 'rxjs';
+import {Channel} from "../types/Channel";
 
 @Injectable({
   providedIn: 'root',
@@ -59,14 +60,6 @@ export class ChannelService {
 
     return CHANNEL_DATA.findIndex(existingChannel => existingChannel.id === channel.id);
   }
-}
-
-export interface Channel {
-  id?: number;
-  selectedChannel: number;
-  name: string;
-  active: boolean;
-  profile?: number;
 }
 
 const CHANNEL_DATA: Channel[] = [

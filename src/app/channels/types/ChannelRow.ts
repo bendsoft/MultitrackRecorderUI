@@ -1,7 +1,7 @@
 import {FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from '@angular/forms';
-import {Channel} from '../service/channel.service';
+import {Channel} from './Channel';
 import {ErrorStateMatcher} from '@angular/material';
-import {ChannelDataSource} from "./ChannelDataSource";
+import {ChannelDataSource} from "../table/ChannelDataSource";
 import {ChannelRowValidator} from "./ChannelRowValidator";
 
 export class ChannelRow {

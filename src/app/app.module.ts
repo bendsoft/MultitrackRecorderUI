@@ -40,6 +40,9 @@ import {RecordingTimerComponent} from './recorder/recording-timer/recording-time
 import {RecordingsListComponent} from './recordings-list/recordings-list-component/recordings-list.component';
 import {CreateRecordingDialogComponent} from './recorder/create-recording-dialog/create-recording-dialog.component';
 
+import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { InMemoryDataService }  from './in-memory-data.service';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -56,6 +59,14 @@ import {CreateRecordingDialogComponent} from './recorder/create-recording-dialog
     BrowserModule,
     FormsModule,
     HttpClientModule,
+
+    // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
+    // and returns simulated server responses.
+    // Remove it when a real server is ready to receive requests.
+    HttpClientInMemoryWebApiModule.forRoot(
+      InMemoryDataService, { dataEncapsulation: false }
+    ),
+
     BrowserAnimationsModule,
     MatButtonModule,
     MatMenuModule,

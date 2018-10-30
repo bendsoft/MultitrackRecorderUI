@@ -1,7 +1,7 @@
 import {Component, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA} from '@angular/material';
 import {FormGroup} from '@angular/forms';
-import {ChannelErrorStateMatcher, ChannelRow} from '../table/ChannelRow';
+import {ChannelErrorStateMatcher, ChannelRow} from '../types/ChannelRow';
 import {ChannelDataSource} from "../table/ChannelDataSource";
 
 @Component({

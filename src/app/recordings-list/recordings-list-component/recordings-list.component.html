@@ -1,18 +1,29 @@
 <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
-  <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding>
-    <button mat-icon-button [attr.aria-label]="Herunterladen">
-      <mat-icon class="mat-icon-rtl-mirror">get_app</mat-icon>
-    </button>
-    {{node.filename}} : {{node.metadata.size}}
-  </mat-tree-node>
-
-  <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding>
-    <button mat-icon-button matTreeNodeToggle
-            [attr.aria-label]="'toggle ' + node.filename">
+  <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
+    <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.filename">
       <mat-icon class="mat-icon-rtl-mirror">
         {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
       </mat-icon>
     </button>
     {{node.filename}}
+  </mat-tree-node>
+
+  <mat-tree-node *matTreeNodeDef="let node;when: isRecording" matTreeNodePadding>
+    <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.filename">
+      <mat-icon class="mat-icon-rtl-mirror">
+        {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+      </mat-icon>
+    </button>
+    {{node.filename}}
+    <button mat-icon-button [attr.aria-label]="Herunterladen">
+      <mat-icon class="mat-icon-rtl-mirror">archive</mat-icon>
+    </button>
+  </mat-tree-node>
+
+  <mat-tree-node *matTreeNodeDef="let node;when: isFile" matTreeNodeToggle matTreeNodePadding>
+    <button mat-icon-button [attr.aria-label]="Herunterladen">
+      <mat-icon class="mat-icon-rtl-mirror">get_app</mat-icon>
+    </button>
+    {{node.filename}} : {{node.metadata.size}}
   </mat-tree-node>
 </mat-tree>

@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {MatDialog, MatSnackBar} from '@angular/material';
 import {SecurityCheckDialogComponent} from '../../common/security-check-dialog/security-check-dialog.component';
 import {ChannelDataSource} from './ChannelDataSource';
-import {ChannelRow} from './ChannelRow';
+import {ChannelRow} from '../types/ChannelRow';
 import {CreateChannelDialogComponent} from '../create-channel-dialog/create-channel-dialog.component';
 import {FormArray, FormGroup} from '@angular/forms';
 
@@ -68,7 +68,7 @@ export class ChannelsTableComponent implements OnInit {
         this.toggleLoadingStatus();
         this.channelDataSource.channelService.createOrUpdateChannel(result)
           .subscribe(result => {
-            this.backendProcessResponse(`Kanal wurde ${ result ? '' : 'nicht ' }gespeichert`);
+            this.handleResponse(`Kanal wurde ${ result ? '' : 'nicht ' }gespeichert`);
         });
       }
     });
@@ -99,7 +99,8 @@ export class ChannelsTableComponent implements OnInit {
     this.channelDataSource.channelService
       .createOrUpdateChannel(this.createNewOrChangedChannel(newOrChangedChannel))
       .subscribe(result => {
-        this.backendProcessResponse(`Kanal wurde ${ result ? '' : 'nicht ' }gespeichert`, newOrChangedChannel);
+        this.handleResponse(`Kanal wurde ${ result ? '' : 'nicht ' }gespeichert`);
+        this.toggleLoadingStatus(newOrChangedChannel);
       });
   }
 
@@ -125,7 +126,8 @@ export class ChannelsTableComponent implements OnInit {
         this.channelDataSource.channelService
           .removeChannel(channelRow.channel)
           .subscribe(result => {
-            this.backendProcessResponse(`Kanal wurde ${ result ? '' : 'nicht ' }entfernt`, removeChannel);
+            this.handleResponse(`Kanal wurde ${ result ? '' : 'nicht ' }entfernt`);
+            this.toggleLoadingStatus(removeChannel);
           });
       }
     });
@@ -138,10 +140,9 @@ export class ChannelsTableComponent implements OnInit {
     this.isLoading = !this.isLoading;
   }
 
-  private backendProcessResponse(message: string, channelRow?: ChannelRow) {
+  private handleResponse(message: string) {
     this.snackBar.open(message, '' ,{
       duration: 2000,
     });
-    this.toggleLoadingStatus(channelRow);
   }
 }
