@@ -1,106 +1,106 @@
-import {InMemoryDbService} from "angular-in-memory-web-api";
-import {Recording} from "./recordings-list/types/Recording";
+import {InMemoryDbService} from 'angular-in-memory-web-api';
+import {Recording} from './recordings-list/types/Recording';
 
 export class InMemoryDataService implements InMemoryDbService {
   createDb() {
     const recordings = [
       {
-        id:2342134,
-        name:"Aufnahme 3",
-        date:20181123,
-        recordings:[
+        id: 2342134,
+        name: 'Aufnahme 3',
+        date: 20181123,
+        recordings: [
           {
-            id:11,
-            channelNr:1,
-            name:"Gesang Robin",
-            size:2345345
+            id: 11,
+            channelNr: 1,
+            name: 'Gesang Robin',
+            size: 2345345
           },
           {
-            id:13,
-            channelNr:2,
-            name:"Gesang Beni",
-            size:243233
+            id: 13,
+            channelNr: 2,
+            name: 'Gesang Beni',
+            size: 243233
           },
           {
-            id:15,
-            channelNr:3,
-            name:"Gesang Silvan",
-            size:987987
+            id: 15,
+            channelNr: 3,
+            name: 'Gesang Silvan',
+            size: 987987
           }
         ]
       },
       {
-        id:566776,
-        name:"Aufnahme 2",
-        date:20170803,
-        recordings:[
+        id: 566776,
+        name: 'Aufnahme 2',
+        date: 20170803,
+        recordings: [
           {
-            id:11,
-            channelNr:1,
-            name:"Gesang Robin",
-            size:2345345
+            id: 11,
+            channelNr: 1,
+            name: 'Gesang Robin',
+            size: 2345345
           },
           {
-            id:13,
-            channelNr:2,
-            name:"Gesang Beni",
-            size:243233
+            id: 13,
+            channelNr: 2,
+            name: 'Gesang Beni',
+            size: 243233
           },
           {
-            id:15,
-            channelNr:3,
-            name:"Gesang Silvan",
-            size:987987
+            id: 15,
+            channelNr: 3,
+            name: 'Gesang Silvan',
+            size: 987987
           }
         ]
       },
       {
-        id:566776,
-        name:"Aufnahme 1",
-        date:20170803,
-        recordings:[
+        id: 566776,
+        name: 'Aufnahme 1',
+        date: 20170803,
+        recordings: [
           {
-            id:11,
-            channelNr:1,
-            name:"Gesang Robin",
-            size:2345345
+            id: 11,
+            channelNr: 1,
+            name: 'Gesang Robin',
+            size: 2345345
           },
           {
-            id:13,
-            channelNr:2,
-            name:"Gesang Beni",
-            size:243233
+            id: 13,
+            channelNr: 2,
+            name: 'Gesang Beni',
+            size: 243233
           },
           {
-            id:15,
-            channelNr:3,
-            name:"Gesang Silvan",
-            size:987987
+            id: 15,
+            channelNr: 3,
+            name: 'Gesang Silvan',
+            size: 987987
           }
         ]
       },
       {
-        id:7989879,
-        name:"Aufnahme 4",
-        date:20171013,
-        recordings:[
+        id: 7989879,
+        name: 'Aufnahme 4',
+        date: 20171013,
+        recordings: [
           {
-            id:11,
-            channelNr:1,
-            name:"Gesang Robin",
-            size:2345345
+            id: 11,
+            channelNr: 1,
+            name: 'Gesang Robin',
+            size: 2345345
           },
           {
-            id:13,
-            channelNr:2,
-            name:"Gesang Beni",
-            size:243233
+            id: 13,
+            channelNr: 2,
+            name: 'Gesang Beni',
+            size: 243233
           },
           {
-            id:15,
-            channelNr:3,
-            name:"Gesang Silvan",
-            size:987987
+            id: 15,
+            channelNr: 3,
+            name: 'Gesang Silvan',
+            size: 987987
           }
         ]
       }

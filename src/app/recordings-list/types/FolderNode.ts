@@ -1,6 +1,6 @@
-import {Node} from "./Node";
+import {Node} from './Node';
 
 export interface FolderNode extends Node {
-  isRecording: boolean,
-  children: Node[]
+  isRecording: boolean;
+  children: Node[];
 }
