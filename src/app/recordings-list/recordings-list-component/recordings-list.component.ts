@@ -45,20 +45,61 @@ export class RecordingsListComponent {
   private buildFileTree(recordings: Recording[]) {
     const recordingsTree: FolderNode[] = [];
 
-    const byYear = _.groupBy(recordings, recording => (recording.date as string).substring(0, 4));
-    const byYearAndMonthDay = byYear.map(year =>
-      _.groupBy(year, recording =>
-        moment((recording.date as string).substring(4, 4), 'MMDD').format('Do MMMM')
-      )
-    );
+    var recordings = [
+      { date: '20170101', name: 'barney', channels: [1,2,3,4,5] },
+      { date: '20170102', name: 'alfred', channels: [1,2,3,4,5] },
+      { date: '20160202', name: 'pebbles', channels: [1,2,3,4,5] }
+    ];
 
-    const byYearAndMonthDayAndRecordingName = byYearAndMonthDay.map(monthDay => _.groupBy(monthDay, 'name'));
+    var fileTree = _
+      .chain(recordings)
+      .sortBy(['date', 'name'])
+      .map(rec => ({ name: rec.date.substring(0,4), isRecording: false, children: [rec] }))
+      .reduce((yearFolders, currFolder) => {
+        const yearFolderFound = yearFolders.find(folder => folder.name === currFolder.name);
+        if(yearFolderFound) {
+          currFolder.children.forEach(rec => yearFolderFound.children.push(rec));
+        } else {
+          yearFolders.push(currFolder);
+        }
+        return yearFolders;
+      },[])
+      //.groupBy(rec => rec.date.substring(0,4))
+      //.mapKeys(year => ({ name: year })
+      //.mapValues(recordingsByYear => _.chain(recordingsByYear)
+      //  .groupBy(rec => rec.date.substring(4,4))
+      //  .value()
+      //)
+      .value();
+
+
+    const byYearAndMonthDay = _.groupBy(recordings, this.extractYear);
+
+    Object.values(byYearAndMonthDay)
+      .map(year => _.groupBy(year, this.extractDayMonth));
+
 
      recordings.map(recording => {
       const year = (recording.date as string).substring(0, 4);
       const dayMonth = moment((recording.date as string).substring(4, 4), 'MMDD').format('Do MMMM');
 
     });
+  }
+
+  private convertToFolderNode(
+    recording: Recording,
+    keyExtractor: (recording: Recording) => string,
+    childrenExtractor: (recording: Recording) => Node[]
+  ): FolderNode {
+
+  }
+
+  private extractYear(recording) {
+    return (recording.date as string).substring(0, 4);
+  }
+
+  private extractDayMonth(recording) {
+    return moment((recording.date as string).substring(4, 4), 'MMDD').format('Do MMMM');
   }
 
   private isFolderContainingRecordings(node: FileNode) {
