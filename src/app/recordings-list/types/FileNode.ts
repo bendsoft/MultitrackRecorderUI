@@ -1,5 +1,5 @@
 import {Node} from './Node';
 
-export interface FileNode extends Node {
-  metadata: any;
+export interface FileNode<T> extends Node {
+  file: T
 }

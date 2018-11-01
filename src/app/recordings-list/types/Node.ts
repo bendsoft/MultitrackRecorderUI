@@ -1,3 +1,3 @@
 export interface Node {
-  name: String;
+  filename: String;
 }

@@ -7,8 +7,8 @@ export class InMemoryDataService implements InMemoryDbService {
       {
         id: 2342134,
         name: 'Aufnahme 3',
-        date: 20181123,
-        recordings: [
+        date: '20181123',
+        channels: [
           {
             id: 11,
             channelNr: 1,
@@ -32,8 +32,8 @@ export class InMemoryDataService implements InMemoryDbService {
       {
         id: 566776,
         name: 'Aufnahme 2',
-        date: 20170803,
-        recordings: [
+        date: '20170803',
+        channels: [
           {
             id: 11,
             channelNr: 1,
@@ -57,8 +57,8 @@ export class InMemoryDataService implements InMemoryDbService {
       {
         id: 566776,
         name: 'Aufnahme 1',
-        date: 20170803,
-        recordings: [
+        date: '20170803',
+        channels: [
           {
             id: 11,
             channelNr: 1,
@@ -82,8 +82,8 @@ export class InMemoryDataService implements InMemoryDbService {
       {
         id: 7989879,
         name: 'Aufnahme 4',
-        date: 20171013,
-        recordings: [
+        date: '20171013',
+        channels: [
           {
             id: 11,
             channelNr: 1,

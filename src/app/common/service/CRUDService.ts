@@ -3,7 +3,7 @@ import {HttpClient, HttpParams} from "@angular/common/http";
 import {ServiceUtil} from "./ServiceUtil";
 import {map} from "rxjs/operators";
 import {BackendResponse} from "../types/BackendResponse";
-import {environment} from "../../../environments";
+import {environment} from "../../../environments/environment";
 
 export abstract class CRUDService<T> {
   public _dataStream = new BehaviorSubject<T[]>([]);
@@ -12,11 +12,11 @@ export abstract class CRUDService<T> {
   protected constructor(
     protected http: HttpClient,
     protected serviceRootApi: string,
-    private getApi?: string = '/',
-    private getAllApi?: string = '/all',
-    private createApi?: string = '/',
-    private deleteApi?: string = '/',
-    private updateApi?: string = '/'
+    private getApi: string = '/',
+    private getAllApi: string = '/all',
+    private createApi: string = '/',
+    private deleteApi: string = '/',
+    private updateApi: string = '/'
   ) {
     this.onInit();
   }
@@ -29,7 +29,7 @@ export abstract class CRUDService<T> {
   }
 
   getAll(params?: HttpParams): Observable<T[]> {
-    return this.http.get<BackendResponse<T>>(this.getServiceRootUrl() + this.getAllApi, { params })
+    return this.http.get<BackendResponse<T[]>>(this.getServiceRootUrl() + this.getAllApi, { params })
       .pipe(map(ServiceUtil.extractObjectFromResponse));
   }
 
