@@ -27,7 +27,7 @@ export abstract class CRUDService<T> {
       { params }
     );
 
-    this.updateDataStream(createRequest);
+    createRequest.subscribe(() => this.updateDataStream());
     return createRequest;
   };
 
