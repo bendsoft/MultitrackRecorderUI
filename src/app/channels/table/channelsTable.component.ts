@@ -5,6 +5,7 @@ import {ChannelDataSource} from './ChannelDataSource';
 import {ChannelRow} from '../types/ChannelRow';
 import {CreateChannelDialogComponent} from '../create-channel-dialog/create-channel-dialog.component';
 import {FormArray, FormGroup} from '@angular/forms';
+import {Channel} from "../types/Channel";
 
 /**
  * @title Channels table
@@ -38,7 +39,10 @@ export class ChannelsTableComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.channelDataSource.channelRowStream.subscribe(this.handleRows.bind(this));
+    this.channelDataSource.channelRowStream.subscribe(channelRows => {
+      this.handleRows(channelRows);
+      this.isLoading = false;
+    });
   }
 
   private handleRows(channelRows: ChannelRow[]) {
@@ -63,10 +67,10 @@ export class ChannelsTableComponent implements OnInit {
       }
     });
 
-    addChannelDialog.afterClosed().subscribe(result => {
-      if (!!result) {
-        this.toggleLoadingStatus();
-        this.channelDataSource.channelService.createOrUpdateChannel(result)
+    addChannelDialog.afterClosed().subscribe(newChannel => {
+      if (!!newChannel) {
+        this.setLoadingStatus(true, newChannel);
+        this.channelDataSource.channelService.create(newChannel)
           .subscribe(result => {
             this.handleResponse(`Kanal wurde ${ result ? '' : 'nicht ' }gespeichert`);
         });
@@ -94,17 +98,17 @@ export class ChannelsTableComponent implements OnInit {
       return;
     }
 
-    this.toggleLoadingStatus(newOrChangedChannel);
+    this.setLoadingStatus(true, newOrChangedChannel);
 
     this.channelDataSource.channelService
-      .createOrUpdateChannel(this.createNewOrChangedChannel(newOrChangedChannel))
+      .update(newOrChangedChannel.channel.id, this.createNewOrChangeChannel(newOrChangedChannel))
       .subscribe(result => {
         this.handleResponse(`Kanal wurde ${ result ? '' : 'nicht ' }gespeichert`);
-        this.toggleLoadingStatus(newOrChangedChannel);
+        this.setLoadingStatus(false, newOrChangedChannel);
       });
   }
 
-  private createNewOrChangedChannel(newOrChangedChannelRow) {
+  private createNewOrChangeChannel(newOrChangedChannelRow): Channel {
     const changedChannel = Object.assign({}, newOrChangedChannelRow.channel);
     changedChannel.selectedChannel = newOrChangedChannelRow.rowFormGroup.get('selectedChannel').value;
     changedChannel.name = newOrChangedChannelRow.rowFormGroup.get('name').value;
@@ -121,23 +125,22 @@ export class ChannelsTableComponent implements OnInit {
 
     checkChannelRemovalDialog.afterClosed().subscribe(removeChannel => {
       if(removeChannel === true) {
-        this.toggleLoadingStatus(removeChannel);
+        this.setLoadingStatus(true, channelRow);
 
         this.channelDataSource.channelService
-          .removeChannel(channelRow.channel)
+          .delete(channelRow.channel.id)
           .subscribe(result => {
             this.handleResponse(`Kanal wurde ${ result ? '' : 'nicht ' }entfernt`);
-            this.toggleLoadingStatus(removeChannel);
           });
       }
     });
   }
 
-  private toggleLoadingStatus(channelRow?: ChannelRow) {
+  private setLoadingStatus(status: boolean, channelRow: ChannelRow) {
     if(channelRow) {
-      channelRow.isLoading = !channelRow.isLoading;
+      channelRow.isLoading = status;
     }
-    this.isLoading = !this.isLoading;
+    if(status) this.isLoading = true;
   }
 
   private handleResponse(message: string) {

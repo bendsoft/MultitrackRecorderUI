@@ -1,5 +1,6 @@
 import {InMemoryDbService} from 'angular-in-memory-web-api';
 import {Recording} from './recordings-list/types/Recording';
+import {Channel} from "./channels/types/Channel";
 
 export class InMemoryDataService implements InMemoryDbService {
   createDb() {
@@ -10,19 +11,19 @@ export class InMemoryDataService implements InMemoryDbService {
         date: '20181123',
         channels: [
           {
-            id: 11,
+            id: 31,
             channelNr: 1,
             name: 'Gesang Robin',
             size: 2345345
           },
           {
-            id: 13,
+            id: 33,
             channelNr: 2,
             name: 'Gesang Beni',
             size: 243233
           },
           {
-            id: 15,
+            id: 35,
             channelNr: 3,
             name: 'Gesang Silvan',
             size: 987987
@@ -35,19 +36,19 @@ export class InMemoryDataService implements InMemoryDbService {
         date: '20170803',
         channels: [
           {
-            id: 11,
+            id: 21,
             channelNr: 1,
             name: 'Gesang Robin',
             size: 2345345
           },
           {
-            id: 13,
+            id: 23,
             channelNr: 2,
             name: 'Gesang Beni',
             size: 243233
           },
           {
-            id: 15,
+            id: 25,
             channelNr: 3,
             name: 'Gesang Silvan',
             size: 987987
@@ -85,19 +86,19 @@ export class InMemoryDataService implements InMemoryDbService {
         date: '20171013',
         channels: [
           {
-            id: 11,
+            id: 41,
             channelNr: 1,
             name: 'Gesang Robin',
             size: 2345345
           },
           {
-            id: 13,
+            id: 43,
             channelNr: 2,
             name: 'Gesang Beni',
             size: 243233
           },
           {
-            id: 15,
+            id: 45,
             channelNr: 3,
             name: 'Gesang Silvan',
             size: 987987
@@ -105,7 +106,20 @@ export class InMemoryDataService implements InMemoryDbService {
         ]
       }
     ];
-    return {recordings};
+    const channels: Channel[] = [
+      { id: 0, selectedChannel: 1, name: 'Gesang Robin', active: true, profile: 0 },
+      { id: 1, selectedChannel: 2, name: 'Gesang Beni', active: true, profile: 0 },
+      { id: 3, selectedChannel: 4, name: 'Gitarre Robin', active: true, profile: 0 },
+      { id: 4, selectedChannel: 5, name: 'Gitarre Beni', active: true, profile: 0 },
+      { id: 2, selectedChannel: 3, name: 'Gesang Silvan', active: false, profile: 0 },
+      { id: 5, selectedChannel: 6, name: 'Bass', active: true, profile: 0 },
+      { id: 6, selectedChannel: 7, name: 'Akkustik Gitarre Robin', active: true, profile: 0 },
+      { id: 7, selectedChannel: 8, name: 'Synthesizer', active: true, profile: 0 },
+      { id: 8, selectedChannel: 9, name: 'Keyboard', active: true, profile: 0 },
+      { id: 9, selectedChannel: 10, name: 'Kickdrum', active: true, profile: 0 },
+      { id: 10, selectedChannel: 11, name: 'Gesang Keyboard', active: true, profile: 0 }
+    ];
+    return {recordings, channels};
   }
 
   // Overrides the genId method to ensure that a recording always has an id.

@@ -12,8 +12,4 @@ export class RecordingService extends CRUDService<Recording> {
   ) {
     super(http, '/recordings');
   }
-
-  onInit() {
-    this.updateDataStream();
-  }
 }

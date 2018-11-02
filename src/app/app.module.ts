@@ -42,6 +42,7 @@ import {CreateRecordingDialogComponent} from './recorder/create-recording-dialog
 
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService }  from './in-memory-data.service';
+import {environment} from "../environments/environment";
 
 @NgModule({
   declarations: [
@@ -58,15 +59,6 @@ import { InMemoryDataService }  from './in-memory-data.service';
   imports: [
     BrowserModule,
     FormsModule,
-    HttpClientModule,
-
-    // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
-    // and returns simulated server responses.
-    // Remove it when a real server is ready to receive requests.
-    HttpClientInMemoryWebApiModule.forRoot(
-      InMemoryDataService, { dataEncapsulation: false }
-    ),
-
     BrowserAnimationsModule,
     MatButtonModule,
     MatMenuModule,
@@ -93,7 +85,12 @@ import { InMemoryDataService }  from './in-memory-data.service';
     MatTreeModule,
     MatExpansionModule,
     MatSnackBarModule,
-    MatProgressSpinnerModule, MatProgressBarModule
+    MatProgressSpinnerModule,
+    MatProgressBarModule,
+    HttpClientModule,
+
+    environment.production ?
+      [] : HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService, { delay: 1000 })
   ],
   providers: [ChannelService, {provide: MAT_DATE_LOCALE, useValue: 'de-CH'}],
   bootstrap: [AppComponent]

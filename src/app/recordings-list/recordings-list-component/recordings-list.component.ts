@@ -5,11 +5,12 @@ import {RecordingService} from '../service/recording.service';
 import {Node} from '../types/Node';
 import {ChannelRecordingFile, Recording} from '../types/Recording';
 import * as _ from 'lodash';
-import * as _moment from 'moment';
 import {FolderNode} from '../types/FolderNode';
 import {FileNode} from "../types/FileNode";
 
+import * as _moment from 'moment';
 const moment = _moment;
+moment.locale('de-CH');
 
 @Component({
   selector: 'app-recordings-list',
@@ -24,6 +25,11 @@ export class RecordingsListComponent {
   constructor(recordingService: RecordingService) {
     this.nestedTreeControl = new NestedTreeControl<Node>(this._getChildren);
     this.nestedDataSource = new MatTreeNestedDataSource();
+
+    recordingService.getAll()
+      .subscribe(recordings => {
+        this.nestedDataSource.data = this.buildFileTree(recordings);
+      });
 
     recordingService.dataStream.subscribe(data => {
       this.nestedDataSource.data = this.buildFileTree(data);
@@ -43,7 +49,7 @@ export class RecordingsListComponent {
   }
 
   private groupByName(groupedFolders, currFolder) {
-    const folderFound = groupedFolders.find(folder => folder.name === currFolder.name);
+    const folderFound = groupedFolders.find(folder => folder.filename === currFolder.filename);
     if(folderFound) {
       currFolder.children.forEach(rec => folderFound.children.push(rec));
     } else {
@@ -94,6 +100,6 @@ export class RecordingsListComponent {
   }
 
   private extractDayMonth(recording) {
-    return moment((recording.date as string).substring(4, 4), 'MMDD').format('Do MMMM');
+    return moment((recording.date as string), 'YYYYMMDD').format('Do MMMM');
   }
 }

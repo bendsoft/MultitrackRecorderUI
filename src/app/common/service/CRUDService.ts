@@ -1,8 +1,6 @@
 import {BehaviorSubject, Observable} from "rxjs";
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {ServiceUtil} from "./ServiceUtil";
-import {map} from "rxjs/operators";
-import {BackendResponse} from "../types/BackendResponse";
 import {environment} from "../../../environments/environment";
 
 export abstract class CRUDService<T> {
@@ -11,31 +9,20 @@ export abstract class CRUDService<T> {
 
   protected constructor(
     protected http: HttpClient,
-    protected serviceRootApi: string,
-    private getApi: string = '/',
-    private getAllApi: string = '/all',
-    private createApi: string = '/',
-    private deleteApi: string = '/',
-    private updateApi: string = '/'
-  ) {
-    this.onInit();
-  }
-
-  protected abstract onInit();
+    protected serviceRootApi: string
+  ) {}
 
   get(id: number | string, params?: HttpParams): Observable<T> {
-    return this.http.get<BackendResponse<T>>(this.getServiceRootUrl() + this.getApi + id, { params })
-      .pipe(map(ServiceUtil.extractObjectFromResponse));
+    return this.http.get<T>(this.buildServiceUrl(id), { params });
   }
 
   getAll(params?: HttpParams): Observable<T[]> {
-    return this.http.get<BackendResponse<T[]>>(this.getServiceRootUrl() + this.getAllApi, { params })
-      .pipe(map(ServiceUtil.extractObjectFromResponse));
+    return this.http.get<T[]>(this.buildServiceUrl(), { params });
   }
 
   create(object: T, params?: HttpParams) {
     const createRequest = this.http.post(
-      this.getServiceRootUrl() + this.createApi,
+      this.buildServiceUrl(),
       ServiceUtil.wrapPayload(object),
       { params }
     );
@@ -46,32 +33,29 @@ export abstract class CRUDService<T> {
 
   update(id: number | string, object: T, params?: HttpParams) {
     const updateRequest = this.http.put(
-      this.getServiceRootUrl() + this.updateApi + id,
+      this.buildServiceUrl(id),
       ServiceUtil.wrapPayload(object),
       { params }
     );
 
-    this.updateDataStream(updateRequest);
+    updateRequest.subscribe(() => this.updateDataStream());
     return updateRequest;
   };
 
-  protected getServiceRootUrl() {
-    return environment.baseApi + this.serviceRootApi;
-  }
-
   delete(id: number | string, params?: HttpParams) {
-    const deleteRequest = this.http.delete(this.deleteApi + id, { params });
+    const deleteRequest = this.http.delete(this.buildServiceUrl(id), { params });
 
-    this.updateDataStream(deleteRequest);
+    deleteRequest.subscribe(() => this.updateDataStream());
     return deleteRequest;
   };
 
-  protected updateDataStream(request?: Observable<any>) {
-    const performUpdate = () => this.getAll().subscribe(result => this._dataStream.next(result));
-    if (request) {
-      request.subscribe(performUpdate);
-    } else {
-      performUpdate();
-    }
+  protected buildServiceUrl(id?: number | string) {
+    return environment.baseApi + this.serviceRootApi + (id != null ? `/${id}` : '');
+  }
+
+  protected updateDataStream() {
+    this.getAll().subscribe(result =>
+      this._dataStream.next(result)
+    );
   }
 }
