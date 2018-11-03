@@ -1,8 +1,8 @@
 import {FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from '@angular/forms';
-import {Channel} from './Channel';
+import {ChannelModel} from '../service/channel.model';
 import {ErrorStateMatcher} from '@angular/material';
-import {ChannelDataSource} from "../table/ChannelDataSource";
-import {ChannelRowValidator} from "./ChannelRowValidator";
+import {ChannelDataSource} from "./channel-data-source";
+import {ChannelRowValidator} from "./channel-row-validator";
 
 export class ChannelRow {
   static readonly _allChannelNumbers = Array.from(Array(17).keys()).slice(1);
@@ -26,12 +26,12 @@ export class ChannelRow {
   private readonly allControls: FormControl[];
   private static readonly ENABLE_DISABLE_OPTIONS = { onlySelf: true, emitEvent: false };
 
-  public static create(channel: Channel, channelRowData: ChannelDataSource, isChannelRowForTable?: Boolean) {
+  public static create(channel: ChannelModel, channelRowData: ChannelDataSource, isChannelRowForTable?: Boolean) {
     return new ChannelRow(channel, channelRowData, isChannelRowForTable);
   }
 
   private constructor(
-    public channel: Channel,
+    public channel: ChannelModel,
     private channelRowData: ChannelDataSource,
     private isChannelRowForTable: Boolean = true
   ) {

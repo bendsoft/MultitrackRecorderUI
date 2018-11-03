@@ -5,7 +5,24 @@
     <mat-card-subtitle>Aufnahme starten</mat-card-subtitle>
 
     <div class="addNewRecording">
-      <button mat-mini-fab class="fab" (click)="openCreateRecordingDialog()">
+      <form [formGroup]="continueExistingRecordingForm">
+        <mat-form-field class="choose-recording">
+          <mat-select
+            aria-label="Bestehende Aufnahme fortsetzen"
+            [formControl]="continueExistingRecordingForm.get('selectExistingRecord')"
+            placeholder="Aufnahme weitermachen ..."
+          >
+            <mat-option *ngFor="let recording of existingTodaysSessions | async" [value]="recording">
+              {{recording.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </form>
+
+      <button mat-mini-fab class="fab"
+              (click)="openCreateRecordingDialog()"
+              aria-label="Neue Aufnahme erstellen"
+      >
         <mat-icon>add</mat-icon>
       </button>
     </div>
@@ -13,22 +30,45 @@
 
   <mat-card-content>
     <div class="recorderController flexTopCenter" *ngIf="recordingInfo">
-      <p>Aufnahmedatum: {{ recordingInfo.recordingDate }}<br />Bezeichnung: {{ recordingInfo.name }}</p>
+      <p>Aufnahmedatum: {{ recordingInfo.date }}<br />Bezeichnung: {{ recordingInfo.name }}</p>
       <div *ngIf="!isRecording" class="recordingReady">
         <button mat-fab
                 color="primary"
                 aria-label="Aufnahme starten"
-                (click)="startRecording()"
+                (click)="onClickStartRecording()"
         >
           <mat-icon>mic</mat-icon>
         </button>
       </div>
       <div *ngIf="isRecording" class="recording flexTopCenter">
+
+        <form [formGroup]="trackRecordingForm" class="example-form">
+          <button (click)="toggleEditMode()" mat-icon-button>
+            <mat-icon *ngIf="trackRecordingForm.get('name').disabled"
+                      color="accent"
+                      aria-label="Bearbeite Songtitel"
+            >edit</mat-icon>
+            <mat-icon *ngIf="trackRecordingForm.get('name').enabled"
+                      color="accent"
+                      aria-label="Speichere &Auml;nderung"
+            >save</mat-icon>
+          </button>
+
+          <mat-form-field>
+            <input matInput
+                   placeholder="Songtitel"
+                   formControlName="name"
+                   [errorStateMatcher]="nameErrorStateMatcher"
+            >
+            <mat-error *ngIf="trackRecordingForm.get('name').hasError('required')">Es muss ein Name vergeben werden</mat-error>
+          </mat-form-field>
+        </form>
+
         <div>
           <button mat-fab
                   color="warn"
                   aria-label="Aufnahme stoppen"
-                  (click)="stopRecording()"
+                  (click)="onClickStopRecording()"
                   class="pulse"
           >
             <mat-icon>stop</mat-icon>
@@ -39,7 +79,7 @@
           <button mat-fab
                   color="primary"
                   aria-label="N&aumlchste Aufnahme starten"
-                  (click)="restartRecording()"
+                  (click)="onClickRecordNextTrack()"
           >
             <mat-icon>skip_next</mat-icon>
           </button>

@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {MatDialog, MatSnackBar} from '@angular/material';
-import {SecurityCheckDialogComponent} from '../../common/security-check-dialog/security-check-dialog.component';
-import {ChannelDataSource} from './ChannelDataSource';
-import {ChannelRow} from '../types/ChannelRow';
+import {SecurityCheckDialogComponent} from '../../shared/security-check-dialog/security-check-dialog.component';
+import {ChannelDataSource} from './channel-data-source';
+import {ChannelRow} from './channel-row';
 import {CreateChannelDialogComponent} from '../create-channel-dialog/create-channel-dialog.component';
 import {FormArray, FormGroup} from '@angular/forms';
-import {Channel} from "../types/Channel";
+import {ChannelModel} from "../service/channel.model";
 
 /**
  * @title Channels table
@@ -108,7 +108,7 @@ export class ChannelsTableComponent implements OnInit {
       });
   }
 
-  private createNewOrChangeChannel(newOrChangedChannelRow): Channel {
+  private createNewOrChangeChannel(newOrChangedChannelRow): ChannelModel {
     const changedChannel = Object.assign({}, newOrChangedChannelRow.channel);
     changedChannel.selectedChannel = newOrChangedChannelRow.rowFormGroup.get('selectedChannel').value;
     changedChannel.name = newOrChangedChannelRow.rowFormGroup.get('name').value;

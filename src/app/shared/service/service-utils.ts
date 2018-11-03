@@ -1,4 +1,4 @@
-export class ServiceUtil {
+export class ServiceUtils {
   static wrapPayload<T>(body: T) {
     if (body === null) return null;
 

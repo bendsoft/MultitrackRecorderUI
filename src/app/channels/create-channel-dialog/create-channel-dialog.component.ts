@@ -1,8 +1,8 @@
 import {Component, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA} from '@angular/material';
 import {FormGroup} from '@angular/forms';
-import {ChannelErrorStateMatcher, ChannelRow} from '../types/ChannelRow';
-import {ChannelDataSource} from "../table/ChannelDataSource";
+import {ChannelErrorStateMatcher, ChannelRow} from '../table/channel-row';
+import {ChannelDataSource} from "../table/channel-data-source";
 
 @Component({
   selector: 'app-create-channel-dialog',

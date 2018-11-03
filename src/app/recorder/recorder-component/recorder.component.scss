@@ -1,5 +1,18 @@
 .addNewRecording {
   margin-left: auto;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  align-content: flex-start;
+  align-items: center;
+
+  button {
+    margin-left: 2rem;
+  }
+}
+
+.choose-recording {
+  width: 220px;
 }
 
 mat-card-header {
@@ -15,7 +28,7 @@ mat-card-header {
 }
 
 .recorderController {
-  height: 16rem;
+  height: 20rem;
 }
 
 .recorder mat-button-toggle.btnRecord.mat-button-toggle-checked mat-icon {

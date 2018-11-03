@@ -31,7 +31,7 @@ import {
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {ChannelsTableComponent} from './channels/table/channelsTable.component';
-import {SecurityCheckDialogComponent} from './common/security-check-dialog/security-check-dialog.component';
+import {SecurityCheckDialogComponent} from './shared/security-check-dialog/security-check-dialog.component';
 import {ChannelService} from './channels/service/channel.service';
 import {CreateChannelDialogComponent} from './channels/create-channel-dialog/create-channel-dialog.component';
 import {RecorderComponent} from './recorder/recorder-component/recorder.component';

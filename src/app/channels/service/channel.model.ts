@@ -1,4 +1,4 @@
-export interface Channel {
+export interface ChannelModel {
   id?: number;
   selectedChannel: number;
   name: string;

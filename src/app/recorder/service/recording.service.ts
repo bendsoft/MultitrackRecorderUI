@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import {Recording} from '../types/Recording';
-import {CRUDService} from '../../common/service/CRUDService';
+import {RecordingModel} from './recording.model';
+import {CRUDService} from '../../shared/service/abstract-crud-service';
 import {HttpClient} from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
-export class RecordingService extends CRUDService<Recording> {
+export class RecordingService extends CRUDService<RecordingModel> {
   constructor(
     http: HttpClient,
   ) {

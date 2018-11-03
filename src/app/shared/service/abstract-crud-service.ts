@@ -1,6 +1,6 @@
 import {BehaviorSubject, Observable} from "rxjs";
 import {HttpClient, HttpParams} from "@angular/common/http";
-import {ServiceUtil} from "./ServiceUtil";
+import {ServiceUtils} from "./service-utils";
 import {environment} from "../../../environments/environment";
 
 export abstract class CRUDService<T> {
@@ -23,7 +23,7 @@ export abstract class CRUDService<T> {
   create(object: T, params?: HttpParams) {
     const createRequest = this.http.post(
       this.buildServiceUrl(),
-      ServiceUtil.wrapPayload(object),
+      ServiceUtils.wrapPayload(object),
       { params }
     );
 
@@ -34,7 +34,7 @@ export abstract class CRUDService<T> {
   update(id: number | string, object: T, params?: HttpParams) {
     const updateRequest = this.http.put(
       this.buildServiceUrl(id),
-      ServiceUtil.wrapPayload(object),
+      ServiceUtils.wrapPayload(object),
       { params }
     );
 
