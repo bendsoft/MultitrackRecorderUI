@@ -2,9 +2,18 @@
   <mat-card-header>
     <div mat-card-avatar class="recorder-header-image"></div>
     <mat-card-title>Recorder</mat-card-title>
-    <mat-card-subtitle>Aufnahme starten</mat-card-subtitle>
+    <mat-card-subtitle>Session aufnehmen</mat-card-subtitle>
+  </mat-card-header>
 
-    <div class="addNewRecording">
+  <mat-card-content>
+    <div class="select-or-create-recording" *ngIf="!isRecording">
+      <button mat-mini-fab class="fab"
+              (click)="openCreateRecordingDialog()"
+              aria-label="Neue Aufnahme erstellen"
+      >
+        <mat-icon>add</mat-icon>
+      </button>
+
       <form [formGroup]="continueExistingRecordingForm">
         <mat-form-field class="choose-recording">
           <mat-select
@@ -18,18 +27,9 @@
           </mat-select>
         </mat-form-field>
       </form>
-
-      <button mat-mini-fab class="fab"
-              (click)="openCreateRecordingDialog()"
-              aria-label="Neue Aufnahme erstellen"
-      >
-        <mat-icon>add</mat-icon>
-      </button>
     </div>
-  </mat-card-header>
 
-  <mat-card-content>
-    <div class="recorderController flexTopCenter" *ngIf="recordingInfo">
+    <div class="recorder-controller flex-top-center" *ngIf="recordingInfo">
       <p>Aufnahmedatum: {{ recordingInfo.date }}<br />Bezeichnung: {{ recordingInfo.name }}</p>
       <div *ngIf="!isRecording" class="recordingReady">
         <button mat-fab
@@ -40,7 +40,7 @@
           <mat-icon>mic</mat-icon>
         </button>
       </div>
-      <div *ngIf="isRecording" class="recording flexTopCenter">
+      <div *ngIf="isRecording" class="recording flex-top-center">
 
         <form [formGroup]="trackRecordingForm" class="example-form">
           <button (click)="toggleEditMode()" mat-icon-button>

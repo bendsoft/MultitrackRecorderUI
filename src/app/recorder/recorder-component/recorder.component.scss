@@ -1,5 +1,4 @@
-.addNewRecording {
-  margin-left: auto;
+.select-or-create-recording {
   display: flex;
   flex-flow: row nowrap;
   justify-content: flex-start;
@@ -7,7 +6,7 @@
   align-items: center;
 
   button {
-    margin-left: 2rem;
+    margin-right: 2rem;
   }
 }
 
@@ -19,7 +18,7 @@ mat-card-header {
   justify-content: flex-start;
 }
 
-.flexTopCenter {
+.flex-top-center {
   display: flex;
   flex-flow: column nowrap;
   justify-content: flex-start;
@@ -27,7 +26,7 @@ mat-card-header {
   align-items: center;
 }
 
-.recorderController {
+.recorder-controller {
   height: 20rem;
 }
 

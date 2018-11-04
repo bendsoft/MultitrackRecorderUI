@@ -3,7 +3,7 @@
 <mat-dialog-content>
   <form [formGroup]="createRecordingForm" class="example-form">
     <mat-form-field>
-      <input matInput [matDatepicker]="picker" placeholder="Datum ausw&auml;hlen" formControlName="recordingDate">
+      <input matInput [matDatepicker]="picker" placeholder="Datum ausw&auml;hlen" formControlName="date">
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>

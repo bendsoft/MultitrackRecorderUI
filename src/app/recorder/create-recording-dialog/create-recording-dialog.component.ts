@@ -13,7 +13,7 @@ const moment = _moment;
 })
 export class CreateRecordingDialogComponent {
   createRecordingForm: FormGroup = new FormGroup({
-    recordingDate: new FormControl(moment(), Validators.required),
+    date: new FormControl(moment(), Validators.required),
     name: new FormControl('', Validators.required)
   });
 
