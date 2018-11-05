@@ -1,8 +1,8 @@
 import {Component} from '@angular/core';
 import {NestedTreeControl} from '@angular/cdk/tree';
 import {MatTreeNestedDataSource} from '@angular/material';
-import {RecordingService} from '../../recorder/service/recording.service';
-import {ChannelRecordingFile} from '../../recorder/service/recording.model';
+import {RecordingService} from '../service/recording.service';
+import {ChannelRecordingFile} from '../service/recording.model';
 import {FileNode, FolderNode, FolderType, Node, RecordingListUtils} from './recording-list-utils';
 
 @Component({

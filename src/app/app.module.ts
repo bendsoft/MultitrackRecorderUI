@@ -37,7 +37,7 @@ import {CreateChannelDialogComponent} from './channels/create-channel-dialog/cre
 import {RecorderComponent} from './recorder/recorder-component/recorder.component';
 import {MatMomentDateModule} from '@angular/material-moment-adapter';
 import {RecordingTimerComponent} from './recorder/recording-timer/recording-timer.component';
-import {RecordingsListComponent} from './recordings-list/recordings-list-component/recordings-list.component';
+import {RecordingsListComponent} from './recorder/recordings-list-component/recordings-list.component';
 import {CreateRecordingDialogComponent} from './recorder/create-recording-dialog/create-recording-dialog.component';
 
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';

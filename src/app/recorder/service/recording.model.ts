@@ -18,3 +18,13 @@ export interface ChannelRecordingFile {
   name: string;
   size: number;
 }
+
+export class RecordingModelFactory {
+  static create(name, date): RecordingModel {
+    return {
+      id: null,
+      name, date,
+      tracks: []
+    } as RecordingModel
+  }
+}

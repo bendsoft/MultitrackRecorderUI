@@ -6,22 +6,24 @@
   </mat-card-header>
 
   <mat-card-content>
-    <div class="select-or-create-recording" *ngIf="!isRecording">
+    <div class="select-or-create-recording">
       <button mat-mini-fab class="fab"
               (click)="openCreateRecordingDialog()"
               aria-label="Neue Aufnahme erstellen"
+              [disabled]="isRecording"
       >
         <mat-icon>add</mat-icon>
       </button>
 
-      <form [formGroup]="continueExistingRecordingForm">
+      <form [formGroup]="currentRecordingForm">
         <mat-form-field class="choose-recording">
           <mat-select
             aria-label="Bestehende Aufnahme fortsetzen"
-            [formControl]="continueExistingRecordingForm.get('selectExistingRecord')"
+            [formControl]="currentRecordingForm.get('selectRecording')"
             placeholder="Aufnahme weitermachen ..."
+            (selectionChange)="onSelectRecording($event)"
           >
-            <mat-option *ngFor="let recording of existingTodaysSessions | async" [value]="recording">
+            <mat-option *ngFor="let recording of todaysSessions | async" [value]="recording">
               {{recording.name}}
             </mat-option>
           </mat-select>
@@ -29,8 +31,7 @@
       </form>
     </div>
 
-    <div class="recorder-controller flex-top-center" *ngIf="recordingInfo">
-      <p>Aufnahmedatum: {{ recordingInfo.date }}<br />Bezeichnung: {{ recordingInfo.name }}</p>
+    <div class="recorder-controller flex-top-center" *ngIf="isRecordingSelected">
       <div *ngIf="!isRecording" class="recordingReady">
         <button mat-fab
                 color="primary"

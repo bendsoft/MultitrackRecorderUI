@@ -6,9 +6,9 @@ export class InMemoryDataService implements InMemoryDbService {
   createDb() {
     const recordings: RecordingModel[] = [
       {
-        id: 2342134,
+        id: 1234,
         name: 'Aufnahme 5',
-        date: '20181103',
+        date: '20181107',
         tracks: [{
           id: 1324,
           number: 1,
@@ -36,7 +36,7 @@ export class InMemoryDataService implements InMemoryDbService {
         }]
       },
       {
-        id: 2342134,
+        id: 2345,
         name: 'Aufnahme 3',
         date: '20181123',
         tracks: [{
@@ -66,7 +66,7 @@ export class InMemoryDataService implements InMemoryDbService {
         }]
       },
       {
-        id: 566776,
+        id: 3456,
         name: 'Aufnahme 2',
         date: '20170803',
         tracks: [{
@@ -96,7 +96,7 @@ export class InMemoryDataService implements InMemoryDbService {
         }]
       },
       {
-        id: 566776,
+        id: 4567,
         name: 'Aufnahme 1',
         date: '20170803',
         tracks: [{
@@ -126,7 +126,7 @@ export class InMemoryDataService implements InMemoryDbService {
         }]
       },
       {
-        id: 7989879,
+        id: 5678,
         name: 'Aufnahme 4',
         date: '20171013',
         tracks: [{

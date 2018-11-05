@@ -1,4 +1,4 @@
-import {ChannelRecordingFile, RecordingModel, Track} from '../../recorder/service/recording.model';
+import {ChannelRecordingFile, RecordingModel, Track} from '../service/recording.model';
 import * as _ from 'lodash';
 import * as _moment from 'moment';
 const moment = _moment;

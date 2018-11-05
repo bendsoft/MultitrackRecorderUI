@@ -1,13 +1,14 @@
 import {Component, ViewChild} from '@angular/core';
 import {RecordingTimerComponent} from '../recording-timer/recording-timer.component';
-import {ErrorStateMatcher, MatDialog, MatSnackBar} from '@angular/material';
+import {ErrorStateMatcher, MatDialog, MatSelectChange, MatSnackBar} from '@angular/material';
 import {CreateRecordingDialogComponent} from '../create-recording-dialog/create-recording-dialog.component';
 import {FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from '@angular/forms';
 import {RecordingService} from '../service/recording.service';
-import {HttpParams} from '@angular/common/http';
-import * as _moment from "moment";
-import {RecordingModel} from '../service/recording.model';
+import * as _moment from 'moment';
+import {RecordingModel, RecordingModelFactory} from '../service/recording.model';
 import {Observable} from 'rxjs';
+import {map, tap} from 'rxjs/operators';
+
 const moment = _moment;
 moment.locale('de-ch');
 
@@ -18,15 +19,12 @@ moment.locale('de-ch');
 })
 export class RecorderComponent {
   isRecording = false;
-  recordingInfo: {
-    date,
-    name
-  };
+  isRecordingSelected = false;
 
-  continueExistingRecordingForm = new FormGroup({
-    selectExistingRecord: new FormControl()
+  currentRecordingForm = new FormGroup({
+    selectRecording: new FormControl()
   });
-  existingTodaysSessions: Observable<RecordingModel[]>;
+  todaysSessions: Observable<RecordingModel[]>;
 
   private trackCounter: number = 1;
   trackRecordingForm = new FormGroup({
@@ -41,27 +39,36 @@ export class RecorderComponent {
   constructor(
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
-    recordingService: RecordingService
+    private recordingService: RecordingService
   ) {
-    const existingRecordingSelect = this.continueExistingRecordingForm.get('selectExistingRecord');
+    const existingRecordingSelect = this.currentRecordingForm.get('selectRecording');
     existingRecordingSelect.disable();
-    this.existingTodaysSessions = recordingService.getAll(new HttpParams().set('date', moment().format('YYYYMMDD')));
-    this.existingTodaysSessions
-      .subscribe(recordingsToday => {
-        if(recordingsToday.length > 0) {
-          existingRecordingSelect.valueChanges.subscribe(recordingSelected => {
-            console.log(recordingSelected);
-
-            if (recordingSelected) {
-              this.recordingInfo = {
-                date: moment(recordingSelected.date, 'YYYYMMDD').format('LL'),
-                name: recordingSelected.name
-              }
-            }
-          });
+    this.todaysSessions = this.recordingService.dataStream.pipe(
+      map(recordings =>
+        recordings.filter(recording =>
+          recording.date === moment().format('YYYYMMDD')
+        )
+      ),
+      tap(todayRec => {
+        existingRecordingSelect.disable();
+        if (Array.isArray(todayRec) && todayRec.length > 0) {
+          existingRecordingSelect.setValue(todayRec[todayRec.length-1]);
           existingRecordingSelect.enable();
         }
-      });
+      })
+    );
+
+    existingRecordingSelect.valueChanges.subscribe(changedValue => {
+      this.isRecordingSelected = !!changedValue;
+    });
+
+    this.recordingService.updateDataStream();
+  }
+
+  onSelectRecording(selectedRecording: MatSelectChange) {
+    if (selectedRecording.value) {
+      console.log(selectedRecording.value);
+    }
   }
 
   toggleEditMode() {
@@ -85,11 +92,15 @@ export class RecorderComponent {
 
     addChannelDialog.afterClosed().subscribe(result => {
       if (result) {
-        this.trackCounter = 0;
-        this.recordingInfo = {
-          name: result.name,
-          date: result.date.format('LL')
-        };
+        this.recordingService.create(
+          RecordingModelFactory.create(
+            result.name,
+            result.date.format('YYYYMMDD')
+          )
+        )
+        .subscribe(() => this.snackBar.open('Aufnahme erfolgreich erstellt!', '' , {
+          duration: 2000
+        }));
       }
     });
   }
@@ -102,6 +113,7 @@ export class RecorderComponent {
     this.trackCounter++;
     this.trackRecordingForm.get('name').reset();
     this.isRecording = false;
+    this.currentRecordingForm.get('selectRecording').enable();
     this.timer.stopTimer();
 
     this.snackBar.open('Aufnahme gestoppt!', '' , {
@@ -111,6 +123,7 @@ export class RecorderComponent {
 
   onClickStartRecording() {
     this.isRecording = true;
+    this.currentRecordingForm.get('selectRecording').disable();
     this.snackBar.open('Aufnahme läuft!', '' , {
       duration: 2000,
     });
