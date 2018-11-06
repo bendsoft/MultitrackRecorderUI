@@ -5,7 +5,7 @@ const moment = _moment;
 moment.locale('de-CH');
 
 export interface FileNode<T> extends Node {
-  file: T
+  file: T;
 }
 
 export enum FolderType {
@@ -14,7 +14,7 @@ export enum FolderType {
 
 export interface FolderNode extends Node {
   id?: number;
-  type: FolderType;
+  folderType: FolderType;
   children: Node[];
 }
 
@@ -28,30 +28,29 @@ export class RecordingListUtils {
       .sortBy(['date', 'name'])
       .map((rec): FolderNode => ({
         filename: RecordingListUtils.extractYear(rec),
-        type: FolderType.PLAIN,
+        folderType: FolderType.PLAIN,
         children: new Array<FolderNode>(
           {
             filename: `${RecordingListUtils.extractDayMonth(rec)} ${rec.name}`,
-            type: FolderType.RECORDING,
+            folderType: FolderType.RECORDING,
             children: this.createTrackList(rec)
           }
         )
       }))
-      .reduce(this.groupByName,[])
+      .reduce(this.groupByName, [])
       .tap(folderTree => folderTree.forEach(yearFolder => {
-        yearFolder.children = yearFolder.children.reduce(this.groupByName,[])
+        yearFolder.children = yearFolder.children.reduce(this.groupByName, []);
       }))
       .value();
   }
 
   private static createTrackList(rec: RecordingModel): FolderNode[] {
     return _.chain(rec.tracks)
-      .sortBy('track.number')
+      .sortBy('track.trackNumber')
       .map(track => ({
-        filename: `${track.number}. ${track.name}`,
+        filename: `${track.trackNumber}. ${track.name}`,
         id: track.id,
-        type: FolderType.TRACK,
-        isTrack: true,
+        folderType: FolderType.TRACK,
         children: this.createChannelList(track)
       }))
       .value();
@@ -69,13 +68,13 @@ export class RecordingListUtils {
 
   private static groupByName(groupedFolders, currFolder) {
     const folderFound = groupedFolders.find(folder => folder.filename === currFolder.filename);
-    if(folderFound) {
+    if (folderFound) {
       currFolder.children.forEach(rec => folderFound.children.push(rec));
     } else {
       groupedFolders.push(currFolder);
     }
     return groupedFolders;
-  };
+  }
 
   private static extractYear(recording: RecordingModel) {
     return (recording.date as string).substring(0, 4);

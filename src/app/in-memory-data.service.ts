@@ -11,7 +11,7 @@ export class InMemoryDataService implements InMemoryDbService {
         date: '20181107',
         tracks: [{
           id: 1324,
-          number: 1,
+          trackNumber: 1,
           name: 'track 1',
           channels: [
             {
@@ -41,7 +41,7 @@ export class InMemoryDataService implements InMemoryDbService {
         date: '20181123',
         tracks: [{
           id: 1324,
-          number: 1,
+          trackNumber: 1,
           name: 'track 1',
           channels: [
             {
@@ -71,7 +71,7 @@ export class InMemoryDataService implements InMemoryDbService {
         date: '20170803',
         tracks: [{
           id: 1324,
-          number: 1,
+          trackNumber: 1,
           name: 'track 1',
           channels: [
             {
@@ -101,7 +101,7 @@ export class InMemoryDataService implements InMemoryDbService {
         date: '20170803',
         tracks: [{
           id: 1324,
-          number: 1,
+          trackNumber: 1,
           name: 'track 1',
           channels: [
             {
@@ -131,7 +131,7 @@ export class InMemoryDataService implements InMemoryDbService {
         date: '20171013',
         tracks: [{
           id: 1324,
-          number: 1,
+          trackNumber: 1,
           name: 'track 1',
           channels: [
             {
@@ -174,7 +174,7 @@ export class InMemoryDataService implements InMemoryDbService {
 
   // Overrides the genId method to ensure that a recording always has an id.
   // If the recordings array is empty,
-  // the method below returns the initial number (11).
+  // the method below returns the initial trackNumber (11).
   // if the recordings array is not empty, the method below returns the highest
   // recording id + 1.
   genId(recordings: RecordingModel[]): number {

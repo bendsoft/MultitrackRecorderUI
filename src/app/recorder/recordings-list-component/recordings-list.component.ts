@@ -33,20 +33,8 @@ export class RecordingsListComponent {
     return !!node.file;
   }
 
-  isSimpleFolder(_: number, node: FolderNode) {
-    return node.type === FolderType.PLAIN;
-  }
-
-  isRecording(_: number, node: FolderNode) {
-    return node.type === FolderType.RECORDING;
-  }
-
-  isTrack(_: number, node: FolderNode) {
-    return node.type === FolderType.TRACK;
-  }
-
   isRecordingOrTrack(_: number, node: FolderNode) {
-    return node.type === FolderType.RECORDING || node.type === FolderType.TRACK;
+    return node.folderType === FolderType.RECORDING || node.folderType === FolderType.TRACK;
   }
 
   private _getChildren(node: FolderNode) {

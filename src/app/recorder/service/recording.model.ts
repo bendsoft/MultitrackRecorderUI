@@ -2,13 +2,13 @@ export interface RecordingModel {
   id: number;
   name: string;
   date: string;
-  tracks: Track[]
+  tracks: Track[];
 }
 
 export interface Track {
-  id: number,
-  number: number,
-  name: string,
+  id: number;
+  trackNumber: number;
+  name: string;
   channels: ChannelRecordingFile[];
 }
 
@@ -25,6 +25,6 @@ export class RecordingModelFactory {
       id: null,
       name, date,
       tracks: []
-    } as RecordingModel
+    } as RecordingModel;
   }
 }
