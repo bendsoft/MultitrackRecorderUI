@@ -24,24 +24,23 @@ export interface Node {
 
 export class RecordingListUtils {
   public static buildFileTree(recordings: RecordingModel[]): Node[] {
-    return _.chain(recordings)
-      .sortBy(['date', 'name'])
-      .map((rec): FolderNode => ({
-        filename: RecordingListUtils.extractYear(rec),
-        folderType: FolderType.PLAIN,
-        children: new Array<FolderNode>(
-          {
-            filename: `${RecordingListUtils.extractDayMonth(rec)} ${rec.name}`,
-            folderType: FolderType.RECORDING,
-            children: this.createTrackList(rec)
-          }
-        )
-      }))
-      .reduce(this.groupByName, [])
-      .tap(folderTree => folderTree.forEach(yearFolder => {
-        yearFolder.children = yearFolder.children.reduce(this.groupByName, []);
-      }))
-      .value();
+    const yearsMap = new Map<string, FolderNode>();
+    _.sortBy(recordings, ['date', 'name']);
+    recordings.forEach((rec) => {
+        const year = RecordingListUtils.extractYear(rec);
+        yearsMap.set(year, {
+          filename: year,
+          folderType: FolderType.PLAIN,
+          children: new Array<FolderNode>(
+            {
+              filename: `${RecordingListUtils.extractDayMonth(rec)} ${rec.name}`,
+              folderType: FolderType.RECORDING,
+              children: this.createTrackList(rec)
+            }
+          )
+        });
+      });
+    return Array.from(yearsMap.values());
   }
 
   private static createTrackList(rec: RecordingModel): FolderNode[] {
