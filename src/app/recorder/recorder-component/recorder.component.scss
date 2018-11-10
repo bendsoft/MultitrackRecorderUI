@@ -18,27 +18,23 @@ mat-card-header {
   justify-content: flex-start;
 }
 
-.flex-top-center {
-  display: flex;
-  flex-flow: column nowrap;
-  justify-content: flex-start;
-  align-content: flex-start;
-  align-items: center;
-}
-
-.recorder-controller {
-  height: 20rem;
-}
-
-.recorder mat-button-toggle.btnRecord.mat-button-toggle-checked mat-icon {
-  color: red;
-}
-
 .recorder-header-image {
   background-image: url("../../../assets/img/microphone.jpg");
   background-size: cover;
 }
 
-.recordingInfo {
-  margin-bottom: 3rem;
+.recorder-controller {
+  min-height: 300px;
+}
+
+.recording-ready, .recording, .recorder-controller {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+    align-content: flex-start;
+    align-items: center;
+}
+
+.recorder mat-button-toggle.btnRecord.mat-button-toggle-checked mat-icon {
+  color: red;
 }

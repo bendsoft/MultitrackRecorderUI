@@ -31,9 +31,13 @@ export abstract class CRUDService<T> {
     return createRequest;
   };
 
-  update(id: number | string, object: T, params?: HttpParams) {
+  update(object: T, params?: HttpParams) {
+    if (typeof object.id !== 'number' && typeof object.id !== 'string') {
+      return Observable.create(subscriber => subscriber.error('Given object needs a valid id-property (must be a number or string)'));
+    }
+
     const updateRequest = this.http.put<T>(
-      this.buildServiceUrl(id),
+      this.buildServiceUrl(object.id),
       object,
       { params }
     ).pipe(share());

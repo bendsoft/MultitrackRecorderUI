@@ -4,7 +4,7 @@ import * as _moment from 'moment';
 const moment = _moment;
 
 @Component({
-  selector: 'app-recording-timer',
+  selector: 'recording-timer',
   templateUrl: './recording-timer.component.html',
   styleUrls: ['./recording-timer.component.css']
 })
@@ -18,7 +18,7 @@ export class RecordingTimerComponent {
   private runningClock;
 
   constructor() {
-    this.restartTimer();
+    this.resetTimer();
   }
 
   private displayTime() {

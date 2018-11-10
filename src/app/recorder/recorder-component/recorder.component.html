@@ -9,7 +9,6 @@
     <div class="select-or-create-recording">
       <button mat-mini-fab class="fab"
               (click)="openCreateRecordingDialog()"
-              aria-label="Neue Aufnahme erstellen"
               [disabled]="isRecording"
       >
         <mat-icon>add</mat-icon>
@@ -18,7 +17,6 @@
       <form [formGroup]="currentRecordingForm">
         <mat-form-field class="choose-recording">
           <mat-select
-            aria-label="Bestehende Aufnahme fortsetzen"
             [formControl]="currentRecordingForm.get('selectRecording')"
             placeholder="Aufnahme weitermachen ..."
             (selectionChange)="onSelectRecording($event)"
@@ -31,30 +29,19 @@
       </form>
     </div>
 
-    <div class="recorder-controller flex-top-center" *ngIf="isRecordingSelected">
-      <div *ngIf="!isRecording" class="recordingReady">
+    <div class="recorder-controller" *ngIf="isRecordingSelected">
+
+      <div *ngIf="!isRecording" class="recording-ready">
         <button mat-fab
                 color="primary"
-                aria-label="Aufnahme starten"
                 (click)="onClickStartRecording()"
         >
           <mat-icon>mic</mat-icon>
         </button>
       </div>
-      <div *ngIf="isRecording" class="recording flex-top-center">
 
-        <form [formGroup]="trackRecordingForm" class="example-form">
-          <button (click)="toggleEditMode()" mat-icon-button>
-            <mat-icon *ngIf="trackRecordingForm.get('name').disabled"
-                      color="accent"
-                      aria-label="Bearbeite Songtitel"
-            >edit</mat-icon>
-            <mat-icon *ngIf="trackRecordingForm.get('name').enabled"
-                      color="accent"
-                      aria-label="Speichere &Auml;nderung"
-            >save</mat-icon>
-          </button>
-
+      <div *ngIf="isRecording" class="recording">
+        <form [formGroup]="trackRecordingForm">
           <mat-form-field>
             <input matInput
                    placeholder="Songtitel"
@@ -65,27 +52,24 @@
           </mat-form-field>
         </form>
 
-        <div>
-          <button mat-fab
-                  color="warn"
-                  aria-label="Aufnahme stoppen"
-                  (click)="onClickStopRecording()"
-                  class="pulse"
-          >
-            <mat-icon>stop</mat-icon>
-          </button>
-        </div>
-        <app-recording-timer></app-recording-timer>
-        <div>
-          <button mat-fab
-                  color="primary"
-                  aria-label="N&aumlchste Aufnahme starten"
-                  (click)="onClickRecordNextTrack()"
-          >
-            <mat-icon>skip_next</mat-icon>
-          </button>
-        </div>
+        <button mat-fab
+                color="warn"
+                (click)="onClickStopRecording()"
+                class="pulse"
+        >
+          <mat-icon>stop</mat-icon>
+        </button>
+
+        <recording-timer></recording-timer>
+
+        <button mat-fab
+                color="primary"
+                (click)="onClickRecordNextTrack()"
+        >
+          <mat-icon>skip_next</mat-icon>
+        </button>
       </div>
+
     </div>
   </mat-card-content>
 

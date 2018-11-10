@@ -6,7 +6,7 @@ import {FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from '@a
 import {RecordingService} from '../service/recording.service';
 import * as _moment from 'moment';
 import {RecordingModel, RecordingModelFactory} from '../service/recording.model';
-import {Observable} from 'rxjs';
+import {Observable, ReplaySubject, Subject} from 'rxjs';
 import {map, tap} from 'rxjs/operators';
 
 const moment = _moment;
@@ -26,15 +26,22 @@ export class RecorderComponent {
   });
   todaysSessions: Observable<RecordingModel[]>;
 
+  currentRecordingInfo: RecordingModel;
+
   private trackCounter: number = 1;
   trackRecordingForm = new FormGroup({
-    name: new FormControl(`Song ${this.trackCounter}`, Validators.required)
+    name: new FormControl(this.getNextSongTitle(), Validators.required)
   });
 
   nameErrorStateMatcher = new TrackRecordingErrorStateMatcher();
 
+  private _timer = new ReplaySubject<RecordingTimerComponent>(1);
   @ViewChild(RecordingTimerComponent)
-  private timer: RecordingTimerComponent;
+  set timer(timer: RecordingTimerComponent) {
+    if (timer) {
+      this._timer.next(timer);
+    }
+  }
 
   constructor(
     private dialog: MatDialog,
@@ -52,8 +59,10 @@ export class RecorderComponent {
       tap(todayRec => {
         existingRecordingSelect.disable();
         if (Array.isArray(todayRec) && todayRec.length > 0) {
-          existingRecordingSelect.setValue(todayRec[todayRec.length-1]);
+          const lastRecordingToday: RecordingModel = todayRec[todayRec.length-1];
+          existingRecordingSelect.setValue(lastRecordingToday);
           existingRecordingSelect.enable();
+          this.trackCounter = lastRecordingToday.tracks.length + 1;
         }
       })
     );
@@ -65,22 +74,15 @@ export class RecorderComponent {
     this.recordingService.updateDataStream();
   }
 
-  onSelectRecording(selectedRecording: MatSelectChange) {
-    if (selectedRecording.value) {
-      console.log(selectedRecording.value);
-    }
+  private getNextSongTitle() {
+    return `Song ${this.trackCounter}`;
   }
 
-  toggleEditMode() {
-    if (!this.trackRecordingForm.valid) {
-      return;
-    }
+  onSelectRecording(selectedRecording: MatSelectChange) {
+    if (selectedRecording.value) {
+      this.trackCounter = selectedRecording.value.tracks.length + 1;
 
-    const trackName = this.trackRecordingForm.get('name');
-    if (trackName.enabled) {
-      trackName.disable();
-    } else {
-      trackName.enable();
+      console.log(selectedRecording.value);
     }
   }
 
@@ -98,9 +100,13 @@ export class RecorderComponent {
             result.date.format('YYYYMMDD')
           )
         )
-        .subscribe(() => this.snackBar.open('Aufnahme erfolgreich erstellt!', '' , {
-          duration: 2000
-        }));
+        .subscribe(newRecording => {
+          this.currentRecordingInfo = newRecording;
+
+          this.snackBar.open('Aufnahme erfolgreich erstellt!', '' , {
+            duration: 2000
+          })
+        });
       }
     });
   }
@@ -110,33 +116,40 @@ export class RecorderComponent {
       return;
     }
 
-    this.trackCounter++;
-    this.trackRecordingForm.get('name').reset();
     this.isRecording = false;
-    this.currentRecordingForm.get('selectRecording').enable();
-    this.timer.stopTimer();
+    this._timer.subscribe(timer => timer.stopTimer());
+    this.trackCounter++;
 
-    this.snackBar.open('Aufnahme gestoppt!', '' , {
-      duration: 2000,
+    console.log(this.currentRecordingInfo);
+
+    this.recordingService.update(this.currentRecordingInfo).subscribe(() => {
+      this.currentRecordingForm.get('selectRecording').enable();
+      this.snackBar.open('Aufnahme gestoppt!', '' , {
+        duration: 2000,
+      });
     });
   }
 
   onClickStartRecording() {
     this.isRecording = true;
+    this._timer.subscribe(timer => timer.startTimer());
     this.currentRecordingForm.get('selectRecording').disable();
+
     this.snackBar.open('Aufnahme läuft!', '' , {
       duration: 2000,
     });
   }
 
   onClickRecordNextTrack() {
-    this.timer.restartTimer();
-
-    this.trackRecordingForm.get('name').reset();
     this.trackCounter++;
+    this._timer.subscribe(timer => timer.restartTimer());
 
-    this.snackBar.open('Nächste Aufnahme gestartet!', '' , {
-      duration: 2000,
+    this.recordingService.update(this.currentRecordingInfo).subscribe(() => {
+      this.trackRecordingForm.get('name').setValue(this.getNextSongTitle());
+
+      this.snackBar.open('Nächste Aufnahme gestartet!', '', {
+        duration: 2000,
+      });
     });
   }
 }
