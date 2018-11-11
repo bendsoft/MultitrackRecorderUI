@@ -20,11 +20,20 @@ export interface ChannelRecordingFile {
 }
 
 export class RecordingModelFactory {
-  static create(name, date): RecordingModel {
+  static createRecording(name, date): RecordingModel {
     return {
       id: null,
       name, date,
       tracks: []
     } as RecordingModel;
+  }
+
+  static createTrack(trackNumber, name) {
+    return {
+      id: null,
+      trackNumber,
+      name,
+      channels: []
+    }
   }
 }

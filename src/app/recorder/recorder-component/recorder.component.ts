@@ -96,7 +96,7 @@ export class RecorderComponent {
     addChannelDialog.afterClosed().subscribe(result => {
       if (result) {
         this.recordingService.create(
-          RecordingModelFactory.create(
+          RecordingModelFactory.createRecording(
             result.name,
             result.date.format('YYYYMMDD')
           )
@@ -135,6 +135,8 @@ export class RecorderComponent {
     this._timer.asObservable().pipe(first()).subscribe(timer => timer.startTimer());
     this.currentRecordingForm.get('selectRecording').disable();
 
+    this.addNewTrack();
+
     this.snackBar.open('Aufnahme läuft!', '' , {
       duration: 2000,
     });
@@ -148,10 +150,19 @@ export class RecorderComponent {
     this.recordingService.update(this.currentRecordingInfo).subscribe(() => {
       this.trackRecordingForm.get('name').setValue(this.getNextSongTitle());
 
+      this.addNewTrack();
+
       this.snackBar.open('Nächste Aufnahme gestartet!', '', {
         duration: 2000,
       });
     });
+  }
+
+  private addNewTrack() {
+    this.currentRecordingInfo.tracks.push(RecordingModelFactory.createTrack(
+      this.trackCounter,
+      this.trackRecordingForm.get('name').value)
+    );
   }
 }
 
