@@ -25,6 +25,7 @@ export class CreateChannelDialogComponent {
 
     const channelRow = ChannelRow.create(
       {
+        id: null,
         selectedChannel: null,
         name: '',
         active: true

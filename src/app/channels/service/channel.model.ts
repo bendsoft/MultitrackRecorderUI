@@ -1,5 +1,5 @@
 export interface ChannelModel {
-  id?: number;
+  id: number;
   selectedChannel: number;
   name: string;
   active: boolean;

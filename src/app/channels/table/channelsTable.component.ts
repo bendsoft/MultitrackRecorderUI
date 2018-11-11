@@ -101,7 +101,7 @@ export class ChannelsTableComponent implements OnInit {
     this.setLoadingStatus(true, newOrChangedChannel);
 
     this.channelDataSource.channelService
-      .update(newOrChangedChannel.channel.id, this.createNewOrChangeChannel(newOrChangedChannel))
+      .update(this.createNewOrChangeChannel(newOrChangedChannel))
       .subscribe(result => {
         this.handleResponse(`Kanal wurde ${ result ? '' : 'nicht ' }gespeichert`);
         this.setLoadingStatus(false, newOrChangedChannel);
