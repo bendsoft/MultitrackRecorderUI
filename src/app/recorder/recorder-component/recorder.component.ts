@@ -6,8 +6,9 @@ import {FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from '@a
 import {RecordingService} from '../service/recording.service';
 import * as _moment from 'moment';
 import {RecordingModel, RecordingModelFactory} from '../service/recording.model';
-import {Observable, ReplaySubject, Subject} from 'rxjs';
-import {map, tap} from 'rxjs/operators';
+import {Observable, ReplaySubject} from 'rxjs';
+import {first, tap} from 'rxjs/operators';
+import {HttpParams} from '@angular/common/http';
 
 const moment = _moment;
 moment.locale('de-ch');
@@ -48,14 +49,20 @@ export class RecorderComponent {
     private snackBar: MatSnackBar,
     private recordingService: RecordingService
   ) {
+    this.updateSelectableRecordings();
+
+    const existingRecordingSelect = this.currentRecordingForm.get('selectRecording');
+    existingRecordingSelect.valueChanges.subscribe(changedValue => {
+      this.isRecordingSelected = !!changedValue;
+    });
+
+    this.recordingService.updateDataStream();
+  }
+
+  private updateSelectableRecordings() {
     const existingRecordingSelect = this.currentRecordingForm.get('selectRecording');
     existingRecordingSelect.disable();
-    this.todaysSessions = this.recordingService.dataStream.pipe(
-      map(recordings =>
-        recordings.filter(recording =>
-          recording.date === moment().format('YYYYMMDD')
-        )
-      ),
+    this.todaysSessions = this.recordingService.getAll(new HttpParams().set('date', moment().format('YYYYMMDD'))).pipe(
       tap(todayRec => {
         existingRecordingSelect.disable();
         if (Array.isArray(todayRec) && todayRec.length > 0) {
@@ -66,12 +73,6 @@ export class RecorderComponent {
         }
       })
     );
-
-    existingRecordingSelect.valueChanges.subscribe(changedValue => {
-      this.isRecordingSelected = !!changedValue;
-    });
-
-    this.recordingService.updateDataStream();
   }
 
   private getNextSongTitle() {
@@ -102,6 +103,7 @@ export class RecorderComponent {
         )
         .subscribe(newRecording => {
           this.currentRecordingInfo = newRecording;
+          this.updateSelectableRecordings();
 
           this.snackBar.open('Aufnahme erfolgreich erstellt!', '' , {
             duration: 2000
@@ -117,10 +119,8 @@ export class RecorderComponent {
     }
 
     this.isRecording = false;
-    this._timer.subscribe(timer => timer.stopTimer());
+    this._timer.asObservable().pipe(first()).subscribe(timer => timer.stopTimer());
     this.trackCounter++;
-
-    console.log(this.currentRecordingInfo);
 
     this.recordingService.update(this.currentRecordingInfo).subscribe(() => {
       this.currentRecordingForm.get('selectRecording').enable();
@@ -132,7 +132,7 @@ export class RecorderComponent {
 
   onClickStartRecording() {
     this.isRecording = true;
-    this._timer.subscribe(timer => timer.startTimer());
+    this._timer.asObservable().pipe(first()).subscribe(timer => timer.startTimer());
     this.currentRecordingForm.get('selectRecording').disable();
 
     this.snackBar.open('Aufnahme läuft!', '' , {
@@ -142,7 +142,8 @@ export class RecorderComponent {
 
   onClickRecordNextTrack() {
     this.trackCounter++;
-    this._timer.subscribe(timer => timer.restartTimer());
+
+    this._timer.asObservable().pipe(first()).subscribe(timer => timer.restartTimer());
 
     this.recordingService.update(this.currentRecordingInfo).subscribe(() => {
       this.trackRecordingForm.get('name').setValue(this.getNextSongTitle());

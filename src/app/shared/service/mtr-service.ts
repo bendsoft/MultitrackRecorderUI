@@ -1,11 +1,11 @@
-import {BehaviorSubject, Observable} from "rxjs";
-import {HttpClient, HttpParams} from "@angular/common/http";
-import {environment} from "../../../environments/environment";
+import {Observable, Subject} from 'rxjs';
+import {HttpClient, HttpParams} from '@angular/common/http';
+import {environment} from '../../../environments/environment';
 import {share} from 'rxjs/operators';
 
-export abstract class CRUDService<T extends { id: number | string}> {
-  public _dataStream = new BehaviorSubject<T[]>([]);
-  public dataStream = this._dataStream.asObservable();
+export abstract class MTRService<T extends { id: number | string}> {
+  private _changesStream = new Subject<T[]>();
+  public changesStream = this._changesStream.asObservable();
 
   protected constructor(
     protected http: HttpClient,
@@ -59,7 +59,7 @@ export abstract class CRUDService<T extends { id: number | string}> {
 
   public updateDataStream() {
     this.getAll().subscribe(result =>
-      this._dataStream.next(result)
+      this._changesStream.next(result)
     );
   }
 }

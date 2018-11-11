@@ -12,8 +12,8 @@ export class RecordingTimerComponent {
   private static readonly intervalPrecision = 1000;
   private static readonly timeFormat = 'HH : mm : ss';
 
-  private _currentValue;
-  formattedValue;
+  private _currentUnformattedValue;
+  currentValue;
 
   private runningClock;
 
@@ -21,31 +21,31 @@ export class RecordingTimerComponent {
     this.resetTimer();
   }
 
-  private displayTime() {
-    this._currentValue.add(RecordingTimerComponent.intervalPrecision, 'ms');
-    this.updateFormattedValue();
-  }
-
   private updateFormattedValue() {
-    this.formattedValue = this._currentValue.format(RecordingTimerComponent.timeFormat);
+    this.currentValue = this._currentUnformattedValue.format(RecordingTimerComponent.timeFormat);
   }
 
-  resetTimer() {
-    this._currentValue = moment().hour(0).minute(0).second(0);
+  private resetTimer() {
+    this._currentUnformattedValue = moment().hour(0).minute(0).second(0);
     this.updateFormattedValue();
   }
 
   restartTimer() {
-    clearInterval(this.runningClock);
+    this.stopTimer();
     this.resetTimer();
     this.startTimer();
   }
 
   startTimer() {
-    this.runningClock = setInterval(this.displayTime.bind(this), RecordingTimerComponent.intervalPrecision);
+    console.log('timer started');
+    this.runningClock = setInterval(() => {
+      this._currentUnformattedValue.add(RecordingTimerComponent.intervalPrecision, 'ms');
+      this.updateFormattedValue();
+    }, RecordingTimerComponent.intervalPrecision);
   }
 
   stopTimer() {
+    console.log('timer stopped');
     clearInterval(this.runningClock);
   }
 }

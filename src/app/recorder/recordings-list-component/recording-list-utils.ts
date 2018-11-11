@@ -1,6 +1,7 @@
 import {ChannelRecordingFile, RecordingModel, Track} from '../service/recording.model';
 import * as _ from 'lodash';
 import * as _moment from 'moment';
+
 const moment = _moment;
 moment.locale('de-CH');
 
@@ -26,20 +27,27 @@ export class RecordingListUtils {
   public static buildFileTree(recordings: RecordingModel[]): Node[] {
     const yearsMap = new Map<string, FolderNode>();
     _.sortBy(recordings, ['date', 'name']);
-    recordings.forEach((rec) => {
+    recordings
+      .filter(rec => rec.tracks.length > 0)
+      .forEach((rec) => {
+        let sessionItem = {
+          filename: `${RecordingListUtils.extractDayMonth(rec)} ${rec.name}`,
+          folderType: FolderType.RECORDING,
+          children: RecordingListUtils.createTrackList(rec)
+        };
+
         const year = RecordingListUtils.extractYear(rec);
-        yearsMap.set(year, {
-          filename: year,
-          folderType: FolderType.PLAIN,
-          children: new Array<FolderNode>(
-            {
-              filename: `${RecordingListUtils.extractDayMonth(rec)} ${rec.name}`,
-              folderType: FolderType.RECORDING,
-              children: this.createTrackList(rec)
-            }
-          )
-        });
+        if (yearsMap.has(year)) {
+          yearsMap.get(year).children.push(sessionItem);
+        } else {
+          yearsMap.set(year, {
+            filename: year,
+            folderType: FolderType.PLAIN,
+            children: new Array<FolderNode>(sessionItem)
+          });
+        }
       });
+
     return Array.from(yearsMap.values());
   }
 
@@ -50,7 +58,7 @@ export class RecordingListUtils {
         filename: `${track.trackNumber}. ${track.name}`,
         id: track.id,
         folderType: FolderType.TRACK,
-        children: this.createChannelList(track)
+        children: RecordingListUtils.createChannelList(track)
       }))
       .value();
   }

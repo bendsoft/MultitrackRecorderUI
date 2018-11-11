@@ -19,7 +19,7 @@ export class ChannelDataSource extends DataSource<ChannelRow> {
   ) {
     super();
 
-    channelService.dataStream.subscribe(channels =>
+    channelService.changesStream.subscribe(channels =>
       this._channelRowStream.next(this.transformChannelToSortedChannelRow(channels))
     );
 

@@ -1,12 +1,12 @@
 import {Injectable} from '@angular/core';
 import {ChannelModel} from "./channel.model";
-import {CRUDService} from "../../shared/service/abstract-crud-service";
+import {MTRService} from "../../shared/service/mtr-service";
 import {HttpClient} from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root',
 })
-export class ChannelService extends CRUDService<ChannelModel> {
+export class ChannelService extends MTRService<ChannelModel> {
   constructor(
     http: HttpClient,
   ) {
