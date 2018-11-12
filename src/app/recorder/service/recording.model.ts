@@ -1,3 +1,5 @@
+import {ChannelModel} from '../../channels/service/channel.model';
+
 export interface RecordingModel {
   id: number;
   name: string;
@@ -28,12 +30,21 @@ export class RecordingModelFactory {
     } as RecordingModel;
   }
 
-  static createTrack(trackNumber, name) {
+  static createTrack(trackNumber, name, channels: ChannelRecordingFile[]): Track {
     return {
       id: null,
       trackNumber,
       name,
-      channels: []
+      channels
+    }
+  }
+
+  static transformChannelToChannelModel(channel: ChannelModel): ChannelRecordingFile {
+    return {
+      id: channel.id,
+      channelNr: channel.selectedChannel,
+      name: channel.name,
+      size: 0
     }
   }
 }

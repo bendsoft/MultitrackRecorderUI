@@ -33,9 +33,9 @@
 
   <mat-tab-group>
     <mat-tab label="Recorder">
-      <app-recorder></app-recorder>
+      <mtr-recorder></mtr-recorder>
     </mat-tab>
-    <mat-tab label="Kan&auml;le">
+    <mat-tab label="Kan&auml;le" [disabled]="recorder.isRecording">
       <mat-card class="channels">
         <mat-card-header>
           <div mat-card-avatar class="channels-header-image"></div>

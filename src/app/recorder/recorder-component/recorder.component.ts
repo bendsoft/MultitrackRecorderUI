@@ -9,12 +9,13 @@ import {RecordingModel, RecordingModelFactory} from '../service/recording.model'
 import {Observable, ReplaySubject} from 'rxjs';
 import {first, tap} from 'rxjs/operators';
 import {HttpParams} from '@angular/common/http';
+import {ChannelDataSource} from '../../channels/table/channel-data-source';
 
 const moment = _moment;
 moment.locale('de-ch');
 
 @Component({
-  selector: 'app-recorder',
+  selector: 'mtr-recorder',
   templateUrl: './recorder.component.html',
   styleUrls: ['./recorder.component.scss']
 })
@@ -47,7 +48,8 @@ export class RecorderComponent {
   constructor(
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
-    private recordingService: RecordingService
+    private recordingService: RecordingService,
+    private channelDataSource: ChannelDataSource
   ) {
     this.updateSelectableRecordings();
 
@@ -161,8 +163,10 @@ export class RecorderComponent {
   private addNewTrack() {
     this.currentRecordingInfo.tracks.push(RecordingModelFactory.createTrack(
       this.trackCounter,
-      this.trackRecordingForm.get('name').value)
-    );
+      this.trackRecordingForm.get('name').value,
+      this.channelDataSource.getChannelRows()
+        .map(channelRow => RecordingModelFactory.transformChannelToChannelModel(channelRow.channel))
+    ));
   }
 }
 
