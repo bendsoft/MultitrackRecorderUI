@@ -95,4 +95,3 @@ export class ChannelErrorStateMatcher implements ErrorStateMatcher {
     return Object.values(formControl.errors).some(error => error === true);
   }
 }
-

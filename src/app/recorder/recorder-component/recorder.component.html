@@ -14,10 +14,10 @@
         <mat-icon>add</mat-icon>
       </button>
 
-      <form [formGroup]="currentRecordingForm">
+      <form>
         <mat-form-field class="choose-recording">
           <mat-select
-            [formControl]="currentRecordingForm.get('selectRecording')"
+            [formControl]="chooseRecordingSelect"
             placeholder="Aufnahme weitermachen ..."
             (selectionChange)="onSelectRecording($event)"
           >
@@ -41,14 +41,14 @@
       </div>
 
       <div *ngIf="isRecording" class="recording">
-        <form [formGroup]="trackRecordingForm">
+        <form>
           <mat-form-field>
             <input matInput
                    placeholder="Songtitel"
-                   formControlName="name"
+                   [formControl]="trackNameInput"
                    [errorStateMatcher]="nameErrorStateMatcher"
             >
-            <mat-error *ngIf="trackRecordingForm.get('name').hasError('required')">Es muss ein Name vergeben werden</mat-error>
+            <mat-error *ngIf="trackNameInput.hasError('required')">Es muss ein Name vergeben werden</mat-error>
           </mat-form-field>
         </form>
 

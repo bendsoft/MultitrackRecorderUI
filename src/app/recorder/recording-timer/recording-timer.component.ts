@@ -37,7 +37,6 @@ export class RecordingTimerComponent {
   }
 
   startTimer() {
-    console.log('timer started');
     this.runningClock = setInterval(() => {
       this._currentUnformattedValue.add(RecordingTimerComponent.intervalPrecision, 'ms');
       this.updateFormattedValue();
@@ -45,7 +44,6 @@ export class RecordingTimerComponent {
   }
 
   stopTimer() {
-    console.log('timer stopped');
     clearInterval(this.runningClock);
   }
 }
