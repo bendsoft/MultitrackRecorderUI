@@ -32,7 +32,7 @@ export class RecorderComponent {
 
   private trackCounter: number = 1;
   trackRecordingForm = new FormGroup({
-    name: new FormControl(this.getNextSongTitle(), Validators.required)
+    name: new FormControl('', Validators.required)
   });
 
   nameErrorStateMatcher = new TrackRecordingErrorStateMatcher();
@@ -120,9 +120,11 @@ export class RecorderComponent {
       return;
     }
 
-    this.isRecording = false;
-    this._timer.asObservable().pipe(first()).subscribe(timer => timer.stopTimer());
     this.trackCounter++;
+    this._timer.asObservable().pipe(first()).subscribe(timer => {
+      timer.stopTimer();
+      this.isRecording = false;
+    });
 
     this.recordingService.update(this.currentRecordingInfo).subscribe(() => {
       this.currentRecordingForm.get('selectRecording').enable();
@@ -134,13 +136,16 @@ export class RecorderComponent {
 
   onClickStartRecording() {
     this.isRecording = true;
-    this._timer.asObservable().pipe(first()).subscribe(timer => timer.startTimer());
-    this.currentRecordingForm.get('selectRecording').disable();
+    this._timer.asObservable().pipe(first()).subscribe(timer => {
+      timer.startTimer();
+      this.currentRecordingForm.get('selectRecording').disable();
+      this.trackRecordingForm.get('name').setValue(this.getNextSongTitle());
 
-    this.addNewTrack();
+      this.addNewTrack();
 
-    this.snackBar.open('Aufnahme läuft!', '' , {
-      duration: 2000,
+      this.snackBar.open('Aufnahme läuft!', '' , {
+        duration: 2000,
+      });
     });
   }
 
