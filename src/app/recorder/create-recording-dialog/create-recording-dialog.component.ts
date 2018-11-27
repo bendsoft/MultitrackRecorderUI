@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
-import {FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from "@angular/forms";
-import {ErrorStateMatcher} from "@angular/material";
+import {Component} from '@angular/core';
+import {FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from '@angular/forms';
+import {ErrorStateMatcher} from '@angular/material';
 import {RecordingService} from '../service/recording.service';
 import {HttpParams} from '@angular/common/http';
-import * as _moment from "moment";
+import * as _moment from 'moment';
+
 const moment = _moment;
 
 @Component({
@@ -27,7 +28,7 @@ export class CreateRecordingDialogComponent {
     const nameInput = this.createRecordingForm.get('name');
     nameInput.disable();
 
-    recordingService.getAll(new HttpParams().set('date', moment().format('YYYYMMDD')))
+    recordingService.getRecordings(new HttpParams().set('date', moment().format('YYYYMMDD')))
       .subscribe(recordingsToday => {
         const standardRecordingsCount = recordingsToday.filter(rec => rec.name.indexOf(this.DEFAULT_RECODING_NAME) >= 0).length + 1;
         nameInput.setValue(`${this.DEFAULT_RECODING_NAME} ${standardRecordingsCount}`);

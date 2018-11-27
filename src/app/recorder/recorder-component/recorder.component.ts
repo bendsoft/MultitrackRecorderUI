@@ -2,7 +2,7 @@ import {Component, ViewChild} from '@angular/core';
 import {RecordingTimerComponent} from '../recording-timer/recording-timer.component';
 import {ErrorStateMatcher, MatDialog, MatSelectChange, MatSnackBar} from '@angular/material';
 import {CreateRecordingDialogComponent} from '../create-recording-dialog/create-recording-dialog.component';
-import {FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from '@angular/forms';
+import {FormControl, Validators} from '@angular/forms';
 import {RecordingService} from '../service/recording.service';
 import * as _moment from 'moment';
 import {RecordingModel, RecordingModelFactory} from '../service/recording.model';
@@ -56,7 +56,7 @@ export class RecorderComponent {
 
   private updateSelectableRecordings() {
     this.chooseRecordingSelect.disable();
-    this.todaysSessions = this.recordingService.getAll(new HttpParams().set('date', moment().format('YYYYMMDD'))).pipe(
+    this.todaysSessions = this.recordingService.getRecordings(new HttpParams().set('date', moment().format('YYYYMMDD'))).pipe(
       tap(todayRec => {
         this.chooseRecordingSelect.disable();
         if (Array.isArray(todayRec) && todayRec.length > 0) {
@@ -87,13 +87,13 @@ export class RecorderComponent {
 
     addChannelDialog.afterClosed().subscribe(result => {
       if (result) {
-        this.recordingService.create(
+        this.recordingService.createRecording(
           RecordingModelFactory.createRecording(
             result.name,
             result.date.format('YYYYMMDD')
           )
         )
-        .subscribe(newRecording => {
+        .subscribe((newRecording: RecordingModel) => {
           this.currentRecordingInfo = newRecording;
           this.updateSelectableRecordings();
 
@@ -132,7 +132,7 @@ export class RecorderComponent {
     }
 
     this.trackCounter++;
-    this.recordingService.update(this.currentRecordingInfo).subscribe(() => {
+    this.recordingService.updateRecording(this.currentRecordingInfo).subscribe(() => {
       this.snackBar.open('Aufnahme gestoppt!', '' , {
         duration: 2000,
       });
@@ -144,7 +144,7 @@ export class RecorderComponent {
 
     this.subscribeToTimerOnce(timer => timer.restartTimer());
 
-    this.recordingService.update(this.currentRecordingInfo).subscribe(() => {
+    this.recordingService.updateRecording(this.currentRecordingInfo).subscribe(() => {
       this.trackNameInput.setValue(this.getNextSongTitle());
 
       this.addNewTrack();

@@ -4,8 +4,8 @@ import {CollectionViewer} from '@angular/cdk/collections';
 import {ChannelService} from '../service/channel.service';
 import {Observable} from 'rxjs/internal/Observable';
 import {BehaviorSubject} from 'rxjs/internal/BehaviorSubject';
-import {Injectable} from "@angular/core";
-import {ChannelModel} from "../service/channel.model";
+import {Injectable} from '@angular/core';
+import {ChannelModel} from '../service/channel.model';
 
 @Injectable({
   providedIn: 'root',
@@ -19,11 +19,11 @@ export class ChannelDataSource extends DataSource<ChannelRow> {
   ) {
     super();
 
-    channelService.changesStream.subscribe(channels =>
+    channelService.changesStream.subscribe((channels: ChannelModel[]) =>
       this._channelRowStream.next(this.transformChannelToSortedChannelRow(channels))
     );
 
-    channelService.getAll().subscribe(channels =>
+    channelService.getChannels().subscribe(channels =>
       this._channelRowStream.next(this.transformChannelToSortedChannelRow(channels))
     );
   }

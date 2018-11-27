@@ -12,15 +12,15 @@ export abstract class MTRService<T extends { id: number | string}> {
     protected serviceRootApi: string
   ) {}
 
-  get(id: number | string, params?: HttpParams): Observable<T> {
+  protected get(id: number | string, params?: HttpParams): Observable<T> {
     return this.http.get<T>(this.buildServiceUrl(id), { params });
   }
 
-  getAll(params?: HttpParams): Observable<T[]> {
+  protected getAll(params?: HttpParams): Observable<T[]> {
     return this.http.get<T[]>(this.buildServiceUrl(), { params });
   }
 
-  create(object: T, params?: HttpParams) {
+  protected create(object: T, params?: HttpParams) {
     const createRequest = this.http.post<T>(
       this.buildServiceUrl(),
       object,
@@ -31,7 +31,7 @@ export abstract class MTRService<T extends { id: number | string}> {
     return createRequest;
   };
 
-  update(object: T, params?: HttpParams) {
+  protected update(object: T, params?: HttpParams) {
     if (typeof object.id !== 'number' && typeof object.id !== 'string') {
       return Observable.create(subscriber => subscriber.error('Given object needs a valid id-property (must be a number or string)'));
     }
@@ -46,7 +46,7 @@ export abstract class MTRService<T extends { id: number | string}> {
     return updateRequest;
   };
 
-  delete(id: number | string, params?: HttpParams) {
+  protected delete(id: number | string, params?: HttpParams) {
     const deleteRequest = this.http.delete(this.buildServiceUrl(id), { params }).pipe(share());
 
     deleteRequest.subscribe(() => this.updateDataStream());

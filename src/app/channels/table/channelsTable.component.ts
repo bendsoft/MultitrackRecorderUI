@@ -5,7 +5,7 @@ import {ChannelDataSource} from './channel-data-source';
 import {ChannelRow} from './channel-row';
 import {CreateChannelDialogComponent} from '../create-channel-dialog/create-channel-dialog.component';
 import {FormArray, FormGroup} from '@angular/forms';
-import {ChannelModel} from "../service/channel.model";
+import {ChannelModel} from '../service/channel.model';
 
 /**
  * @title Channels table
@@ -70,7 +70,7 @@ export class ChannelsTableComponent implements OnInit {
     addChannelDialog.afterClosed().subscribe(newChannel => {
       if (!!newChannel) {
         this.setLoadingStatus(true, newChannel);
-        this.channelDataSource.channelService.create(newChannel)
+        this.channelDataSource.channelService.createChannel(newChannel)
           .subscribe(result => {
             this.handleResponse(`Kanal wurde ${ result ? '' : 'nicht ' }gespeichert`);
         });
@@ -101,7 +101,7 @@ export class ChannelsTableComponent implements OnInit {
     this.setLoadingStatus(true, newOrChangedChannel);
 
     this.channelDataSource.channelService
-      .update(this.createNewOrChangeChannel(newOrChangedChannel))
+      .updateChannel(this.createNewOrChangeChannel(newOrChangedChannel))
       .subscribe(result => {
         this.handleResponse(`Kanal wurde ${ result ? '' : 'nicht ' }gespeichert`);
         this.setLoadingStatus(false, newOrChangedChannel);
@@ -128,7 +128,7 @@ export class ChannelsTableComponent implements OnInit {
         this.setLoadingStatus(true, channelRow);
 
         this.channelDataSource.channelService
-          .delete(channelRow.channel.id)
+          .deleteChannel(channelRow.channel.id)
           .subscribe(result => {
             this.handleResponse(`Kanal wurde ${ result ? '' : 'nicht ' }entfernt`);
           });

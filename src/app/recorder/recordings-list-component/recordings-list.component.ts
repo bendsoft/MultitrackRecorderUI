@@ -18,7 +18,7 @@ export class RecordingsListComponent {
     this.nestedTreeControl = new NestedTreeControl<Node>(this._getChildren);
     this.nestedDataSource = new MatTreeNestedDataSource();
 
-    recordingService.getAll()
+    recordingService.getRecordings()
       .subscribe(recordings => {
         this.nestedDataSource.data = RecordingListUtils.buildFileTree(recordings);
       });
