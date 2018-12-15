@@ -164,7 +164,7 @@ export class RecorderComponent {
       this.trackCounter,
       this.trackNameInput.value,
       this.channelDataSource.getChannelRows()
-        .map(channelRow => RecordingModelFactory.transformChannelToChannelModel(channelRow.channel))
+        .map(channelRow => RecordingModelFactory.transformChannelModelToChannelRecordingFile(channelRow.channel))
     ));
   }
 }

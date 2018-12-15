@@ -1,7 +1,7 @@
 export interface ChannelModel {
-  id: number;
-  selectedChannel: number;
+  id: number | string;
+  channelNumber: number;
   name: string;
   active: boolean;
-  profile?: number;
+  profile?: number | string;
 }

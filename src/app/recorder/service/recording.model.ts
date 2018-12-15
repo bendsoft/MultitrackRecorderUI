@@ -1,24 +1,26 @@
 import {ChannelModel} from '../../channels/service/channel.model';
 
 export interface RecordingModel {
-  id: number;
+  id: number | string;
   name: string;
   date: string;
   tracks: Track[];
 }
 
 export interface Track {
-  id: number;
+  id: number | string;
   trackNumber: number;
   name: string;
   channels: ChannelRecordingFile[];
 }
 
 export interface ChannelRecordingFile {
-  id: number;
-  channelNr: number;
+  id: number | string;
+  channelNumber: number;
   name: string;
-  size: number;
+  filename: string;
+  type: string;
+  data: string;
 }
 
 export class RecordingModelFactory {
@@ -39,12 +41,14 @@ export class RecordingModelFactory {
     }
   }
 
-  static transformChannelToChannelModel(channel: ChannelModel): ChannelRecordingFile {
+  static transformChannelModelToChannelRecordingFile(channel: ChannelModel): ChannelRecordingFile {
     return {
       id: channel.id,
-      channelNr: channel.selectedChannel,
+      channelNumber: channel.channelNumber,
       name: channel.name,
-      size: 0
+      filename: null,
+      type: null,
+      data: null
     }
   }
 }

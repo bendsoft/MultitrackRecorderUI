@@ -1,8 +1,8 @@
 import {FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from '@angular/forms';
 import {ChannelModel} from '../service/channel.model';
 import {ErrorStateMatcher} from '@angular/material';
-import {ChannelDataSource} from "./channel-data-source";
-import {ChannelRowValidator} from "./channel-row-validator";
+import {ChannelDataSource} from './channel-data-source';
+import {ChannelRowValidator} from './channel-row-validator';
 
 export class ChannelRow {
   static readonly _allChannelNumbers = Array.from(Array(17).keys()).slice(1);
@@ -37,9 +37,9 @@ export class ChannelRow {
   ) {
     Object.freeze(this.channel);
 
-    const selectedChannel = new FormControl(channel.selectedChannel, [
+    const selectedChannel = new FormControl(channel.channelNumber, [
       Validators.required,
-      ChannelRowValidator.checkUnique.bind(this, 'selectedChannel', this.channelRowData, true)
+      ChannelRowValidator.checkUnique.bind(this, 'channelNumber', this.channelRowData, true)
     ]);
     const name = new FormControl(channel.name, [
       Validators.required,
@@ -51,7 +51,7 @@ export class ChannelRow {
     this.toggleControlsEneable();
 
     this.rowFormGroup = new FormGroup({
-      selectedChannel: selectedChannel,
+      channelNumber: selectedChannel,
       name: name,
       active: active
     });

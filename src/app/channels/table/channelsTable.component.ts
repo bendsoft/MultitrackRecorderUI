@@ -24,7 +24,7 @@ export class ChannelsTableComponent implements OnInit {
     this._isLoading = state;
   }
 
-  displayedColumns = ['selectedChannel', 'edit', 'name', 'active', 'action'];
+  displayedColumns = ['channelNumber', 'edit', 'name', 'active', 'action'];
 
   private channelsFormGroup = new FormGroup(
     {
@@ -110,7 +110,7 @@ export class ChannelsTableComponent implements OnInit {
 
   private createNewOrChangeChannel(newOrChangedChannelRow): ChannelModel {
     const changedChannel = Object.assign({}, newOrChangedChannelRow.channel);
-    changedChannel.selectedChannel = newOrChangedChannelRow.rowFormGroup.get('selectedChannel').value;
+    changedChannel.channelNumber = newOrChangedChannelRow.rowFormGroup.get('channelNumber').value;
     changedChannel.name = newOrChangedChannelRow.rowFormGroup.get('name').value;
     changedChannel.active = newOrChangedChannelRow.rowFormGroup.get('active').value;
 

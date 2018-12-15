@@ -9,19 +9,19 @@
       <div class="loading-text">Änderung wird gespeichert</div>
     </div>
     <mat-table #table [dataSource]="channelDataSource">
-      <ng-container matColumnDef="selectedChannel">
+      <ng-container matColumnDef="channelNumber">
         <mat-header-cell *matHeaderCellDef>Nummer</mat-header-cell>
         <mat-cell *matCellDef="let channelRow">
           <mat-form-field class="channel-number-select">
             <mat-select
-              [formControl]="channelRow.rowFormGroup.get('selectedChannel')"
+              [formControl]="channelRow.rowFormGroup.get('channelNumber')"
               [errorStateMatcher]="channelRow.chooseChannelErrorStateMatcher"
             >
               <mat-option *ngFor="let channelNr of channelRow.allChannelNumbers" [value]="channelNr">
                 {{channelNr}}
               </mat-option>
             </mat-select>
-            <mat-error *ngIf="channelRow.rowFormGroup.get('selectedChannel').hasError('notUnique')">Kanal doppelt</mat-error>
+            <mat-error *ngIf="channelRow.rowFormGroup.get('channelNumber').hasError('notUnique')">Kanal doppelt</mat-error>
           </mat-form-field>
         </mat-cell>
       </ng-container>

@@ -14,7 +14,7 @@ export enum FolderType {
 }
 
 export interface FolderNode extends Node {
-  id?: number;
+  id?: number | string;
   folderType: FolderType;
   children: Node[];
 }
@@ -65,22 +65,12 @@ export class RecordingListUtils {
 
   private static createChannelList(track: Track): FileNode<ChannelRecordingFile>[] {
     return _.chain(track.channels)
-      .sortBy('file.channelNr')
+      .sortBy('file.channelNumber')
       .map((channel): FileNode<ChannelRecordingFile> => ({
         filename: channel.name,
         file: channel
       }))
       .value();
-  }
-
-  private static groupByName(groupedFolders, currFolder) {
-    const folderFound = groupedFolders.find(folder => folder.filename === currFolder.filename);
-    if (folderFound) {
-      currFolder.children.forEach(rec => folderFound.children.push(rec));
-    } else {
-      groupedFolders.push(currFolder);
-    }
-    return groupedFolders;
   }
 
   private static extractYear(recording: RecordingModel) {
