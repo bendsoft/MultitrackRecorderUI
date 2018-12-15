@@ -23,6 +23,6 @@
   <button mat-button mat-dialog-close>Abbrechen<mat-icon>cancel</mat-icon></button>
   <button mat-button
           [mat-dialog-close]="createRecordingForm.valid ? createRecordingForm.value : null"
-          [disabled]="createRecordingForm.invalid !== true">OK<mat-icon>save</mat-icon>
+          [disabled]="createRecordingForm.invalid || loading">OK<mat-icon>save</mat-icon>
   </button>
 </mat-dialog-actions>

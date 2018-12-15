@@ -18,8 +18,9 @@ export class CreateRecordingDialogComponent {
     name: new FormControl('', Validators.required)
   });
 
-  nameErrorStateMatcher = new RecordingErrorStateMatcher(true, true);
+  loading = false;
 
+  nameErrorStateMatcher = new RecordingErrorStateMatcher(true, true);
   private readonly DEFAULT_RECODING_NAME = 'Aufnahme';
 
   constructor(
@@ -27,12 +28,14 @@ export class CreateRecordingDialogComponent {
   ) {
     const nameInput = this.createRecordingForm.get('name');
     nameInput.disable();
+    this.loading = true;
 
     recordingService.getRecordings(new HttpParams().set('date', moment().format('YYYYMMDD')))
       .subscribe(recordingsToday => {
         const standardRecordingsCount = recordingsToday.filter(rec => rec.name.indexOf(this.DEFAULT_RECODING_NAME) >= 0).length + 1;
         nameInput.setValue(`${this.DEFAULT_RECODING_NAME} ${standardRecordingsCount}`);
         nameInput.enable();
+        this.loading = false;
       });
   }
 }
