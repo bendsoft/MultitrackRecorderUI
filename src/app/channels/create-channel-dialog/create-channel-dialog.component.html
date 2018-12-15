@@ -10,8 +10,8 @@
       >
         <mat-option *ngFor="let nr of availableChannels" [value]="nr">{{ nr }}</mat-option>
       </mat-select>
-      <mat-error *ngIf="createChannelForm.get('selectedChannel').hasError('notUnique')">Kanal ist bereits vergeben</mat-error>
-      <mat-error *ngIf="createChannelForm.get('selectedChannel').hasError('required')">Es muss ein Kanal ausgew&auml;hlt werden</mat-error>
+      <mat-error *ngIf="createChannelForm.get('channelNumber').hasError('notUnique')">Kanal ist bereits vergeben</mat-error>
+      <mat-error *ngIf="createChannelForm.get('channelNumber').hasError('required')">Es muss ein Kanal ausgew&auml;hlt werden</mat-error>
     </mat-form-field>
 
     <mat-form-field>

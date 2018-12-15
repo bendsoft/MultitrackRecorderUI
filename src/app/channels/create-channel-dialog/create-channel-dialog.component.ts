@@ -2,7 +2,7 @@ import {Component, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA} from '@angular/material';
 import {FormGroup} from '@angular/forms';
 import {ChannelErrorStateMatcher, ChannelRow} from '../table/channel-row';
-import {ChannelDataSource} from "../table/channel-data-source";
+import {ChannelDataSource} from '../table/channel-data-source';
 
 @Component({
   selector: 'app-create-channel-dialog',
@@ -26,7 +26,7 @@ export class CreateChannelDialogComponent {
     const channelRow = ChannelRow.create(
       {
         id: null,
-        selectedChannel: null,
+        channelNumber: null,
         name: '',
         active: true
       },
