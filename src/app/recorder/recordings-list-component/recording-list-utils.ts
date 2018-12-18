@@ -26,7 +26,7 @@ export interface Node {
 export class RecordingListUtils {
   public static buildFileTree(recordings: RecordingModel[]): Node[] {
     const yearsMap = new Map<string, FolderNode>();
-    _.sortBy(recordings, ['date', 'name']);
+    _.sortBy(recordings, ['recordingDate', 'name']);
     recordings
       .filter(rec => rec.tracks.length > 0)
       .forEach((rec) => {
@@ -64,7 +64,7 @@ export class RecordingListUtils {
   }
 
   private static createChannelList(track: Track): FileNode<ChannelRecordingFile>[] {
-    return _.chain(track.channels)
+    return _.chain(track.channelRecordingFiles)
       .sortBy('file.channelNumber')
       .map((channel): FileNode<ChannelRecordingFile> => ({
         filename: channel.name,
@@ -74,10 +74,10 @@ export class RecordingListUtils {
   }
 
   private static extractYear(recording: RecordingModel) {
-    return (recording.date as string).substring(0, 4);
+    return (recording.recordingDate as string).substring(0, 4);
   }
 
   private static extractDayMonth(recording: RecordingModel) {
-    return moment((recording.date as string), 'YYYYMMDD').format('Do MMMM');
+    return moment((recording.recordingDate as string), 'YYYYMMDD').format('Do MMMM');
   }
 }

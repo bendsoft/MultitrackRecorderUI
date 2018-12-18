@@ -30,7 +30,7 @@ export class CreateRecordingDialogComponent {
     nameInput.disable();
     this.loading = true;
 
-    recordingService.getRecordings(new HttpParams().set('date', moment().format('YYYYMMDD')))
+    recordingService.getRecordings(new HttpParams().set('recordingDate', moment().format('YYYYMMDD')))
       .subscribe(recordingsToday => {
         const standardRecordingsCount = recordingsToday.filter(rec => rec.name.indexOf(this.DEFAULT_RECODING_NAME) >= 0).length + 1;
         nameInput.setValue(`${this.DEFAULT_RECODING_NAME} ${standardRecordingsCount}`);

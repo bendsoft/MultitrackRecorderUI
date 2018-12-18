@@ -56,7 +56,7 @@ export class RecorderComponent {
 
   private updateSelectableRecordings() {
     this.chooseRecordingSelect.disable();
-    this.todaysSessions = this.recordingService.getRecordings(new HttpParams().set('date', moment().format('YYYYMMDD'))).pipe(
+    this.todaysSessions = this.recordingService.getRecordings(new HttpParams().set('recordingDate', moment().format('YYYYMMDD'))).pipe(
       tap(todayRec => {
         this.chooseRecordingSelect.disable();
         if (Array.isArray(todayRec) && todayRec.length > 0) {
@@ -90,7 +90,7 @@ export class RecorderComponent {
         this.recordingService.createRecording(
           RecordingModelFactory.createRecording(
             result.name,
-            result.date.format('YYYYMMDD')
+            result.recordingDate.format('YYYYMMDD')
           )
         )
         .subscribe((newRecording: RecordingModel) => {

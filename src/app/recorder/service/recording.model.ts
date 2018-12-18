@@ -3,7 +3,7 @@ import {ChannelModel} from '../../channels/service/channel.model';
 export interface RecordingModel {
   id: number | string;
   name: string;
-  date: string;
+  recordingDate: string;
   tracks: Track[];
 }
 
@@ -11,7 +11,7 @@ export interface Track {
   id: number | string;
   trackNumber: number;
   name: string;
-  channels: ChannelRecordingFile[];
+  channelRecordingFiles: ChannelRecordingFile[];
 }
 
 export interface ChannelRecordingFile {
@@ -27,7 +27,8 @@ export class RecordingModelFactory {
   static createRecording(name, date): RecordingModel {
     return {
       id: null,
-      name, date,
+      name,
+      recordingDate: date,
       tracks: []
     } as RecordingModel;
   }
@@ -37,7 +38,7 @@ export class RecordingModelFactory {
       id: null,
       trackNumber,
       name,
-      channels
+      channelRecordingFiles: channels
     }
   }
 

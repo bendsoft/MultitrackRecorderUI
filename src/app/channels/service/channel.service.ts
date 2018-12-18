@@ -10,7 +10,7 @@ export class ChannelService extends MTRService<ChannelModel> {
   constructor(
     http: HttpClient,
   ) {
-    super(http, '/channels');
+    super(http, '/channelRecordingFiles');
   }
 
   getChannels(params?: HttpParams) {

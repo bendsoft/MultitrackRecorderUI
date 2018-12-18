@@ -8,12 +8,12 @@ export class InMemoryDataService implements InMemoryDbService {
       {
         id: 1234,
         name: 'Aufnahme 5',
-        date: '20181107',
+        recordingDate: '20181107',
         tracks: [{
           id: 1324,
           trackNumber: 1,
           name: 'track 1',
-          channels: [
+          channelRecordingFiles: [
             {
               id: 31,
               channelNumber: 1,
@@ -44,12 +44,12 @@ export class InMemoryDataService implements InMemoryDbService {
       {
         id: 2345,
         name: 'Aufnahme 3',
-        date: '20181123',
+        recordingDate: '20181123',
         tracks: [{
           id: 1324,
           trackNumber: 1,
           name: 'track 1',
-          channels: [
+          channelRecordingFiles: [
             {
               id: 31,
               channelNumber: 1,
@@ -80,12 +80,12 @@ export class InMemoryDataService implements InMemoryDbService {
       {
         id: 3456,
         name: 'Aufnahme 2',
-        date: '20170803',
+        recordingDate: '20170803',
         tracks: [{
           id: 1324,
           trackNumber: 1,
           name: 'track 1',
-          channels: [
+          channelRecordingFiles: [
             {
               id: 21,
               channelNumber: 1,
@@ -116,12 +116,12 @@ export class InMemoryDataService implements InMemoryDbService {
       {
         id: 4567,
         name: 'Aufnahme 1',
-        date: '20170803',
+        recordingDate: '20170803',
         tracks: [{
           id: 1324,
           trackNumber: 1,
           name: 'track 1',
-          channels: [
+          channelRecordingFiles: [
             {
               id: 11,
               channelNumber: 1,
@@ -152,12 +152,12 @@ export class InMemoryDataService implements InMemoryDbService {
       {
         id: 5678,
         name: 'Aufnahme 4',
-        date: '20171013',
+        recordingDate: '20171013',
         tracks: [{
           id: 1324,
           trackNumber: 1,
           name: 'track 1',
-          channels: [
+          channelRecordingFiles: [
             {
               id: 41,
               channelNumber: 1,
