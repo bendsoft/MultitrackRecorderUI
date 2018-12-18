@@ -1,3 +1,5 @@
+@import '~styles.scss';
+
 .select-or-create-recording {
   display: flex;
   flex-flow: row nowrap;
@@ -37,4 +39,41 @@ mat-card-header {
 
 .recorder mat-button-toggle.btnRecord.mat-button-toggle-checked mat-icon {
   color: red;
+}
+
+.pulse {
+  animation: pulse 1s infinite;
+}
+.pulse:hover {
+  animation: none;
+}
+
+$pulse_step1: 0 0 0 0 mat-color($warn, 0.7);
+$pulse_step2: 0 0 0 10px mat-color($warn, 0.1);
+$pulse_step3: 0 0 0 0 mat-color($warn, 0.7);
+
+@-webkit-keyframes pulse {
+  0% {
+    -webkit-box-shadow: $pulse_step1;
+  }
+  50% {
+    -webkit-box-shadow: $pulse_step2;
+  }
+  100% {
+    -webkit-box-shadow: $pulse_step3;
+  }
+}
+@keyframes pulse {
+  0% {
+    -moz-box-shadow: $pulse_step1;
+    box-shadow: $pulse_step1;
+  }
+  50% {
+    -moz-box-shadow: $pulse_step2;
+    box-shadow: $pulse_step2;
+  }
+  100% {
+    -moz-box-shadow: $pulse_step3;
+    box-shadow: $pulse_step3;
+  }
 }
