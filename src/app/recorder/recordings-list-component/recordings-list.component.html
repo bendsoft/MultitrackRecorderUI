@@ -26,8 +26,11 @@
           </mat-icon>
         </button>
         {{node.filename}}
-        <button mat-icon-button [attr.aria-label]="Herunterladen">
+        <button mat-icon-button>
           <mat-icon class="mat-icon-rtl-mirror">archive</mat-icon>
+        </button>
+        <button mat-icon-button>
+          <mat-icon class="mat-icon-rtl-mirror">delete</mat-icon>
         </button>
       </div>
       <ul [class.example-tree-invisible]="!nestedTreeControl.isExpanded(node)">
