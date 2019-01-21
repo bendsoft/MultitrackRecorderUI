@@ -24,13 +24,13 @@ export interface Node {
 }
 
 export class RecordingListUtils {
-  public static buildFileTree(recordings: RecordingModel[]): Node[] {
+  public static buildFileTree(recordings: RecordingModel[]): FolderNode[] {
     const yearsMap = new Map<string, FolderNode>();
 
     _.orderBy(recordings, 'recordingDate', 'desc')
       .filter(rec => rec.tracks.length > 0)
       .forEach((rec) => {
-        let sessionItem = {
+        const sessionItem = {
           filename: `${RecordingListUtils.extractDayMonth(rec)} ${rec.name}`,
           folderType: FolderType.RECORDING,
           children: RecordingListUtils.createTrackList(rec.tracks)
@@ -43,7 +43,7 @@ export class RecordingListUtils {
           yearsMap.set(year, {
             filename: year,
             folderType: FolderType.PLAIN,
-            children: new Array<FolderNode>(sessionItem)
+            children: [sessionItem]
           });
         }
       });
@@ -57,7 +57,7 @@ export class RecordingListUtils {
         filename: `${track.trackNumber}. ${track.name}`,
         id: track.id,
         folderType: FolderType.TRACK,
-        children: RecordingListUtils.createChannelList(track.channels)
+        children: RecordingListUtils.createChannelList(track.channelRecordingFiles)
       }));
   }
 

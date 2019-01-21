@@ -13,48 +13,60 @@ export class InMemoryDataService implements InMemoryDbService {
           id: 1325,
           trackNumber: 2,
           name: 'track 2',
-          channels: [
+          channelRecordingFiles: [
             {
               id: 31,
-              channelNr: 2,
+              channelNumber: 2,
               name: 'Gesang Robin',
-              size: 2345345
+              filename: '',
+              type: '',
+              data: null
             },
             {
               id: 33,
-              channelNr: 1,
+              channelNumber: 1,
               name: 'Gesang Beni',
-              size: 243233
+              filename: '',
+              type: '',
+              data: null
             },
             {
               id: 35,
-              channelNr: 3,
+              channelNumber: 3,
               name: 'Gesang Silvan',
-              size: 987987
+              filename: '',
+              type: '',
+              data: null
             }
           ]
         }, {
           id: 1324,
           trackNumber: 3,
           name: 'track 3',
-          channels: [
+          channelRecordingFiles: [
             {
               id: 31,
-              channelNr: 1,
+              channelNumber: 1,
               name: 'Gesang Robin',
-              size: 2345345
+              filename: '',
+              type: '',
+              data: null
             },
             {
               id: 33,
-              channelNr: 2,
+              channelNumber: 2,
               name: 'Gesang Beni',
-              size: 243233
+              filename: '',
+              type: '',
+              data: null
             },
             {
               id: 35,
-              channelNr: 3,
+              channelNumber: 3,
               name: 'Gesang Silvan',
-              size: 987987
+              filename: '',
+              type: '',
+              data: null
             }
           ]
         }, {
