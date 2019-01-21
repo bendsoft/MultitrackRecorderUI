@@ -21,6 +21,7 @@ export class RecordingsListComponent {
     recordingService.getRecordings()
       .subscribe(recordings => {
         this.nestedDataSource.data = RecordingListUtils.buildFileTree(recordings);
+        console.log(JSON.stringify(this.nestedDataSource.data));
       });
 
     recordingService.changesStream.subscribe((recordings: RecordingModel[]) => {

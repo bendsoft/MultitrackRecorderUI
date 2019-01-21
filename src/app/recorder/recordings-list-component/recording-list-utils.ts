@@ -26,14 +26,14 @@ export interface Node {
 export class RecordingListUtils {
   public static buildFileTree(recordings: RecordingModel[]): Node[] {
     const yearsMap = new Map<string, FolderNode>();
-    _.sortBy(recordings, ['recordingDate', 'name']);
-    recordings
+
+    _.orderBy(recordings, 'recordingDate', 'desc')
       .filter(rec => rec.tracks.length > 0)
       .forEach((rec) => {
         let sessionItem = {
           filename: `${RecordingListUtils.extractDayMonth(rec)} ${rec.name}`,
           folderType: FolderType.RECORDING,
-          children: RecordingListUtils.createTrackList(rec)
+          children: RecordingListUtils.createTrackList(rec.tracks)
         };
 
         const year = RecordingListUtils.extractYear(rec);
@@ -51,26 +51,22 @@ export class RecordingListUtils {
     return Array.from(yearsMap.values());
   }
 
-  private static createTrackList(rec: RecordingModel): FolderNode[] {
-    return _.chain(rec.tracks)
-      .sortBy('track.trackNumber')
+  private static createTrackList(tracks: Track[]): FolderNode[] {
+    return _.sortBy(tracks,'trackNumber')
       .map(track => ({
         filename: `${track.trackNumber}. ${track.name}`,
         id: track.id,
         folderType: FolderType.TRACK,
-        children: RecordingListUtils.createChannelList(track)
-      }))
-      .value();
+        children: RecordingListUtils.createChannelList(track.channels)
+      }));
   }
 
-  private static createChannelList(track: Track): FileNode<ChannelRecordingFile>[] {
-    return _.chain(track.channelRecordingFiles)
-      .sortBy('file.channelNumber')
+  private static createChannelList(channels: ChannelRecordingFile[]): FileNode<ChannelRecordingFile>[] {
+    return _.sortBy(channels, 'channelNumber')
       .map((channel): FileNode<ChannelRecordingFile> => ({
         filename: channel.name,
         file: channel
-      }))
-      .value();
+      }));
   }
 
   private static extractYear(recording: RecordingModel) {
