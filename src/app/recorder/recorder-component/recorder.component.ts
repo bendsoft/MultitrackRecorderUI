@@ -1,43 +1,60 @@
-import {Component, ViewChild} from '@angular/core';
-import {RecordingTimerComponent} from '../recording-timer/recording-timer.component';
+import {AfterViewInit, Component, ViewChild} from '@angular/core';
+import {RecordingTimer, RecordingTimerComponent} from '../recording-timer/recording-timer.component';
 import {ErrorStateMatcher, MatDialog, MatSelectChange, MatSnackBar} from '@angular/material';
 import {CreateRecordingDialogComponent} from '../create-recording-dialog/create-recording-dialog.component';
 import {FormControl, Validators} from '@angular/forms';
 import {RecordingService} from '../service/recording.service';
 import * as _moment from 'moment';
 import {RecordingModel, RecordingModelFactory} from '../service/recording.model';
-import {Observable, ReplaySubject} from 'rxjs';
-import {first, tap} from 'rxjs/operators';
+import {Observable} from 'rxjs';
+import {tap} from 'rxjs/operators';
 import {HttpParams} from '@angular/common/http';
 import {ChannelDataSource} from '../../channels/table/channel-data-source';
 
 const moment = _moment;
 moment.locale('de-ch');
 
+class RecordingTimerComponentQueue implements RecordingTimer {
+  private methodCalls = [];
+
+  applyQueuedMethods(realComponent: RecordingTimerComponent) {
+    this.methodCalls.forEach(command => {
+      realComponent[command]();
+    });
+  }
+
+  restartTimer() {
+    this.methodCalls.push('restart');
+  }
+
+  startTimer() {
+    this.methodCalls.push('start');
+  }
+
+  stopTimer() {
+    this.methodCalls.push('stop');
+  }
+}
+
 @Component({
   selector: 'mtr-recorder',
   templateUrl: './recorder.component.html',
   styleUrls: ['./recorder.component.scss']
 })
-export class RecorderComponent {
+export class RecorderComponent implements AfterViewInit {
   isRecording = false;
   isRecordingSelected = false;
 
   currentRecordingInfo: RecordingModel;
-  private trackCounter: number = 1;
+  private trackCounter = 1;
 
   chooseRecordingSelect = new FormControl();
   trackNameInput = new FormControl(this.getNextSongTitle(), Validators.required);
   nameErrorStateMatcher = new TrackRecordingErrorStateMatcher();
   todaysSessions: Observable<RecordingModel[]>;
 
-  private _timer: ReplaySubject<RecordingTimerComponent>;
-  @ViewChild(RecordingTimerComponent)
-  set timer(timer: RecordingTimerComponent) {
-    if (timer) {
-      this._timer.next(timer);
-    }
-  }
+  @ViewChild(RecordingTimerComponent) timerComponent;
+  private timer: RecordingTimer = new RecordingTimerComponentQueue();
 
   constructor(
     private dialog: MatDialog,
@@ -54,13 +71,18 @@ export class RecorderComponent {
     this.recordingService.updateDataStream();
   }
 
+  ngAfterViewInit(): void {
+    (this.timer as RecordingTimerComponentQueue).applyQueuedMethods(this.timerComponent);
+    this.timer = this.timerComponent;
+  }
+
   private updateSelectableRecordings() {
     this.chooseRecordingSelect.disable();
     this.todaysSessions = this.recordingService.getRecordings(new HttpParams().set('recordingDate', moment().format('YYYYMMDD'))).pipe(
       tap(todayRec => {
         this.chooseRecordingSelect.disable();
         if (Array.isArray(todayRec) && todayRec.length > 0) {
-          const lastRecordingToday: RecordingModel = todayRec[todayRec.length-1];
+          const lastRecordingToday: RecordingModel = todayRec[todayRec.length - 1];
           this.chooseRecordingSelect.setValue(lastRecordingToday);
           this.chooseRecordingSelect.enable();
           this.trackCounter = lastRecordingToday.tracks.length + 1;
@@ -99,15 +121,14 @@ export class RecorderComponent {
 
           this.snackBar.open('Aufnahme erfolgreich erstellt!', '' , {
             duration: 2000
-          })
+          });
         });
       }
     });
   }
 
   onClickStartRecording() {
-    this. _timer = new ReplaySubject<RecordingTimerComponent>(1);
-    this.subscribeToTimerOnce(timer => timer.startTimer());
+    this.timer.startTimer();
 
     this.isRecording = true;
     this.chooseRecordingSelect.disable();
@@ -142,7 +163,7 @@ export class RecorderComponent {
   onClickRecordNextTrack() {
     this.trackCounter++;
 
-    this.subscribeToTimerOnce(timer => timer.restartTimer());
+    this.timer.restartTimer();
 
     this.recordingService.updateRecording(this.currentRecordingInfo).subscribe(() => {
       this.trackNameInput.setValue(this.getNextSongTitle());
@@ -153,10 +174,6 @@ export class RecorderComponent {
         duration: 2000,
       });
     });
-  }
-
-  private subscribeToTimerOnce(callback) {
-    return this._timer.asObservable().pipe(first()).subscribe(callback);
   }
 
   private addNewTrack() {

@@ -3,12 +3,18 @@ import { Component } from '@angular/core';
 import * as _moment from 'moment';
 const moment = _moment;
 
+export interface RecordingTimer {
+  restartTimer();
+  stopTimer();
+  startTimer();
+}
+
 @Component({
   selector: 'recording-timer',
   templateUrl: './recording-timer.component.html',
   styleUrls: ['./recording-timer.component.css']
 })
-export class RecordingTimerComponent {
+export class RecordingTimerComponent implements RecordingTimer {
   private static readonly intervalPrecision = 1000;
   private static readonly timeFormat = 'HH : mm : ss';
 
