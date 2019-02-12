@@ -112,7 +112,7 @@ export class RecorderComponent implements AfterViewInit {
         this.recordingService.createRecording(
           RecordingModelFactory.createRecording(
             result.name,
-            result.recordingDate.format('YYYYMMDD')
+            result.date.format('YYYYMMDD')
           )
         )
         .subscribe((newRecording: RecordingModel) => {
