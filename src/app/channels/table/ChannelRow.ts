@@ -1,8 +1,8 @@
 import {FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from '@angular/forms';
-import {ChannelModel} from '../service/channel.model';
+import {ChannelModel} from '../types/ChannelModel';
 import {ErrorStateMatcher} from '@angular/material';
-import {ChannelDataSource} from './channel-data-source';
-import {ChannelRowValidator} from './channel-row-validator';
+import {ChannelDataSource} from './ChannelDataSource';
+import {ChannelRowValidator} from './ChannelRowValidator';
 
 export class ChannelRow {
   static readonly _allChannelNumbers = Array.from(Array(17).keys()).slice(1);

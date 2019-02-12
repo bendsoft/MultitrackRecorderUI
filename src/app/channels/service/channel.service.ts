@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {ChannelModel} from './channel.model';
+import {ChannelModel} from '../types/ChannelModel';
 import {MTRService} from '../../shared/service/mtr-service';
 import {HttpClient, HttpParams} from '@angular/common/http';
 

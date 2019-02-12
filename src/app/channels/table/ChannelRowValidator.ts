@@ -1,5 +1,5 @@
 import {FormControl} from '@angular/forms';
-import {ChannelDataSource} from "./channel-data-source";
+import {ChannelDataSource} from "./ChannelDataSource";
 
 export class ChannelRowValidator {
   public static checkUnique(

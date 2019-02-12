@@ -1,4 +1,4 @@
-import {ChannelModel} from '../../channels/service/channel.model'
+import {ChannelModel} from '../../channels/types/ChannelModel'
 import {RecordingModel} from './RecordingModel'
 import {Track} from './Track'
 import {ChannelRecordingFile} from './ChannelRecordingFile'

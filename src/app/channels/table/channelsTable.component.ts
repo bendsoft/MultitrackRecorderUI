@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {MatDialog, MatSnackBar} from '@angular/material';
 import {SecurityCheckDialogComponent} from '../../shared/security-check-dialog/security-check-dialog.component';
-import {ChannelDataSource} from './channel-data-source';
-import {ChannelRow} from './channel-row';
+import {ChannelDataSource} from './ChannelDataSource';
+import {ChannelRow} from './ChannelRow';
 import {CreateChannelDialogComponent} from '../create-channel-dialog/create-channel-dialog.component';
 import {FormArray, FormGroup} from '@angular/forms';
-import {ChannelModel} from '../service/channel.model';
+import {ChannelModel} from '../types/ChannelModel';
 
 /**
  * @title Channels table
