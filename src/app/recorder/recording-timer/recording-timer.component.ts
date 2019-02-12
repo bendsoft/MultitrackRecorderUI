@@ -1,13 +1,9 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core'
 
-import * as _moment from 'moment';
+import * as _moment from 'moment'
+import {RecordingTimer} from './RecordingTimer'
+
 const moment = _moment;
-
-export interface RecordingTimer {
-  restartTimer();
-  stopTimer();
-  startTimer();
-}
 
 @Component({
   selector: 'recording-timer',

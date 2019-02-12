@@ -1,5 +1,5 @@
 import {AfterViewChecked, Component, ViewChild} from '@angular/core'
-import {RecordingTimer, RecordingTimerComponent} from '../recording-timer/recording-timer.component'
+import {RecordingTimerComponent} from '../recording-timer/recording-timer.component'
 import {ErrorStateMatcher, MatDialog, MatSelectChange, MatSnackBar} from '@angular/material'
 import {CreateRecordingDialogComponent} from '../create-recording-dialog/create-recording-dialog.component'
 import {FormControl, Validators} from '@angular/forms'
@@ -10,32 +10,11 @@ import {Observable} from 'rxjs'
 import {tap} from 'rxjs/operators'
 import {HttpParams} from '@angular/common/http'
 import {ChannelDataSource} from '../../channels/table/channel-data-source'
+import {RecordingTimerComponentQueue} from './RecordingTimerComponentQueue'
+import {RecordingTimer} from '../recording-timer/RecordingTimer'
 
 const moment = _moment
 moment.locale('de-ch')
-
-class RecordingTimerComponentQueue implements RecordingTimer {
-  private methodCalls = []
-
-  applyQueuedMethods(realComponent: RecordingTimerComponent) {
-    this.methodCalls.forEach(command => {
-      realComponent[command]()
-    })
-    this.methodCalls = []
-  }
-
-  restartTimer() {
-    this.methodCalls.push('restartTimer')
-  }
-
-  startTimer() {
-    this.methodCalls.push('startTimer')
-  }
-
-  stopTimer() {
-    this.methodCalls.push('stopTimer')
-  }
-}
 
 @Component({
   selector: 'mtr-recorder',
