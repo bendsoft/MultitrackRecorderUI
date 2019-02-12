@@ -1,6 +1,8 @@
-import {ChannelRecordingFile, RecordingModel, Track} from '../service/recording.model';
+import {ChannelRecordingFile} from '../types/ChannelRecordingFile';
 import * as _ from 'lodash';
 import * as _moment from 'moment';
+import {RecordingModel} from '../types/RecordingModel'
+import {Track} from '../types/Track'
 
 const moment = _moment;
 moment.locale('de-CH');

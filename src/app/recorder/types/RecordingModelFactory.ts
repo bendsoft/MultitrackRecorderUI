@@ -1,27 +1,7 @@
-import {ChannelModel} from '../../channels/service/channel.model';
-
-export interface RecordingModel {
-  id: number | string;
-  name: string;
-  recordingDate: string;
-  tracks: Track[];
-}
-
-export interface Track {
-  id: number | string;
-  trackNumber: number;
-  name: string;
-  channelRecordingFiles: ChannelRecordingFile[];
-}
-
-export interface ChannelRecordingFile {
-  id: number | string;
-  channelNumber: number;
-  name: string;
-  filename: string;
-  type: string;
-  data: string;
-}
+import {ChannelModel} from '../../channels/service/channel.model'
+import {RecordingModel} from './RecordingModel'
+import {Track} from './Track'
+import {ChannelRecordingFile} from './ChannelRecordingFile'
 
 export class RecordingModelFactory {
   static createRecording(name, date): RecordingModel {

@@ -5,13 +5,14 @@ import {CreateRecordingDialogComponent} from '../create-recording-dialog/create-
 import {FormControl, Validators} from '@angular/forms'
 import {RecordingService} from '../service/recording.service'
 import * as _moment from 'moment'
-import {RecordingModel, RecordingModelFactory} from '../service/recording.model'
+import {RecordingModelFactory} from '../types/RecordingModelFactory'
 import {Observable} from 'rxjs'
 import {tap} from 'rxjs/operators'
 import {HttpParams} from '@angular/common/http'
 import {ChannelDataSource} from '../../channels/table/channel-data-source'
 import {RecordingTimerComponentQueue} from './RecordingTimerComponentQueue'
-import {RecordingTimer} from '../recording-timer/RecordingTimer'
+import {RecordingTimer} from '../types/RecordingTimer'
+import {RecordingModel} from '../types/RecordingModel'
 
 const moment = _moment
 moment.locale('de-ch')

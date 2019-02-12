@@ -1,5 +1,5 @@
 import {InMemoryDbService} from 'angular-in-memory-web-api';
-import {RecordingModel} from './recorder/service/recording.model';
+import {RecordingModel} from './recorder/types/RecordingModel';
 import {ChannelModel} from './channels/service/channel.model';
 
 export class InMemoryDataService implements InMemoryDbService {

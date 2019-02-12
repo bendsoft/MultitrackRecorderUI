@@ -1,7 +1,7 @@
 import {Component} from '@angular/core'
 
 import * as _moment from 'moment'
-import {RecordingTimer} from './RecordingTimer'
+import {RecordingTimer} from '../types/RecordingTimer'
 
 const moment = _moment;
 

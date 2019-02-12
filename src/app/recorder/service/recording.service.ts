@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {RecordingModel} from './recording.model';
+import {RecordingModel} from '../types/RecordingModel';
 import {MTRService} from '../../shared/service/mtr-service';
 import {HttpClient, HttpParams} from '@angular/common/http';
 
