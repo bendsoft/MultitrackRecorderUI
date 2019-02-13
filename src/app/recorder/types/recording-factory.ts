@@ -1,16 +1,16 @@
-import {ChannelModel} from '../../channels/types/ChannelModel'
-import {RecordingModel} from './RecordingModel'
-import {Track} from './Track'
-import {ChannelRecordingFile} from './ChannelRecordingFile'
+import {Channel} from '../../channels/types/channel'
+import {Recording} from './recording'
+import {Track} from './track'
+import {ChannelRecordingFile} from './channel-recording-file'
 
-export class RecordingModelFactory {
-  static createRecording(name, date): RecordingModel {
+export class RecordingFactory {
+  static createRecording(name, date): Recording {
     return {
       id: null,
       name,
       recordingDate: date,
       tracks: []
-    } as RecordingModel;
+    } as Recording;
   }
 
   static createTrack(trackNumber, name, channels: ChannelRecordingFile[]): Track {
@@ -22,7 +22,7 @@ export class RecordingModelFactory {
     }
   }
 
-  static transformChannelModelToChannelRecordingFile(channel: ChannelModel): ChannelRecordingFile {
+  static transformChannelModelToChannelRecordingFile(channel: Channel): ChannelRecordingFile {
     return {
       id: channel.id,
       channelNumber: channel.channelNumber,

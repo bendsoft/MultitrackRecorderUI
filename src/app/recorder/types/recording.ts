@@ -1,6 +1,6 @@
-import {Track} from './Track'
+import {Track} from './track'
 
-export interface RecordingModel {
+export interface Recording {
   id: number | string;
   name: string;
   recordingDate: string;

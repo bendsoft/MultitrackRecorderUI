@@ -40,9 +40,9 @@ import {RecordingTimerComponent} from './recorder/recording-timer/recording-time
 import {RecordingsListComponent} from './recorder/recordings-list-component/recordings-list.component';
 import {CreateRecordingDialogComponent} from './recorder/create-recording-dialog/create-recording-dialog.component';
 
-import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { InMemoryDataService }  from './in-memory-data.service';
-import {environment} from "../environments/environment";
+import {HttpClientInMemoryWebApiModule} from 'angular-in-memory-web-api';
+import {InMemoryDataService} from './in-memory-data.service';
+import {environment} from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -90,10 +90,11 @@ import {environment} from "../environments/environment";
     HttpClientModule,
 
     environment.production ?
-      [] : HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService, { delay: 1000 })
+      [] : HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService, {delay: 1000})
   ],
   providers: [ChannelService, {provide: MAT_DATE_LOCALE, useValue: 'de-CH'}],
   bootstrap: [AppComponent]
 })
 
-export class AppModule { }
+export class AppModule {
+}

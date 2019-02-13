@@ -1,4 +1,4 @@
-import {ChannelRecordingFile} from './ChannelRecordingFile'
+import {ChannelRecordingFile} from './channel-recording-file'
 
 export interface Track {
   id: number | string;

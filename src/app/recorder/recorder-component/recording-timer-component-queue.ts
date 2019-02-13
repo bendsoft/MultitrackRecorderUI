@@ -1,5 +1,5 @@
 import {RecordingTimerComponent} from '../recording-timer/recording-timer.component'
-import {RecordingTimer} from '../types/RecordingTimer'
+import {RecordingTimer} from '../types/recording-timer'
 
 export class RecordingTimerComponentQueue implements RecordingTimer {
   private methodCalls = []

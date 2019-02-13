@@ -1,19 +1,19 @@
 import {Component, OnInit} from '@angular/core';
 import {MatDialog, MatSnackBar} from '@angular/material';
 import {SecurityCheckDialogComponent} from '../../shared/security-check-dialog/security-check-dialog.component';
-import {ChannelDataSource} from './ChannelDataSource';
-import {ChannelRow} from './ChannelRow';
+import {ChannelDataSource} from './channel-data-source';
+import {ChannelRow} from './channel-row';
 import {CreateChannelDialogComponent} from '../create-channel-dialog/create-channel-dialog.component';
 import {FormArray, FormGroup} from '@angular/forms';
-import {ChannelModel} from '../types/ChannelModel';
+import {Channel} from '../types/channel';
 
 /**
  * @title Channels table
  */
 @Component({
   selector: 'app-channels-table',
-  styleUrls: ['channelsTable.component.css'],
-  templateUrl: 'channelsTable.component.html'
+  styleUrls: ['channels-table.component.css'],
+  templateUrl: 'channels-table.component.html'
 })
 export class ChannelsTableComponent implements OnInit {
   private _isLoading = false;
@@ -108,7 +108,7 @@ export class ChannelsTableComponent implements OnInit {
       });
   }
 
-  private createNewOrChangeChannel(newOrChangedChannelRow): ChannelModel {
+  private createNewOrChangeChannel(newOrChangedChannelRow): Channel {
     const changedChannel = Object.assign({}, newOrChangedChannelRow.channel);
     changedChannel.channelNumber = newOrChangedChannelRow.rowFormGroup.get('channelNumber').value;
     changedChannel.name = newOrChangedChannelRow.rowFormGroup.get('name').value;

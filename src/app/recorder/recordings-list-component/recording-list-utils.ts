@@ -1,8 +1,8 @@
-import {ChannelRecordingFile} from '../types/ChannelRecordingFile';
+import {ChannelRecordingFile} from '../types/channel-recording-file';
 import * as _ from 'lodash';
 import * as _moment from 'moment';
-import {RecordingModel} from '../types/RecordingModel'
-import {Track} from '../types/Track'
+import {Recording} from '../types/recording'
+import {Track} from '../types/track'
 
 const moment = _moment;
 moment.locale('de-CH');
@@ -26,7 +26,7 @@ export interface Node {
 }
 
 export class RecordingListUtils {
-  public static buildFileTree(recordings: RecordingModel[]): FolderNode[] {
+  public static buildFileTree(recordings: Recording[]): FolderNode[] {
     const yearsMap = new Map<string, FolderNode>();
 
     _.orderBy(recordings, 'recordingDate', 'desc')
@@ -71,11 +71,11 @@ export class RecordingListUtils {
       }));
   }
 
-  private static extractYear(recording: RecordingModel) {
+  private static extractYear(recording: Recording) {
     return (recording.recordingDate as string).substring(0, 4);
   }
 
-  private static extractDayMonth(recording: RecordingModel) {
+  private static extractDayMonth(recording: Recording) {
     return moment((recording.recordingDate as string), 'YYYYMMDD').format('Do MMMM');
   }
 }

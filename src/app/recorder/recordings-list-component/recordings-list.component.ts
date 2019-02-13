@@ -2,9 +2,9 @@ import {Component} from '@angular/core';
 import {NestedTreeControl} from '@angular/cdk/tree';
 import {MatTreeNestedDataSource} from '@angular/material';
 import {RecordingService} from '../service/recording.service';
-import {ChannelRecordingFile} from '../types/ChannelRecordingFile';
+import {ChannelRecordingFile} from '../types/channel-recording-file';
 import {FileNode, FolderNode, FolderType, Node, RecordingListUtils} from './recording-list-utils';
-import {RecordingModel} from '../types/RecordingModel'
+import {Recording} from '../types/recording'
 
 @Component({
   selector: 'app-recordings-list',
@@ -24,7 +24,7 @@ export class RecordingsListComponent {
         this.nestedDataSource.data = RecordingListUtils.buildFileTree(recordings);
       });
 
-    recordingService.changesStream.subscribe((recordings: RecordingModel[]) => {
+    recordingService.changesStream.subscribe((recordings: Recording[]) => {
       this.nestedDataSource.data = RecordingListUtils.buildFileTree(recordings);
     });
   }

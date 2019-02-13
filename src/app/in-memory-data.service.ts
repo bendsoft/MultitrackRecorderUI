@@ -1,10 +1,10 @@
 import {InMemoryDbService} from 'angular-in-memory-web-api';
-import {RecordingModel} from './recorder/types/RecordingModel';
-import {ChannelModel} from './channels/types/ChannelModel';
+import {Recording} from './recorder/types/recording';
+import {Channel} from './channels/types/channel';
 
 export class InMemoryDataService implements InMemoryDbService {
   createDb() {
-    const recordings: RecordingModel[] = [
+    const recordings: Recording[] = [
       {
         id: 1234,
         name: 'Aufnahme 5',
@@ -246,7 +246,7 @@ export class InMemoryDataService implements InMemoryDbService {
         }]
       }
     ];
-    const channels: ChannelModel[] = [
+    const channels: Channel[] = [
       {id: 0, channelNumber: 1, name: 'Gesang Robin', active: true, profile: 0},
       {id: 1, channelNumber: 2, name: 'Gesang Beni', active: true, profile: 0},
       {id: 3, channelNumber: 4, name: 'Gitarre Robin', active: true, profile: 0},
@@ -267,7 +267,7 @@ export class InMemoryDataService implements InMemoryDbService {
   // the method below returns the initial trackNumber (11).
   // if the recordings array is not empty, the method below returns the highest
   // recording id + 1.
-  genId(recordings: RecordingModel[]): number {
+  genId(recordings: Recording[]): number {
     return recordings.length > 0 ? Math.max(...recordings.map(recording => recording.id as number)) + 1 : 11;
   }
 }

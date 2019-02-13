@@ -5,14 +5,14 @@ import {CreateRecordingDialogComponent} from '../create-recording-dialog/create-
 import {FormControl, Validators} from '@angular/forms'
 import {RecordingService} from '../service/recording.service'
 import * as _moment from 'moment'
-import {RecordingModelFactory} from '../types/RecordingModelFactory'
+import {RecordingFactory} from '../types/recording-factory'
 import {Observable} from 'rxjs'
 import {tap} from 'rxjs/operators'
 import {HttpParams} from '@angular/common/http'
-import {ChannelDataSource} from '../../channels/table/ChannelDataSource'
-import {RecordingTimerComponentQueue} from './RecordingTimerComponentQueue'
-import {RecordingTimer} from '../types/RecordingTimer'
-import {RecordingModel} from '../types/RecordingModel'
+import {ChannelDataSource} from '../../channels/table/channel-data-source'
+import {RecordingTimerComponentQueue} from './recording-timer-component-queue'
+import {RecordingTimer} from '../types/recording-timer'
+import {Recording} from '../types/recording'
 
 const moment = _moment
 moment.locale('de-ch')
@@ -26,13 +26,13 @@ export class RecorderComponent implements AfterViewChecked {
   isRecording = false
   isRecordingSelected = false
 
-  currentRecordingInfo: RecordingModel
+  currentRecordingInfo: Recording
   private trackCounter = 1
 
   chooseRecordingSelect = new FormControl()
   trackNameInput = new FormControl(this.getNextSongTitle(), Validators.required)
   nameErrorStateMatcher = new TrackRecordingErrorStateMatcher()
-  todaysSessions: Observable<RecordingModel[]>
+  todaysSessions: Observable<Recording[]>
 
   @ViewChild(RecordingTimerComponent) timerComponent
   private timer: RecordingTimer = new RecordingTimerComponentQueue()
@@ -70,7 +70,7 @@ export class RecorderComponent implements AfterViewChecked {
       tap(todayRec => {
         this.chooseRecordingSelect.disable()
         if (Array.isArray(todayRec) && todayRec.length > 0) {
-          const lastRecordingToday: RecordingModel = todayRec[todayRec.length - 1]
+          const lastRecordingToday: Recording = todayRec[todayRec.length - 1]
           this.chooseRecordingSelect.setValue(lastRecordingToday)
           this.chooseRecordingSelect.enable()
           this.trackCounter = lastRecordingToday.tracks.length + 1
@@ -98,12 +98,12 @@ export class RecorderComponent implements AfterViewChecked {
     addChannelDialog.afterClosed().subscribe(result => {
       if (result) {
         this.recordingService.createRecording(
-          RecordingModelFactory.createRecording(
+          RecordingFactory.createRecording(
             result.name,
             result.date.format('YYYYMMDD')
           )
         )
-          .subscribe((newRecording: RecordingModel) => {
+          .subscribe((newRecording: Recording) => {
             this.currentRecordingInfo = newRecording
             this.updateSelectableRecordings()
 
@@ -165,11 +165,11 @@ export class RecorderComponent implements AfterViewChecked {
   }
 
   private addNewTrack() {
-    this.currentRecordingInfo.tracks.push(RecordingModelFactory.createTrack(
+    this.currentRecordingInfo.tracks.push(RecordingFactory.createTrack(
       this.trackCounter,
       this.trackNameInput.value,
       this.channelDataSource.getChannelRows()
-        .map(channelRow => RecordingModelFactory.transformChannelModelToChannelRecordingFile(channelRow.channel))
+        .map(channelRow => RecordingFactory.transformChannelModelToChannelRecordingFile(channelRow.channel))
     ))
   }
 }

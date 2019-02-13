@@ -1,11 +1,11 @@
-import {ChannelRow} from './ChannelRow';
+import {ChannelRow} from './channel-row';
 import {DataSource} from '@angular/cdk/table';
 import {CollectionViewer} from '@angular/cdk/collections';
 import {ChannelService} from '../service/channel.service';
 import {Observable} from 'rxjs/internal/Observable';
 import {BehaviorSubject} from 'rxjs/internal/BehaviorSubject';
 import {Injectable} from '@angular/core';
-import {ChannelModel} from '../types/ChannelModel';
+import {Channel} from '../types/channel';
 
 @Injectable({
   providedIn: 'root',
@@ -19,7 +19,7 @@ export class ChannelDataSource extends DataSource<ChannelRow> {
   ) {
     super();
 
-    channelService.changesStream.subscribe((channels: ChannelModel[]) =>
+    channelService.changesStream.subscribe((channels: Channel[]) =>
       this._channelRowStream.next(this.transformChannelToSortedChannelRow(channels))
     );
 
@@ -39,7 +39,7 @@ export class ChannelDataSource extends DataSource<ChannelRow> {
     return this._channelRowStream.getValue();
   }
 
-  private transformChannelToSortedChannelRow(channels: ChannelModel[]): ChannelRow[] {
+  private transformChannelToSortedChannelRow(channels: Channel[]): ChannelRow[] {
     const sortedChannels = new Array(16);
     channels
       .map(channel => ChannelRow.create(channel, this))
