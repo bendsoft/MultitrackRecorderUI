@@ -23,7 +23,17 @@ moment.locale('de-ch')
   styleUrls: ['./recorder.component.scss']
 })
 export class RecorderComponent implements AfterViewChecked {
-  isRecording = false
+  private _isRecording = false
+  set isRecording(value) {
+    this._isRecording = value;
+    value ?
+      this.chooseRecordingSelect.disable() :
+      this.chooseRecordingSelect.enable()
+  }
+  get isRecording() {
+    return this._isRecording
+  }
+
   isRecordingSelected = false
 
   currentRecordingInfo: Recording
@@ -54,7 +64,9 @@ export class RecorderComponent implements AfterViewChecked {
 
   ngAfterViewChecked(): void {
     if (this.isRecording && this.timerComponent) {
-      (<RecordingTimerComponentQueue>this.timer).applyQueuedMethods(this.timerComponent)
+      if (this.timer && (<RecordingTimerComponentQueue>this.timer).applyQueuedMethods) {
+        (<RecordingTimerComponentQueue>this.timer).applyQueuedMethods(this.timerComponent)
+      }
       this.timer = this.timerComponent
     } else if (this.isRecording === false) {
       this.timer = new RecordingTimerComponentQueue()
@@ -119,7 +131,6 @@ export class RecorderComponent implements AfterViewChecked {
     this.timer.startTimer()
 
     this.isRecording = true
-    this.chooseRecordingSelect.disable()
     this.trackNameInput.setValue(this.getNextSongTitle())
 
     this.addNewTrack()
