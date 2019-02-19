@@ -57,7 +57,6 @@ export class RecordingListUtils {
     return _.sortBy(tracks,'trackNumber')
       .map(track => ({
         filename: `${track.trackNumber}. ${track.name}`,
-        id: track.id,
         folderType: FolderType.TRACK,
         children: RecordingListUtils.createChannelList(track.channelRecordingFiles)
       }));

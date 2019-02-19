@@ -10,7 +10,6 @@ export class InMemoryDataService implements InMemoryDbService {
         name: 'Aufnahme 5',
         recordingDate: '20171107',
         tracks: [{
-          id: 1325,
           trackNumber: 2,
           name: 'track 2',
           channelRecordingFiles: [
@@ -40,7 +39,6 @@ export class InMemoryDataService implements InMemoryDbService {
             }
           ]
         }, {
-          id: 1324,
           trackNumber: 3,
           name: 'track 3',
           channelRecordingFiles: [
@@ -70,7 +68,6 @@ export class InMemoryDataService implements InMemoryDbService {
             }
           ]
         }, {
-          id: 1329,
           trackNumber: 1,
           name: 'track 1',
           channelRecordingFiles: [
@@ -106,7 +103,6 @@ export class InMemoryDataService implements InMemoryDbService {
         name: 'Aufnahme 3',
         recordingDate: '20171123',
         tracks: [{
-          id: 1324,
           trackNumber: 1,
           name: 'track 1',
           channelRecordingFiles: [
@@ -142,7 +138,6 @@ export class InMemoryDataService implements InMemoryDbService {
         name: 'Aufnahme 2',
         recordingDate: '20180103',
         tracks: [{
-          id: 1324,
           trackNumber: 1,
           name: 'track 1',
           channelRecordingFiles: [
@@ -178,7 +173,6 @@ export class InMemoryDataService implements InMemoryDbService {
         name: 'Aufnahme 1',
         recordingDate: '20170803',
         tracks: [{
-          id: 1324,
           trackNumber: 1,
           name: 'track 1',
           channelRecordingFiles: [
@@ -214,7 +208,6 @@ export class InMemoryDataService implements InMemoryDbService {
         name: 'Aufnahme 4',
         recordingDate: '20180813',
         tracks: [{
-          id: 1324,
           trackNumber: 1,
           name: 'track 1',
           channelRecordingFiles: [

@@ -15,7 +15,6 @@ export class RecordingFactory {
 
   static createTrack(trackNumber, name, channels: ChannelRecordingFile[]): Track {
     return {
-      id: null,
       trackNumber,
       name,
       channelRecordingFiles: channels
